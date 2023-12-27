@@ -1,0 +1,129 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.HashMap;
+
+/**
+ * Super Class for all plants that can be placed on dirtTiles
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+public abstract class Plant extends Tile
+{
+
+    protected int growthRate;
+    protected int maturity; 
+    protected int growthStage;
+    protected int lifeTime;
+    protected boolean mature;
+    protected int yeild;
+
+    //[Growth Stage][Animation Frame];
+    protected GreenfootImage[][] growthAnimations;
+    protected int animationIndex;
+    protected int deltaIndex;
+    protected DirtTile myTile;
+    protected HashMap<Integer, Integer> yOffsets;
+
+    public Plant(){
+        super(0);
+        myTile = null;
+        myPlot = null;
+        deltaIndex = 1;
+        lifeTime = 0;
+        growthStage = 1;
+        maturity = 0;
+        mature = false;
+        //nextFrame would be 0
+        animationIndex = -1;
+        
+        yOffsets = new HashMap<>();    
+    }
+    
+    public void act()
+    {
+        super.act();
+        /**
+         * NEW: tile y offset
+         */
+        if(myTile != null){
+            setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
+            grow();
+        }
+        //animate
+        if(lifeTime % 12 == 0 && growthStage > 0){
+            nextFrame();
+        }
+        //fade
+        if(growthStage > 0){
+            fadeOval(getImage());
+            lifeTime++;
+        }
+        
+    
+    }
+
+    public abstract void grow();
+    /**
+     * NEW: plant method changed
+     */
+    public void plant(LandPlot plot, DirtTile tile){
+        myPlot = plot;
+        myTile = tile;
+        plot.zSort();
+    }
+    
+    public abstract void nextFrame();
+    
+    public abstract void collect();
+    
+    public GreenfootImage[] getSeedImages(){
+        return growthAnimations[0];
+    }
+    
+    public void setYOffset(int growthStage, int pixels){
+        yOffsets.put(growthStage, pixels);
+    }
+    //getters and setters
+    public int getGrowthRate(){
+        return growthRate;
+    }
+    public void setGrowthRate(int growthRate){
+        this.growthRate = growthRate;
+    }
+    public int getMaturity(){
+        return maturity;
+    }
+    public void setMaturity(int maturity){
+        this.maturity = maturity;
+    }
+    public int getGrowthStage(){
+        return growthStage;
+    }
+    public void setGrowthStage(int growthStage){
+        this.growthStage = growthStage;
+    }
+    public int getLifeTime(){
+        return lifeTime;
+    }
+    public void setLifeTime(int lifeTime){
+        this.lifeTime = lifeTime;
+    }
+    public boolean isMature(){
+        return mature;
+    }
+    public void setMature(boolean mature){
+        this.mature = mature;
+    }
+    public int getYield(){
+        return yeild;
+    }
+    public void setYield(int yeild){
+        this.yeild = yeild;
+    }
+    public DirtTile getDirtTile(){
+        return myTile;
+    }
+    public void setDirtTile(DirtTile newTile){
+        myTile = newTile;
+    }
+}
