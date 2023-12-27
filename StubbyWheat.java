@@ -10,9 +10,12 @@ public class StubbyWheat extends Plant
 {
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
-    private ObjectID ID = ObjectID.STUBBY_WHEAT;
+    /**
+     * NEW: ID moved and initialized in constructor
+     */
     public StubbyWheat(){
         super();
+        ID = ObjectID.STUBBY_WHEAT;
         initialize();
         yeild = 1;
     }

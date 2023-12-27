@@ -10,13 +10,13 @@ import java.util.ArrayList;
 public class DirtTile extends Tile
 {
     public static final int DEFAULT_GROWTH_MULTIPLIER = 1;
-    
+
     private ObjectID ID = ObjectID.DIRTILE;
     //active/projected toggle
     private boolean active;
     private GreenfootImage projectedTile;
     private GreenfootImage activeTile;
-    
+
     private Plant plant;
     private Seed seed;
     private double growthMultiplier;
@@ -57,6 +57,12 @@ public class DirtTile extends Tile
             stopProjection();
         }
         fadeOval(activeTile);
+        /**
+         * NEW 
+         */
+        if (hoveringThis() && Greenfoot.isKeyDown("space")){
+            myPlot.removeTile(row,col);
+        }
     }
 
     /**
@@ -84,11 +90,11 @@ public class DirtTile extends Tile
             setImage(projectedTile);
         }     
     }
-    
+
     public void unPlant(){
         plant = null;
     }
-    
+
     /**
      * used to handle all mouse inputs
      */
@@ -105,18 +111,23 @@ public class DirtTile extends Tile
             }
             //activate tile when clicked
             //NOTE: can remove Cursor.getActor() == null after editmode is implemented
-            if (Cursor.getActor() == null && activeTile.getTransparency() >TRANSLUCENT && !active && getAffordable() && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
-                /**
-                 * NEW: changed code below
-                 */
-                activate();
-                
-                //temporary
-                if(Inventory.getAmount(ID) == 0){
-                    Inventory.withdraw(10);
+            /**
+             * NEW: changed code below
+             */
+            if (Cursor.getActor() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
+
+                if(getAffordable() || Inventory.getAmount(ID) != 0){
+                    activate();
+                    if(Inventory.getAmount(ID) == 0){
+                        Inventory.withdraw(10);
+                    }else{
+                        Inventory.remove(ID);
+                    }
+
+                    playPlaceSound();
                 }
-                
-                playPlaceSound();
+                //temporary
+
             }
 
         }
@@ -129,7 +140,7 @@ public class DirtTile extends Tile
             }
         }
     }
-    
+
     /**
      * used to handle all keypress Actions
      */
@@ -162,10 +173,11 @@ public class DirtTile extends Tile
             //dcol = dx, drow = dy
             int deltaCol = direction[0];
             int deltaRow = direction[1];
-
+            /**
+             * NEW: changed if statment
+             */
             DirtTile neighbour = myPlot.getTile(row + deltaRow, col + deltaCol);
             if(neighbour != null && !neighbour.isActive()){
-                getWorld().removeObject(neighbour);
                 myPlot.removeFromPlot(row + deltaRow, col + deltaCol);
             }
         }
@@ -197,13 +209,14 @@ public class DirtTile extends Tile
          */
         return Inventory.getBallance() >= 10;
     }
+
     /**
      * NEW: getter method
      */
     public Plant getPlant(){
         return plant;
     }
-    
+
     public void playPlaceSound(){
         //start the place sound here
     }
@@ -218,6 +231,7 @@ public class DirtTile extends Tile
     public boolean isActive(){
         return active;
     }
+
     /**
      * NEW: activate method changed
      */
@@ -228,4 +242,24 @@ public class DirtTile extends Tile
         active = true;
     }
 
+    /**
+     * NEW 
+     */
+    public ObjectID getID(){
+        return ID;
+    }
+
+    /**
+     * NEW 
+     */
+    public int getRow(){
+        return row;
+    }
+
+    /**
+     * NEW
+     */
+    public int getCol(){
+        return col;
+    }
 }

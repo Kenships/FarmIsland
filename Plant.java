@@ -23,7 +23,10 @@ public abstract class Plant extends Tile
     protected int deltaIndex;
     protected DirtTile myTile;
     protected HashMap<Integer, Integer> yOffsets;
-
+    /**
+     * NEW:
+     */
+    protected ObjectID ID;
     public Plant(){
         super(0);
         myTile = null;
@@ -46,8 +49,21 @@ public abstract class Plant extends Tile
          * NEW: tile y offset
          */
         if(myTile != null){
-            setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
-            grow();
+            if(myTile.getWorld() != null){
+                setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
+                grow();
+            }
+            else{
+                //collects if mature returns seed if not
+                if(mature){
+                    collect();
+                }
+                else{
+                    Inventory.add(ID.getSeedID());
+                }
+                getWorld().removeObject(this);
+                return;
+            }
         }
         //animate
         if(lifeTime % 12 == 0 && growthStage > 0){

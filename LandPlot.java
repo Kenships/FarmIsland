@@ -1,5 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
+import java.util.Stack;
+import java.util.PriorityQueue;
 /**
  * Stores all DirtTiles in play
  * 
@@ -11,15 +13,18 @@ public class LandPlot extends Actor
     //where the first tile is spawned
     public static final int STARTING_ROW = 15;
     public static final int STARTING_COL = 15;
-    
-    
+    /**
+     * NEW 
+     */
+    public static final int[][] DIRECTIONS = {{-1,0},{1,0},{0,1},{0,-1}};
+
     public static final int MARGIN = 128;
     public static final int WIDTH = GameWorld.SCREEN_WIDTH - 2 * MARGIN;
     public static final int HEIGHT = GameWorld.SCREEN_HEIGHT - 2 * MARGIN;;
     public static final Color BABY_BLUE = new Color(137, 207, 240);
-    
+
     private ObjectID ID = ObjectID.LANDPLOT;
-    
+
     private GreenfootImage myImage;
     private DirtTile[][] plot;
 
@@ -38,22 +43,21 @@ public class LandPlot extends Actor
     {
         moveAndDrag(); 
     }
-    
+
     public void initialize(){
         //sets a temporary image for the "moveable screen"
         myImage = new GreenfootImage(GameWorld.SCREEN_WIDTH - 2 * MARGIN, GameWorld.SCREEN_HEIGHT - 2 * MARGIN);
         myImage.setColor(BABY_BLUE);
         myImage.fill();
         setImage(myImage);
-        
+
         //puts many objects on screen
-        
-        
+
         //initialize the plot
         plot = new DirtTile[32][32];
 
     }
-    
+
     //credit: ChatGPT for the idea to store mouse info
     //used to check when mouse is dragging and calculates the movement per act and applies it to each tile
     public void moveAndDrag(){
@@ -94,14 +98,14 @@ public class LandPlot extends Actor
         }
         return false;
     }
-    
+
     //begins the plot at the center
     public void startPlot(){
         //adds the central plot to the world
         plot[STARTING_ROW][STARTING_COL] = new DirtTile(this, STARTING_ROW, STARTING_COL, true);
         getWorld().addObject(plot[STARTING_ROW][STARTING_COL], getX(), getY());
     }
-    
+
     //creates a new tile at row/col that is "projected"
     public DirtTile createTile(int row, int col){
         if(row >= 0 && col >= 0 && row < plot.length && col < plot.length && plot[row][col] == null){
@@ -116,19 +120,45 @@ public class LandPlot extends Actor
     }
     //removes only from the matrix
     public void removeFromPlot(int row, int col){
-        plot[row][col] = null;        
+        /**
+         * NEW: remove from plot
+         */
+        DirtTile remove = plot[row][col];
+        if(remove == plot[STARTING_ROW][STARTING_COL]){
+            //cannot remove starting tile
+            return;
+        }
+        if(remove != null){
+            if(remove.isActive()){
+                Inventory.add(remove.getID());
+            }
+            if(remove.getWorld() != null){
+                getWorld().removeObject(remove);
+            }
+            plot[row][col] = null;  
+        }
+
     }
-    
+
     //removes an in the matrix and world if it exists and is active
     public void removeTile(int row, int col){
         DirtTile remove = plot[row][col];
         
         if(remove != null && remove.getWorld() != null && remove.isActive()){
             remove.stopProjection();
-            getWorld().removeObject(remove);
             removeFromPlot(row,col);
+            /**
+             * NEW
+             */
+            for (int i = 0; i < 4; i++){
+                if (plot[row + DIRECTIONS[i][0]][col + DIRECTIONS[i][1]]!= null && 
+                !getPath(plot[row + DIRECTIONS[i][0]][col + DIRECTIONS[i][1]],plot[STARTING_ROW][STARTING_COL])){
+                    removeTiles(row + DIRECTIONS[i][0],col + DIRECTIONS[i][1]);
+                }
+            }
         }
     }
+
     /**
      * NEW METHOD
      */
@@ -146,5 +176,85 @@ public class LandPlot extends Actor
             }
         }
         Util.zSort(actors, getWorld());
+    }
+
+    /**
+     * NEW 
+     */
+    public GridPath[][] initMatrix(DirtTile destination){
+        GridPath[][] matrix = new GridPath[plot.length][plot[0].length];
+        for(int row = 0; row < matrix.length; row++){
+            for(int col = 0; col < matrix[0].length; col++){
+                matrix[row][col] = new GridPath(row, col);
+                matrix[row][col].setHCost(Math.abs(row - destination.getRow()) + Math.abs(col - destination.getCol()));
+                matrix[row][col].setTotalCost(Integer.MAX_VALUE);
+                if(plot[row][col] == null || !plot[row][col].isActive()){
+                    matrix[row][col].setClosed(true);
+                }
+                
+            }
+        }
+        return matrix;
+    }
+
+    /**
+     * NEW
+     */
+
+    public boolean getPath(DirtTile startLocation, DirtTile endLocation){
+        if (startLocation == null) return false;
+        System.out.println("search");
+        GridPath[][] matrix = initMatrix(endLocation);
+        PriorityQueue<GridPath> openList = new PriorityQueue<>(new GridComparator());
+        boolean pathFound = false;
+        GridPath start = matrix[startLocation.getRow()][startLocation.getCol()];
+        GridPath end = matrix[endLocation.getRow()][endLocation.getCol()];
+        openList.add(start);
+        GridPath current;
+        while(true){
+            current = openList.poll();
+            if(current == null) break;
+            current.setClosed(true);
+            if(current == end){
+                pathFound = true;
+                break;
+            }
+            for(int[] direction : DIRECTIONS){
+                int row = current.getRow() + direction[1];
+                int col = current.getCol() + direction[0];
+                if(row < 0 || col < 0 || row >= plot.length || col >= plot[0].length || matrix[row][col] == null || matrix[row][col].isClosed()) {
+                    continue; 
+                }
+                int nextTotalCost = current.getTotalCost() + 1 + matrix[row][col].getHCost();
+                GridPath adjacentGrid = matrix[row][col];
+                if(nextTotalCost < adjacentGrid.getTotalCost()){
+                    adjacentGrid.setTotalCost(nextTotalCost);
+                    adjacentGrid.setParent(current);
+                    adjacentGrid.setGCost(current.getGCost() + 1);
+                    if(!openList.contains(adjacentGrid)){
+                        openList.add(adjacentGrid);
+                    }
+                }
+            }
+        }
+        System.out.println(pathFound);
+        return pathFound;
+    }
+
+    /**
+     * NEW
+     */
+    private void removeTiles(int x, int y){
+        for (int i = 0; i < 4; i ++){
+            int xUpdated = x + DIRECTIONS[i][0];
+            int yUpdated = y + DIRECTIONS[i][1];
+            if (xUpdated >= 0 && xUpdated < 32 && yUpdated >= 0 && yUpdated < 32 && plot[xUpdated][yUpdated] != null){
+                if(plot[xUpdated][yUpdated].isActive()){
+                    plot[xUpdated][yUpdated].stopProjection();
+                }
+                removeFromPlot(xUpdated, yUpdated);
+                removeTiles(xUpdated, yUpdated);
+            }
+        }
     }
 }

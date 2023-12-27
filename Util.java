@@ -22,7 +22,8 @@ public class Util
     public static void zSort (ArrayList<Actor> actorsToSort, World world){
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
         for (Actor a : actorsToSort){
-            acList.add (new ActorContent (a, a.getX(), a.getY()));
+            if(a.getWorld() != null)
+                acList.add (new ActorContent (a, a.getX(), a.getY()));
         }    
         Collections.sort(acList);
         for (ActorContent a : acList){

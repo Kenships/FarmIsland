@@ -10,9 +10,12 @@ public class Wheat extends Plant
 {
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 3;
-    private ObjectID ID = ObjectID.WHEAT;
+    /**
+     * NEW: ID moved and initialized in constructor
+     */
     public Wheat(){
         super();
+        ID = ObjectID.WHEAT;
         initialize();
         yeild = 1;
     }

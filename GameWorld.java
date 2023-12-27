@@ -15,6 +15,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * - Plant
  * - Tile
  * - Seed
+ * - new class Grid Comparator
+ * - new class GridPath
+ * - Stubby Wheat
+ * - Wheat
+ * - new class Effect
+ * 
  */
 public class GameWorld extends World
 {

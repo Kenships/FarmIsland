@@ -51,12 +51,34 @@ public class Inventory
         }
         return inventory.get(id);
     }
-    
-    public static void remove(ObjectID id){
+    /**
+     * NEW:
+     */
+    public static boolean removeAll(ObjectID id){
         if(inventory.containsKey(id)){;
-            inventory.put(id,inventory.get(id) - 1);
+            inventory.remove(id);
+            return true;
         }
         output();
+        return false;
+    }
+    
+    public static boolean remove(ObjectID id, int amount){
+        if(inventory.containsKey(id)){
+            inventory.put(id,inventory.get(id) - amount);
+            return true;
+        }
+        output();
+        return false;
+    }
+    
+    public static boolean remove(ObjectID id){
+        if(inventory.containsKey(id)){;
+            inventory.put(id,inventory.get(id) - 1);
+            return true;
+        }
+        output();
+        return false;
     }
     
     //adds 1 item to inventory
