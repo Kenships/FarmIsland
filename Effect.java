@@ -70,7 +70,7 @@ public class Effect extends Actor
         if(index > 10 || index < 0){
             deltaIndex *= -1;
         }
-        setImage(image);
+        setImage(scaled);
     }
     public void rock(){
         if(index <= 10){
