@@ -8,7 +8,7 @@ import java.util.PriorityQueue;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class LandPlot extends Actor
+public class LandPlot extends SuperSmoothMover
 {
     //where the first tile is spawned
     public static final int STARTING_ROW = 15;
@@ -203,7 +203,6 @@ public class LandPlot extends Actor
 
     public boolean getPath(DirtTile startLocation, DirtTile endLocation){
         if (startLocation == null) return false;
-        System.out.println("search");
         GridPath[][] matrix = initMatrix(endLocation);
         PriorityQueue<GridPath> openList = new PriorityQueue<>(new GridComparator());
         boolean pathFound = false;
@@ -237,7 +236,6 @@ public class LandPlot extends Actor
                 }
             }
         }
-        System.out.println(pathFound);
         return pathFound;
     }
 

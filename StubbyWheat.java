@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StubbyWheat extends Plant
+public class StubbyWheat extends Plant implements ItemConvertible
 {
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
@@ -110,5 +110,10 @@ public class StubbyWheat extends Plant
 
     public void playRemoveSound(){
 
+    }
+    
+    //temporary
+    public GreenfootImage getItemImage(){
+        return new GreenfootImage("Stubby Wheat Stage 0.png");
     }
 }

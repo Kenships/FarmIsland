@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public abstract class Tile extends Actor
+public abstract class Tile extends SuperSmoothMover
 {
     //offset used when a tile is clicked
     public static int SELECT_OFFSET = -16;

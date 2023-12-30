@@ -57,10 +57,10 @@ public class StartWorld extends World
          * NEW: initialize method edited
          */
         setPaintOrder(Button.class, Effect.class);
-        startButton = new StartMenuButton("Start");
-        load = new StartMenuButton("Load");
-        settings = new StartMenuButton("Settings");
-        quit = new StartMenuButton("Quit");
+        startButton = new MenuButton("Start");
+        load = new MenuButton("Load");
+        settings = new MenuButton("Settings");
+        quit = new MenuButton("Quit");
         addObject(startButton,160,200);
         addObject(load,160,320);
         addObject(settings,160,440);

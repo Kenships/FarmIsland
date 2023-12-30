@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version December 2023
  */
-public class RainDrop extends Actor
+public class RainDrop extends SuperSmoothMover
 {
     public RainDrop()
     {

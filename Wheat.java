@@ -111,4 +111,9 @@ public class Wheat extends Plant
     public void playRemoveSound(){
         
     }
+    
+    //temporary
+    public GreenfootImage getItemImage(){
+        return new GreenfootImage("Stubby Wheat Stage 0.png");
+    }
 }

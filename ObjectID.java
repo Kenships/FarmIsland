@@ -1,3 +1,4 @@
+import greenfoot.*;
 /**
  * Write a description of class ObjectID here.
  * 
@@ -16,5 +17,9 @@ public enum ObjectID
                 return STUBBY_WHEAT_SEED; 
         }
         return WHEAT_SEED;
+    }
+    
+    public GreenfootImage getDisplayImage(){
+        return new GreenfootImage(this.toString() + ".png");
     }
 }

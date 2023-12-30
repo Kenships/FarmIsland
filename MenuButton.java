@@ -6,12 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StartMenuButton extends Button
+public class MenuButton extends Button
 {
     private boolean offseted;
 
     private int offset;
-    public StartMenuButton(String text){
+    public MenuButton(String text){
         //(text, width, height)
         super(text,350,60);
 

@@ -1,5 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
+import java.util.HashMap;
+import java.util.ArrayList;
 /**
  * Write a description of class GameWorld here.
  * 
@@ -49,7 +51,7 @@ public class GameWorld extends World
          */
         editMode = true;
         //add objects
-        setPaintOrder(Seed.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
 
         addObject(new LandPlot(), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
@@ -58,7 +60,11 @@ public class GameWorld extends World
 
         addObject(new Seed(ObjectID.WHEAT_SEED), 1200, 650);
         addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED), 1100, 650);
-
+        ArrayList<ObjectID> temp = new ArrayList<>();
+        for(int i = 0; i < 20; i++){
+            temp.add(ObjectID.STUBBY_WHEAT);
+        }
+        addObject(new ShopMenu(temp), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     }
     /**
      * NEW: removed zsort method

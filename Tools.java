@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version December 2023
  */
-public abstract class Tools extends Actor
+public abstract class Tools extends SuperSmoothMover
 {
     protected String name;
     protected int durability;

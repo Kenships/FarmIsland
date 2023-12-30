@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public abstract class Weather extends Actor
+public abstract class Weather extends SuperSmoothMover
 {
     /**
      * Act - do whatever the Weather wants to do. This method is called whenever
