@@ -74,9 +74,9 @@ public class MenuButton extends Button
     }
     
     public void drawText(String text){
-        clickImage[0] = new GreenfootImage(imageName + " Button 1.png");        
-        hoverImage[0] = new GreenfootImage(imageName + " Button.png");        
-        mainImage[0] = new GreenfootImage(imageName + " Button.png");
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + " Button 1.png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + " Button.png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + " Button.png");
         mainImage[0].drawString(text, width/2, height/2);
         hoverImage[0].drawString(text, width/2, height/2);
         clickImage[0].drawString(text, clickImage[0].getWidth()/2, clickImage[0].getHeight()/2);
