@@ -20,6 +20,6 @@ public enum ObjectID
     }
     
     public GreenfootImage getDisplayImage(){
-        return new GreenfootImage(this.toString() + ".png");
+        return new GreenfootImage("Displays/Items/" + this.toString() + ".png");
     }
 }

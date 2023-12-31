@@ -20,9 +20,9 @@ public abstract class Button extends SuperSmoothMover
         hoverImage = new GreenfootImage[1];
         clickImage = new GreenfootImage[1];
 
-        clickImage[0] = new GreenfootImage(imageName + " Button 1.png");        
-        hoverImage[0] = new GreenfootImage(imageName + " Button.png");        
-        mainImage[0] = new GreenfootImage(imageName + " Button.png");
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + " Button 1.png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + " Button.png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + " Button.png");
         setImage(mainImage[0]);
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();

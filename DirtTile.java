@@ -75,12 +75,12 @@ public class DirtTile extends Tile
         myPlot = plot;
         growthMultiplier = DEFAULT_GROWTH_MULTIPLIER;
         //initialize projected to be invisable
-        projectedTile = new GreenfootImage("Dirt Tile.png");
+        projectedTile = new GreenfootImage("Tiles/Dirt Tile.png");
         projectedTile.setTransparency(TRANSPARENT);
         /**
          * NEW: image
          */
-        activeTile  = new GreenfootImage("Dirt Tile.png");
+        activeTile = new GreenfootImage(projectedTile);
         if(active){
             setImage(activeTile);
         }

@@ -78,7 +78,7 @@ public class ShopMenu extends SuperSmoothMover
     }
 
     public void initialize(HashMap<ObjectID, Integer> galleryIDs){
-        background = new GreenfootImage("Shop Background.png");
+        background = new GreenfootImage("Backgrounds/Shop Background.png");
         setImage(background);
 
         returnButton = new MenuButton("Shop");

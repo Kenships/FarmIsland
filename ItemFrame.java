@@ -27,7 +27,7 @@ public class ItemFrame extends SuperSmoothMover
             foreground = new GreenfootImage(1,1);
         }
         mainImage = new GreenfootImage(width, height);
-        background = new GreenfootImage("Frame.png");
+        background = new GreenfootImage("Displays/Frames/Frame.png");
         background.scale(width, height);
         drawFrame();
         

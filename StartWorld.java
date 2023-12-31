@@ -11,9 +11,9 @@ public class StartWorld extends World
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
     
-    private GreenfootImage background = new GreenfootImage("Start BG Back.png");
-    private GreenfootImage clouds = new GreenfootImage("Start BG Clouds.png");
-    private GreenfootImage island = new GreenfootImage("Start BG Island.png");
+    private GreenfootImage background = new GreenfootImage("BackGrounds/Start BG Back.png");
+    private GreenfootImage clouds = new GreenfootImage("BackGrounds/Start BG Clouds.png");
+    private GreenfootImage island = new GreenfootImage("BackGrounds/Start BG Island.png");
     
     private GreenfootImage screen = new GreenfootImage(430, 720);
     
@@ -23,9 +23,6 @@ public class StartWorld extends World
     private Button quit;
     public StartWorld()
     {   
-        /**
-         * NEW
-         */
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false);
         screen.setColor(new Color(255,255,255,45));
         screen.fillPolygon(new int[] {0,0,430,390}, new int[] {0,720,720,0}, 4);
