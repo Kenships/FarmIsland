@@ -17,7 +17,7 @@ public class Seed extends SuperSmoothMover
     private int frame;
     private int actCounter;
     private int fixedX, fixedY;
-    
+
     public Seed(ObjectID ID, int amount, boolean disapear){
 
         disapearWhenEmpty = disapear;
@@ -100,6 +100,7 @@ public class Seed extends SuperSmoothMover
             Cursor.release();
         }
     }
+
     /**
      * Plants and returns plant
      * 
@@ -110,7 +111,7 @@ public class Seed extends SuperSmoothMover
         if(getWorld() == null){
             return null;
         }
-        
+
         Plant plant = newPlant();
         /**
          * NEW: tile.getY() + Yoffset
@@ -121,17 +122,17 @@ public class Seed extends SuperSmoothMover
             Inventory.remove(ID);
             plant.plant(plot, tile);
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
-
-            if(Inventory.getAmount(ID) == 0){
-                if(disapearWhenEmpty){
-                    getWorld().removeObject(this);
-                }
-                else{
-                    return null;
-                }
+            if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
+                
+                getWorld().removeObject(this);
+            
             }
         }
+        else{
 
+            return null;
+
+        }
         return plant;
     }
 

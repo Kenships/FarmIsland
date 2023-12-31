@@ -80,7 +80,7 @@ public class Wheat extends Plant
     }
     public void collect(){
         Inventory.add(ID, yeild);
-        Inventory.deposit(1);
+        CurrencyHandler.deposit(2);
         myTile.unPlant();
         getWorld().removeObject(this);
     }

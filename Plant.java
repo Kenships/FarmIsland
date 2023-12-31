@@ -38,13 +38,16 @@ public abstract class Plant extends Tile
         mature = false;
         //nextFrame would be 0
         animationIndex = -1;
-        
+
         yOffsets = new HashMap<>();    
     }
-    
+
     public void act()
     {
         super.act();
+        if(getWorld() == null){
+            return;
+        }
         /**
          * NEW: tile y offset
          */
@@ -55,13 +58,17 @@ public abstract class Plant extends Tile
             }
             else{
                 //collects if mature returns seed if not
+                myTile.unPlant();
                 if(mature){
                     collect();
                 }
                 else{
                     Inventory.add(ID.getSeedID());
                 }
-                getWorld().removeObject(this);
+                if(getWorld() != null){
+                    getWorld().removeObject(this);
+                }
+
                 return;
             }
         }
@@ -74,10 +81,8 @@ public abstract class Plant extends Tile
             fadeOval(getImage());
             lifeTime++;
         }
-        
-    
-    }
 
+    }
     public abstract void grow();
     /**
      * NEW: plant method changed
@@ -87,15 +92,15 @@ public abstract class Plant extends Tile
         myTile = tile;
         plot.zSort();
     }
-    
+
     public abstract void nextFrame();
-    
+
     public abstract void collect();
-    
+
     public GreenfootImage[] getSeedImages(){
         return growthAnimations[0];
     }
-    
+
     public void setYOffset(int growthStage, int pixels){
         yOffsets.put(growthStage, pixels);
     }
@@ -103,42 +108,55 @@ public abstract class Plant extends Tile
     public int getGrowthRate(){
         return growthRate;
     }
+
     public void setGrowthRate(int growthRate){
         this.growthRate = growthRate;
     }
+
     public int getMaturity(){
         return maturity;
     }
+
     public void setMaturity(int maturity){
         this.maturity = maturity;
     }
+
     public int getGrowthStage(){
         return growthStage;
     }
+
     public void setGrowthStage(int growthStage){
         this.growthStage = growthStage;
     }
+
     public int getLifeTime(){
         return lifeTime;
     }
+
     public void setLifeTime(int lifeTime){
         this.lifeTime = lifeTime;
     }
+
     public boolean isMature(){
         return mature;
     }
+
     public void setMature(boolean mature){
         this.mature = mature;
     }
+
     public int getYield(){
         return yeild;
     }
+
     public void setYield(int yeild){
         this.yeild = yeild;
     }
+
     public DirtTile getDirtTile(){
         return myTile;
     }
+
     public void setDirtTile(DirtTile newTile){
         myTile = newTile;
     }

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Inventory
 {
     private static HashMap <ObjectID, Integer> inventory;
-    private static int currency;
     public void act()
     {
         // Add your action code here.
@@ -28,21 +27,7 @@ public class Inventory
     }
     
     public static void resetData(){
-        currency = 0;
         inventory.clear();
-    }
-    
-    public static void deposit(int amount){
-        currency += amount;
-        output();
-    }
-    
-    public static void withdraw (int amount){
-        currency -= amount;
-    }
-    
-    public static int getBallance(){
-        return currency;
     }
     
     public static int getAmount(ObjectID id){
@@ -102,6 +87,5 @@ public class Inventory
         for(ObjectID id : inventory.keySet()){
             System.out.println(id + " : " + inventory.get(id));
         }
-        System.out.println("Currency : " + currency);
     }
 }

@@ -7,7 +7,7 @@ import greenfoot.*;
  */
 public enum ObjectID  
 {
-    DIRTILE, LANDPLOT, STUBBY_WHEAT, STUBBY_WHEAT_SEED, WHEAT, WHEAT_SEED;
+    NONE, DIRT_TILE, LANDPLOT, STUBBY_WHEAT, STUBBY_WHEAT_SEED, WHEAT, WHEAT_SEED;
     
     public ObjectID getSeedID(){
         switch(this){

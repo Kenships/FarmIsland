@@ -13,6 +13,8 @@ public class LandPlot extends SuperSmoothMover
     //where the first tile is spawned
     public static final int STARTING_ROW = 15;
     public static final int STARTING_COL = 15;
+    public static final int GRID_ROWS = 32;
+    public static final int GRID_COLS = 32;
     /**
      * NEW 
      */
@@ -54,7 +56,7 @@ public class LandPlot extends SuperSmoothMover
         //puts many objects on screen
 
         //initialize the plot
-        plot = new DirtTile[32][32];
+        plot = new DirtTile[GRID_ROWS][GRID_COLS];
 
     }
 

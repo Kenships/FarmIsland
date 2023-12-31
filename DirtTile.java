@@ -11,7 +11,7 @@ public class DirtTile extends Tile
 {
     public static final int DEFAULT_GROWTH_MULTIPLIER = 1;
 
-    private ObjectID ID = ObjectID.DIRTILE;
+    private ObjectID ID = ObjectID.DIRT_TILE;
     //active/projected toggle
     private boolean active;
     private GreenfootImage projectedTile;
@@ -50,19 +50,17 @@ public class DirtTile extends Tile
     public void act()
     {
         super.act();
+        if(getWorld() == null){
+            return;
+        }
         if(active && GameWorld.getEditMode()){
             projectTiles();
         }
         else if(active && !GameWorld.getEditMode()){
             stopProjection();
         }
+
         fadeOval(activeTile);
-        /**
-         * NEW 
-         */
-        if (hoveringThis() && Greenfoot.isKeyDown("space")){
-            myPlot.removeTile(row,col);
-        }
     }
 
     /**
@@ -116,13 +114,9 @@ public class DirtTile extends Tile
              */
             if (Cursor.getActor() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
 
-                if(getAffordable() || Inventory.getAmount(ID) != 0){
+                if(Inventory.getAmount(ID) != 0){
                     activate();
-                    if(Inventory.getAmount(ID) == 0){
-                        Inventory.withdraw(10);
-                    }else{
-                        Inventory.remove(ID);
-                    }
+                    Inventory.remove(ID);
 
                     playPlaceSound();
                 }
@@ -133,11 +127,33 @@ public class DirtTile extends Tile
         }
         //check for plant on cursor
         Actor actor = Cursor.getActor();
+        /*if(active){
+        if(plant == null){
+        System.out.println("plant == null");
+        }
+        if(activeTile.getTransparency() > TRANSLUCENT){
+        System.out.println("activeTile.getTransparency() > TRANSLUCENT");
+        }
+        if(hoveringThis()){
+        System.out.println(hoveringThis());
+        }
+        if(actor != null){
+        System.out.println("actor != null");
+        }
+        if(actor != null && actor instanceof Seed){
+        System.out.println("actor != null && actor instanceof Seed");
+        }
+        }*/
+
         if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && actor != null && actor instanceof Seed){
             Seed seed = (Seed) Cursor.getActor();
             if(!seed.isDisplayed()){
                 plant = seed.plant(myPlot, this);
             }
+        }
+
+        if (hoveringThis() && Greenfoot.isKeyDown("space")){
+            myPlot.removeTile(row,col);
         }
     }
 
@@ -171,15 +187,18 @@ public class DirtTile extends Tile
     public void stopProjection(){
         for(int[] direction : directions){
             //dcol = dx, drow = dy
-            int deltaCol = direction[0];
-            int deltaRow = direction[1];
+            int deltaCol = col + direction[0];
+            int deltaRow = row + direction[1];
             /**
              * NEW: changed if statment
              */
-            DirtTile neighbour = myPlot.getTile(row + deltaRow, col + deltaCol);
-            if(neighbour != null && !neighbour.isActive()){
-                myPlot.removeFromPlot(row + deltaRow, col + deltaCol);
+            if(deltaRow > 0 && deltaRow < LandPlot.GRID_ROWS && deltaCol > 0 && deltaCol < LandPlot.GRID_COLS){
+                DirtTile neighbour = myPlot.getTile(deltaRow,  deltaCol);
+                if(neighbour != null && !neighbour.isActive()){
+                    myPlot.removeFromPlot(row + deltaRow, col + deltaCol);
+                }
             }
+
         }
     }
 
@@ -207,7 +226,7 @@ public class DirtTile extends Tile
         /**
          * TEMPORARY!!!
          */
-        return Inventory.getBallance() >= 10;
+        return CurrencyHandler.isAffordable(ID);
     }
 
     /**

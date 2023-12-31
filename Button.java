@@ -11,15 +11,25 @@ public abstract class Button extends SuperSmoothMover
     protected GreenfootImage[] mainImage;
     protected GreenfootImage[] hoverImage;
     protected GreenfootImage[] clickImage;
-    protected String text;
+    protected String imageName;
     protected int width, height;
     private boolean clicked;
-    public Button(String text, int width, int height){
-        this.text = text;
-        this.width = width;
-        this.height = height;
-    }
+    public Button(String imageName){
+        this.imageName = imageName;
+        mainImage = new GreenfootImage[1];
+        hoverImage = new GreenfootImage[1];
+        clickImage = new GreenfootImage[1];
 
+        clickImage[0] = new GreenfootImage(imageName + " Button 1.png");        
+        hoverImage[0] = new GreenfootImage(imageName + " Button.png");        
+        mainImage[0] = new GreenfootImage(imageName + " Button.png");
+        setImage(mainImage[0]);
+        width = mainImage[0].getWidth();
+        height = mainImage[0].getHeight();
+    }
+    public void addedToWorld(World w){
+        clicked = false;
+    }
     public void act()
     {
         //mouse pressed + mouse release combo to check for hold

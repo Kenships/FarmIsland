@@ -11,24 +11,20 @@ public class MenuButton extends Button
     private boolean offseted;
 
     private int offset;
-    public MenuButton(String text){
-        //(text, width, height)
-        super(text,350,60);
-
+    public MenuButton(String imageName){
+        //(imageName, width, height)
+        super(imageName);
+    }
+    public MenuButton(String imageName, String text){
+        super(imageName);
+        mainImage[0].drawString(text,10,height - 10);
+    }
+    public void addedToWorld(World w){
+        super.addedToWorld(w);
         offset = 5;
         offseted = false;
-
-        mainImage = new GreenfootImage[1];
-        hoverImage = new GreenfootImage[1];
-        clickImage = new GreenfootImage[1];
-
-        clickImage[0] = new GreenfootImage(text + " Button 1.png");        
-        hoverImage[0] = new GreenfootImage(text + " Button.png");        
-        mainImage[0] = new GreenfootImage(text + " Button.png");
-        setImage(mainImage[0]);
-
     }
-
+    
     public void act()
     {
         super.act();
@@ -57,7 +53,7 @@ public class MenuButton extends Button
         }
         setImage(mainImage[0]);
     }
-
+    
     public boolean hoveringThis(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse != null){
@@ -75,5 +71,15 @@ public class MenuButton extends Button
             return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
         }
         return false;
+    }
+    
+    public void drawText(String text){
+        clickImage[0] = new GreenfootImage(imageName + " Button 1.png");        
+        hoverImage[0] = new GreenfootImage(imageName + " Button.png");        
+        mainImage[0] = new GreenfootImage(imageName + " Button.png");
+        mainImage[0].drawString(text, width/2, height/2);
+        hoverImage[0].drawString(text, width/2, height/2);
+        clickImage[0].drawString(text, clickImage[0].getWidth()/2, clickImage[0].getHeight()/2);
+        setImage(mainImage[0]);
     }
 }

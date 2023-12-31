@@ -30,6 +30,14 @@ public class GameWorld extends World
     private static boolean editMode;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
+    public static final String GAME = "Game";
+    public static final String SHOP = "Shop";
+    public static final String ACHIEVEMENT = "Achievement";
+    
+    //used to indicate which screen is currently in priority/active
+    private String screen;
+    private ShopMenu shop;
+    private Button openShop;
     /**
      * Constructor for objects of class GameWorld.
      * 
@@ -42,7 +50,12 @@ public class GameWorld extends World
     }
 
     public void act(){
-        
+        if(screen.equals(GAME)){
+            if(openShop.getWorld() == null){
+                addObject(openShop, 64, 656);
+            }
+            checkMouseAction();
+        }
     }
 
     public void initialize(String saveFile){
@@ -50,25 +63,40 @@ public class GameWorld extends World
          * PLEASE REMOVE EDITMODE = TRUE LATOR
          */
         editMode = true;
+        
+        //initializes starting screen
+        
+        screen = GAME;
+        
         //add objects
-        setPaintOrder(Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(CurrencyHandler.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
 
         addObject(new LandPlot(), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
         //sets up the enventory from previous save
         Inventory.initialize(saveFile);
-
-        addObject(new Seed(ObjectID.WHEAT_SEED), 1200, 650);
-        addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED), 1100, 650);
-        ArrayList<ObjectID> temp = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            temp.add(ObjectID.STUBBY_WHEAT);
-        }
-        addObject(new ShopMenu(temp), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        CurrencyHandler.initialize(saveFile);
+        
+        addObject(new CurrencyHandler(), 1200, 100);
+        addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
+        addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
+        
+        HashMap<ObjectID, Integer> temp = new HashMap<>();
+        temp.put(ObjectID.DIRT_TILE, -1);
+        temp.put(ObjectID.WHEAT_SEED, -1);
+        temp.put(ObjectID.STUBBY_WHEAT_SEED, -1);
+        shop = new ShopMenu(temp);
+        openShop = new MenuButton("Shop");
+        addObject(openShop, 64, 656);
     }
-    /**
-     * NEW: removed zsort method
-     */
+    
+    public void checkMouseAction(){
+        if(Greenfoot.mouseClicked(openShop)){
+            removeObject(openShop);
+            addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        }
+    }
+    
     public static boolean getEditMode(){
         return editMode;
     }
@@ -79,5 +107,14 @@ public class GameWorld extends World
     //changes edit mode from true to false and vice verca
     public static void toggleEditMode(){
         editMode ^= true;
+    }
+    public boolean isScreen(String screen){
+        return this.screen.equals(screen);
+    }
+    public String getScreen(){
+        return screen;
+    }
+    public void setScreen(String screen){
+        this.screen = screen;
     }
 }

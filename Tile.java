@@ -49,8 +49,13 @@ public abstract class Tile extends SuperSmoothMover
      */
     public void act()
     {
-        checkMouseAction();
-        checkKeypressAction();
+        GameWorld myWorld = (GameWorld) getWorld();
+        
+        if(myWorld.isScreen(myWorld.GAME)){
+            checkMouseAction();
+            checkKeypressAction();
+        }
+        
     }
 
     /**
@@ -159,9 +164,6 @@ public abstract class Tile extends SuperSmoothMover
         }
         return false;
     }
-    /**
-     * NEW: method
-     */
     public int getTileYOffset(){
         return tileYOffset;
     }
