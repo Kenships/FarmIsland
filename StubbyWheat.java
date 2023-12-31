@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class StubbyWheat extends Plant implements ItemConvertible
 {
     public static final int DEFAULT_GROWTHRATE = 1;
-    public static final int GROWTH_STAGES = 4;
+    public static final int GROWTH_STAGES = 3;
     /**
      * NEW: ID moved and initialized in constructor
      */
@@ -34,8 +34,7 @@ public class StubbyWheat extends Plant implements ItemConvertible
         growthRate = DEFAULT_GROWTHRATE;
         
         growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
-        growthAnimations[0][0] = new GreenfootImage("Stubby Wheat Stage 0.png");
-        for(int stage = 1; stage < GROWTH_STAGES; stage++){
+        for(int stage = 0; stage < GROWTH_STAGES; stage++){
             //initialize offsets
             setYOffset(stage, 0);
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){

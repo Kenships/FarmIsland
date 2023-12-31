@@ -10,7 +10,7 @@ public class Seed extends SuperSmoothMover
 {
     private boolean disapearWhenEmpty;
 
-    private GreenfootImage[] seedImages;
+    private GreenfootImage seedImage;
     private ObjectID ID;
     //is this item a display item or item in play
     private boolean display;
@@ -24,10 +24,10 @@ public class Seed extends SuperSmoothMover
 
         Inventory.add(ID, amount);
         this.ID = ID;
-        Plant plant = newPlant();
-        seedImages = plant.getSeedImages();
+        
+        seedImage = ID.getSeedID().getDisplayImage();
         display = false;
-        setImage(seedImages[0]);
+        setImage(seedImage);
     }
 
     public Seed(ObjectID ID, int amount){
@@ -73,12 +73,7 @@ public class Seed extends SuperSmoothMover
      * animations may not be accurate to what is wanted change if nessesary
      */
     public void animate(){
-        if(actCounter % 12 == 0){
-            frame++;
-            if(frame == seedImages.length){
-                frame = 0;
-            }
-        }
+        //fill later
     }
 
     public void reposition(){

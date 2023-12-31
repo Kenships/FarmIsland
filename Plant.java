@@ -33,7 +33,7 @@ public abstract class Plant extends Tile
         myPlot = null;
         deltaIndex = 1;
         lifeTime = 0;
-        growthStage = 1;
+        growthStage = 0;
         maturity = 0;
         mature = false;
         //nextFrame would be 0
@@ -73,11 +73,11 @@ public abstract class Plant extends Tile
             }
         }
         //animate
-        if(lifeTime % 12 == 0 && growthStage > 0){
+        if(lifeTime % 12 == 0 && growthStage >= 0){
             nextFrame();
         }
         //fade
-        if(growthStage > 0){
+        if(growthStage >= 0){
             fadeOval(getImage());
             lifeTime++;
         }

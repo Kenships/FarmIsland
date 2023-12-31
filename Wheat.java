@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Wheat extends Plant
 {
     public static final int DEFAULT_GROWTHRATE = 1;
-    public static final int GROWTH_STAGES = 3;
+    public static final int GROWTH_STAGES = 4;
     /**
      * NEW: ID moved and initialized in constructor
      */
@@ -32,16 +32,16 @@ public class Wheat extends Plant
     public void initialize(){
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
-        setYOffset(1, -8);
-        setYOffset(2, -8);
+        for(int stage = 0; stage < GROWTH_STAGES; stage++){
+            setYOffset(stage, -32);
+        }
         
         growthRate = DEFAULT_GROWTHRATE;
         
         growthAnimations = new GreenfootImage[GROWTH_STAGES][5];
-        growthAnimations[0][0] = new GreenfootImage("Crop Stage 0.png");
-        for(int stage = 1; stage < GROWTH_STAGES; stage++){
+        for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
-                growthAnimations[stage][frame] = new GreenfootImage("Crop Stage " + stage + " " + frame + ".png");
+                growthAnimations[stage][frame] = new GreenfootImage("Crop new/stage " + stage + "/Crop " + stage + " " + frame + ".png");
             }
 
         }
