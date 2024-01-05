@@ -127,23 +127,7 @@ public class DirtTile extends Tile
         }
         //check for plant on cursor
         Actor actor = Cursor.getActor();
-        /*if(active){
-        if(plant == null){
-        System.out.println("plant == null");
-        }
-        if(activeTile.getTransparency() > TRANSLUCENT){
-        System.out.println("activeTile.getTransparency() > TRANSLUCENT");
-        }
-        if(hoveringThis()){
-        System.out.println(hoveringThis());
-        }
-        if(actor != null){
-        System.out.println("actor != null");
-        }
-        if(actor != null && actor instanceof Seed){
-        System.out.println("actor != null && actor instanceof Seed");
-        }
-        }*/
+        
 
         if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && actor != null && actor instanceof Seed){
             Seed seed = (Seed) Cursor.getActor();
@@ -156,7 +140,7 @@ public class DirtTile extends Tile
             myPlot.removeTile(row,col);
         }
     }
-
+    
     /**
      * used to handle all keypress Actions
      */

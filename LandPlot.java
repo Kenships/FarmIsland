@@ -125,6 +125,10 @@ public class LandPlot extends SuperSmoothMover
         /**
          * NEW: remove from plot
          */
+        if(row < 0 || col < 0 || row >= plot.length || col >= plot[row].length){
+            return;
+        }
+
         DirtTile remove = plot[row][col];
         if(remove == plot[STARTING_ROW][STARTING_COL]){
             //cannot remove starting tile
@@ -145,17 +149,21 @@ public class LandPlot extends SuperSmoothMover
     //removes an in the matrix and world if it exists and is active
     public void removeTile(int row, int col){
         DirtTile remove = plot[row][col];
-        
+
         if(remove != null && remove.getWorld() != null && remove.isActive()){
             remove.stopProjection();
             removeFromPlot(row,col);
-            /**
-             * NEW
-             */
+
             for (int i = 0; i < 4; i++){
-                if (plot[row + DIRECTIONS[i][0]][col + DIRECTIONS[i][1]]!= null && 
-                !getPath(plot[row + DIRECTIONS[i][0]][col + DIRECTIONS[i][1]],plot[STARTING_ROW][STARTING_COL])){
-                    removeTiles(row + DIRECTIONS[i][0],col + DIRECTIONS[i][1]);
+                int newRow = row + DIRECTIONS[i][0];
+                int newCol = col + DIRECTIONS[i][1];
+                if(newRow < 0 || newCol < 0 || newRow >= plot.length || newCol >= plot[row].length){
+                    continue;
+                }
+                if (plot[newRow][newCol] != null && plot[newRow][newCol].isActive() && !getPath(plot[newRow][newCol], plot[STARTING_ROW][STARTING_COL])){
+                    remove.stopProjection();
+                    removeFromPlot(newRow,newCol);
+                    removeTiles(newRow,newCol);
                 }
             }
         }
@@ -193,7 +201,7 @@ public class LandPlot extends SuperSmoothMover
                 if(plot[row][col] == null || !plot[row][col].isActive()){
                     matrix[row][col].setClosed(true);
                 }
-                
+
             }
         }
         return matrix;
@@ -251,9 +259,10 @@ public class LandPlot extends SuperSmoothMover
             if (xUpdated >= 0 && xUpdated < 32 && yUpdated >= 0 && yUpdated < 32 && plot[xUpdated][yUpdated] != null){
                 if(plot[xUpdated][yUpdated].isActive()){
                     plot[xUpdated][yUpdated].stopProjection();
+                    removeFromPlot(xUpdated, yUpdated);
+                    removeTiles(xUpdated, yUpdated);
                 }
-                removeFromPlot(xUpdated, yUpdated);
-                removeTiles(xUpdated, yUpdated);
+
             }
         }
     }
