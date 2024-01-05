@@ -137,6 +137,7 @@ public class LandPlot extends SuperSmoothMover
         if(remove != null){
             if(remove.isActive()){
                 Inventory.add(remove.getID());
+                remove.stopProjection();
             }
             if(remove.getWorld() != null){
                 getWorld().removeObject(remove);
@@ -151,7 +152,6 @@ public class LandPlot extends SuperSmoothMover
         DirtTile remove = plot[row][col];
 
         if(remove != null && remove.getWorld() != null && remove.isActive()){
-            remove.stopProjection();
             removeFromPlot(row,col);
 
             for (int i = 0; i < 4; i++){
@@ -161,7 +161,6 @@ public class LandPlot extends SuperSmoothMover
                     continue;
                 }
                 if (plot[newRow][newCol] != null && plot[newRow][newCol].isActive() && !getPath(plot[newRow][newCol], plot[STARTING_ROW][STARTING_COL])){
-                    remove.stopProjection();
                     removeFromPlot(newRow,newCol);
                     removeTiles(newRow,newCol);
                 }
@@ -258,11 +257,12 @@ public class LandPlot extends SuperSmoothMover
             int yUpdated = y + DIRECTIONS[i][1];
             if (xUpdated >= 0 && xUpdated < 32 && yUpdated >= 0 && yUpdated < 32 && plot[xUpdated][yUpdated] != null){
                 if(plot[xUpdated][yUpdated].isActive()){
-                    plot[xUpdated][yUpdated].stopProjection();
                     removeFromPlot(xUpdated, yUpdated);
                     removeTiles(xUpdated, yUpdated);
                 }
-
+                else{
+                    removeFromPlot(xUpdated, yUpdated);
+                }
             }
         }
     }

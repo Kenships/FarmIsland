@@ -171,15 +171,15 @@ public class DirtTile extends Tile
     public void stopProjection(){
         for(int[] direction : directions){
             //dcol = dx, drow = dy
-            int deltaCol = col + direction[0];
-            int deltaRow = row + direction[1];
+            int newCol = col + direction[0];
+            int newRow = row + direction[1];
             /**
              * NEW: changed if statment
              */
-            if(deltaRow > 0 && deltaRow < LandPlot.GRID_ROWS && deltaCol > 0 && deltaCol < LandPlot.GRID_COLS){
-                DirtTile neighbour = myPlot.getTile(deltaRow,  deltaCol);
+            if(newRow > 0 && newRow < LandPlot.GRID_ROWS && newCol > 0 && newCol < LandPlot.GRID_COLS){
+                DirtTile neighbour = myPlot.getTile(newRow,  newCol);
                 if(neighbour != null && !neighbour.isActive()){
-                    myPlot.removeFromPlot(row + deltaRow, col + deltaCol);
+                    myPlot.removeFromPlot(newRow, newCol);
                 }
             }
 
