@@ -30,10 +30,17 @@ public class GameWorld extends World
     private static boolean editMode;
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
+    public static final int ACTS_TO_HOME = 30;
     public static final String GAME = "Game";
     public static final String SHOP = "Shop";
     public static final String ACHIEVEMENT = "Achievement";
-    
+
+    private LandPlot landPlot;
+    private Button homeButton;
+    private boolean shouldMove;
+    private double exactDistancePerFrame;
+    private int i;
+    private double distance;
     //used to indicate which screen is currently in priority/active
     private String screen;
     private ShopMenu shop;
@@ -51,52 +58,101 @@ public class GameWorld extends World
 
     public void act(){
         if(screen.equals(GAME)){
-            if(openShop.getWorld() == null){
-                addObject(openShop, 64, 656);
-            }
             checkMouseAction();
+            homeIslands();
         }
-    }
 
+        
+
+    }
     public void initialize(String saveFile){
         /**
          * PLEASE REMOVE EDITMODE = TRUE LATOR
          */
         editMode = true;
-        
+
         //initializes starting screen
-        
+
         screen = GAME;
-        
+
         //add objects
         setPaintOrder(CurrencyHandler.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
-
-        addObject(new LandPlot(), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        landPlot = new LandPlot();
+        addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
         //sets up the enventory from previous save
         Inventory.initialize(saveFile);
         CurrencyHandler.initialize(saveFile);
-        
+
         addObject(new CurrencyHandler(), 1200, 100);
         addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
-        
+
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
         temp.put(ObjectID.WHEAT_SEED, -1);
         temp.put(ObjectID.STUBBY_WHEAT_SEED, -1);
         shop = new ShopMenu(temp);
         openShop = new MenuButton("Shop");
+        homeButton = new MenuButton("Home");
         addObject(openShop, 64, 656);
+        addObject(homeButton, 64, 600);
     }
-    
-    public void checkMouseAction(){
-        if(Greenfoot.mouseClicked(openShop)){
-            removeObject(openShop);
-            addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    public void homeIslands(){
+        DirtTile centreTile = landPlot.getTile(LandPlot.STARTING_ROW, LandPlot.STARTING_COL);
+        int centreX = SCREEN_WIDTH/2;
+        int centreY = SCREEN_HEIGHT/2;
+        int centreTileX = centreTile.getX();
+        int centreTileY = centreTile.getY();
+        double deltaX = centreX - centreTileX;
+        double deltaY = centreY - centreTileY;
+        distance = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+        if(i == ACTS_TO_HOME){
+            shouldMove = false;
+            i = 0;
+        }
+
+        if(shouldMove)
+        {
+            if(i == 0){
+                exactDistancePerFrame = distance/ACTS_TO_HOME;
+
+                centreTile.enableStaticRotation();
+                centreTile.turnTowards(centreX, centreY);
+                double rotation = centreTile.getPreciseRotation();
+
+                for (Tile object : getObjects(DirtTile.class)) {
+                    object.enableStaticRotation();
+                    object.setRotation(rotation);
+                }
+
+            }
+            for (Tile object : getObjects(DirtTile.class)) {
+                object.move(exactDistancePerFrame);
+            }
+
+            i++;
         }
     }
-    
+    public void checkMouseAction(){
+        if(Greenfoot.mouseClicked(openShop)){
+            setScreen(SHOP);
+        }
+        if(Greenfoot.mouseClicked(homeButton) && !shouldMove && distance  != 0){
+            shouldMove = true;
+        }
+    }
+
+    public void removeButtons(){
+        removeObject(openShop);
+        removeObject(homeButton);
+    }
+
+    public void resetButtons(){
+        addObject(openShop, 64, 656);
+        addObject(homeButton, 64, 600);
+    }
+
     public static boolean getEditMode(){
         return editMode;
     }
@@ -108,13 +164,25 @@ public class GameWorld extends World
     public static void toggleEditMode(){
         editMode ^= true;
     }
+
     public boolean isScreen(String screen){
         return this.screen.equals(screen);
     }
+
     public String getScreen(){
         return screen;
     }
+
     public void setScreen(String screen){
         this.screen = screen;
+        switch(screen){
+            case GAME:
+                resetButtons();
+                break;
+            case SHOP:
+                removeButtons();
+                addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+                break;
+        }
     }
 }
