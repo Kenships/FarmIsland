@@ -132,7 +132,7 @@ public class ShopMenu extends SuperSmoothMover
         y = GameWorld.SCREEN_HEIGHT - y;
         myWorld.addObject(menuDown,x,y);
 
-        purchase = new MenuButton("purchase");
+        purchase = new MenuButton("Purchase");
         x = SPACING * (ROW_MAX + 1) + 256;
         y = GameWorld.SCREEN_HEIGHT/2;
         myWorld.addObject(purchase, x,y);
