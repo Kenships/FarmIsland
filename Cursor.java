@@ -9,6 +9,7 @@ import greenfoot.*;
 public class Cursor
 {
     private static Actor holding;
+    private static Tools activeTool;
     
     public static MouseInfo getMouseInfo(){
         return Greenfoot.getMouseInfo();
@@ -16,6 +17,14 @@ public class Cursor
     
     public static void release(){
         holding = null;
+    }
+    
+    public static void setTool(Tools tool){
+        activeTool = tool;
+    }
+    
+    public static Tools getTool(){
+        return activeTool;
     }
     
     public static Actor getActor(){

@@ -84,6 +84,7 @@ public class ShopMenu extends SuperSmoothMover
         returnButton = new MenuButton("Shop");
         menuUp = new MenuButton("Arrow");
         menuDown = new MenuButton("Arrow");
+        purchase = new MenuButton("Purchase");
         menuDown.setRotation(180);
         itemGallery = new ArrayList<>();
         
@@ -96,8 +97,13 @@ public class ShopMenu extends SuperSmoothMover
             }
 
         }
+        sortItemGallery();
     }
-
+    
+    public void sortItemGallery(){
+        //to be filled
+    }
+    
     public void resetShop(){
         int index = 0;
         for(ShopItem item : itemGallery){
@@ -118,7 +124,7 @@ public class ShopMenu extends SuperSmoothMover
         myWorld.addObject(featuredItem, x, y);
 
     }
-
+    
     public void addButtons(){
         int x = LEFT_MARGIN/3;
         int y = GameWorld.SCREEN_HEIGHT - LEFT_MARGIN/3;
@@ -126,18 +132,18 @@ public class ShopMenu extends SuperSmoothMover
         getWorld().addObject(returnButton, 64, 656);
         x = LEFT_MARGIN + SPACING * ROW_MAX;
         y = TOP_MARGIN;
-        System.out.println(x + " " + y);
+
         myWorld.addObject(menuUp,x,y);
 
         y = GameWorld.SCREEN_HEIGHT - y;
         myWorld.addObject(menuDown,x,y);
 
-        purchase = new MenuButton("Purchase");
+        
         x = SPACING * (ROW_MAX + 1) + 256;
         y = GameWorld.SCREEN_HEIGHT/2;
         myWorld.addObject(purchase, x,y);
     }
-
+    
     public void clearShop(){
         ArrayList<Actor> components = new ArrayList<>();
         components.add(returnButton);

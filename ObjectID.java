@@ -7,7 +7,7 @@ import greenfoot.*;
  */
 public enum ObjectID  
 {
-    NONE, DIRT_TILE, LANDPLOT, STUBBY_WHEAT, STUBBY_WHEAT_SEED, WHEAT, WHEAT_SEED;
+    NONE, DIRT_TILE, LANDPLOT, STUBBY_WHEAT, STUBBY_WHEAT_SEED, WHEAT, WHEAT_SEED, BASIC_TOOL;
     
     public ObjectID getSeedID(){
         switch(this){
@@ -21,5 +21,9 @@ public enum ObjectID
     
     public GreenfootImage getDisplayImage(){
         return new GreenfootImage("Displays/Items/" + this.toString() + ".png");
+    }
+    
+    public GreenfootImage getToolImage(String rarity){
+        return new GreenfootImage("Tools/" + rarity + "/" + this.toString() + ".png");
     }
 }

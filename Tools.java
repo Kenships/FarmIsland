@@ -8,19 +8,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public abstract class Tools extends SuperSmoothMover
 {
-    protected String name;
+    protected ObjectID ID;
     protected int durability;
     protected int efficiency;
     protected String type;
-    
+    protected boolean unbreakable;
+    protected GreenfootImage toolImage;
     /**
      * Gets the name of the tool.
      * 
-     * @return String - Name of the tool
+     * @return ObjectID - ID of the tool
      */
-    public String getName()
+    public ObjectID getID()
     {
-        return name;
+        return ID;
     }
     
     /**
@@ -52,6 +53,12 @@ public abstract class Tools extends SuperSmoothMover
      */
     public void act()
     {
-        // Add your action code here.
+        if(getWorld() == null){
+            return;
+        }
+        
+        if(Cursor.getTool() == this){
+            setLocation(Cursor.getX(), Cursor.getY());
+        }
     }
 }

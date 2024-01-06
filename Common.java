@@ -8,13 +8,30 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Common extends Tools
 {
-    public Common()
+    /**
+     * @param ID the object ID of the desired tool
+     */
+    public Common(ObjectID ID)
+    {
+        switch(ID){
+            case BASIC_TOOL:
+                toolImage = ID.getToolImage(this.getClass().getName());
+                efficiency = 1;
+                unbreakable = true;
+                break;
+        }
+        setImage(toolImage);
+    }
+    public Common(){
+        
+        
+    }
+    public void effect()
     {
         
     }
     
-    public void effect()
-    {
-        
+    public void act(){
+        super.act();
     }
 }

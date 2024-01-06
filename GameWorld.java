@@ -87,7 +87,11 @@ public class GameWorld extends World
         addObject(new CurrencyHandler(), 1200, 100);
         addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
-
+        
+        Common tool = new Common(ObjectID.BASIC_TOOL);
+        addObject(tool, 0,0);
+        Cursor.setTool(tool);
+        
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
         temp.put(ObjectID.WHEAT_SEED, -1);
