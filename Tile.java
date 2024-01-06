@@ -71,7 +71,9 @@ public abstract class Tile extends SuperSmoothMover
         //HX will adjust the elipse hieght
         double WX = 0.4; // "2/5"
         double HX = 2; 
-        double distance = Math.sqrt(WX * (getX() - myPlot.getX()) * (getX() - myPlot.getX()) + HX * (getY() - myPlot.getY()) * (getY() - myPlot.getY()));
+        double deltaX = getX() - myPlot.getX();
+        double deltaY = getY() - myPlot.getY() + tileYOffset;
+        double distance = Math.sqrt(WX * (deltaX) * (deltaX) + HX * (deltaY) * (deltaY));
 
         if(distance >= FADE_RADIUS && distance <= FADE_RADIUS + FADE_DISTANCE){
             double delta = FADE_RADIUS + FADE_DISTANCE - distance;

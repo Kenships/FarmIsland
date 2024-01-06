@@ -28,7 +28,11 @@ public abstract class Plant extends Tile
      */
     protected ObjectID ID;
     public Plant(){
-        super(0);
+        this(0); 
+    }
+
+    public Plant(int offset){
+        super(offset);
         myTile = null;
         myPlot = null;
         deltaIndex = 1;
@@ -83,7 +87,9 @@ public abstract class Plant extends Tile
         }
 
     }
+
     public abstract void grow();
+
     /**
      * NEW: plant method changed
      */

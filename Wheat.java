@@ -8,19 +8,21 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Wheat extends Plant
 {
+    public static final int Y_OFFSET = 32;
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
     /**
      * NEW: ID moved and initialized in constructor
      */
     public Wheat(){
-        super();
+        super(Y_OFFSET);
         ID = ObjectID.WHEAT;
         initialize();
         yeild = 1;
     }
     public Wheat(int yeild){
-        super();
+        super(32);
+        ID = ObjectID.WHEAT;
         initialize();
         this.yeild = yeild;
     }
@@ -33,7 +35,7 @@ public class Wheat extends Plant
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
-            setYOffset(stage, -32);
+            setYOffset(stage, -Y_OFFSET);
         }
         
         growthRate = DEFAULT_GROWTHRATE;
