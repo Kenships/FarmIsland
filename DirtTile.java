@@ -156,8 +156,8 @@ public class DirtTile extends Tile
         //loops through each direction
         for(int i = 0; i < directions.length; i++){
             //dcol, drow is where the next tile is located in the plot
-            int dcol = directions[i][0];
-            int drow = directions[i][1];
+            int dcol = directions[i][1];
+            int drow = directions[i][0];
             //dx, dy is where the next tile will be
             int dx = directionDistances[i][0];
             int dy = directionDistances[i][1];
