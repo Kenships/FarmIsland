@@ -39,6 +39,9 @@ public abstract class Tools extends SuperSmoothMover
      */
     public void takeDurability()
     {
+        if(unbreakable){
+            return;
+        }
         durability --;
     }
     
@@ -57,7 +60,7 @@ public abstract class Tools extends SuperSmoothMover
             return;
         }
         
-        if(Cursor.getTool() == this){
+        if(Cursor.getTool() == this && Cursor.getMouseInfo() != null){
             setLocation(Cursor.getX(), Cursor.getY());
         }
     }

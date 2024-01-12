@@ -13,10 +13,14 @@ public class Common extends Tools
      */
     public Common(ObjectID ID)
     {
+        toolImage = ID.getToolImage(this.getClass().getName());
         switch(ID){
             case BASIC_TOOL:
-                toolImage = ID.getToolImage(this.getClass().getName());
                 efficiency = 1;
+                unbreakable = true;
+                break;
+            case DIAMOND_TOOL:
+                efficiency = 10;
                 unbreakable = true;
                 break;
         }

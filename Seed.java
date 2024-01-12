@@ -24,7 +24,7 @@ public class Seed extends SuperSmoothMover
 
         Inventory.add(ID, amount);
         this.ID = ID;
-        
+
         seedImage = ID.getSeedID().getDisplayImage();
         display = false;
         setImage(seedImage);
@@ -87,11 +87,16 @@ public class Seed extends SuperSmoothMover
     }
 
     public void checkMouseAction(){
-        if(Greenfoot.mousePressed(this)){
+        GameWorld myWorld = (GameWorld) getWorld();
+        if(!myWorld.isScreen(GameWorld.GAME)){
+            return;
+        }
+        if(Greenfoot.mousePressed(null) && hoveringThis()){
+            System.out.println("pickedup");
             Cursor.pickUp(this);
         }
-        if(Greenfoot.mouseClicked(this)){
-            //setLocation (fixedX, fixedY);
+        if(Greenfoot.mouseClicked(null) && hoveringThis()){
+            setLocation (fixedX, fixedY);
             Cursor.release();
         }
     }
@@ -108,9 +113,7 @@ public class Seed extends SuperSmoothMover
         }
 
         Plant plant = newPlant();
-        /**
-         * NEW: tile.getY() + Yoffset
-         */
+
         if(Inventory.getAmount(ID) > 0 || Inventory.getAmount(ID) < 0){
 
             //remove one count of seed in inventory
@@ -118,9 +121,9 @@ public class Seed extends SuperSmoothMover
             plant.plant(plot, tile);
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
-                
+
                 getWorld().removeObject(this);
-            
+
             }
         }
         else{
@@ -131,6 +134,19 @@ public class Seed extends SuperSmoothMover
         return plant;
     }
 
+    public boolean hoveringThis(){
+        MouseInfo mouse = Cursor.getMouseInfo();
+        if(mouse == null){
+            return false;
+        }
+
+        int leftBound = getX() - getImage().getWidth()/2;
+        int rightBound = getX() + getImage().getWidth()/2;
+        int topBound = getY() - getImage().getHeight()/2;
+        int bottomBound = getY() + getImage().getHeight()/2;
+        
+        return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
+    }
     public void fixLocation(int x, int y){
         fixedX = x;
         fixedY = y;

@@ -59,4 +59,8 @@ public abstract class Button extends SuperSmoothMover
     public abstract void release();
 
     public abstract boolean hoveringThis();
+    
+    public boolean leftClickedThis(){
+        return Greenfoot.mouseClicked(null) && hoveringThis() && Cursor.leftClicked();
+    }
 }

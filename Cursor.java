@@ -36,6 +36,12 @@ public class Cursor
         return mouse.getButton();
     }
     
+    public static boolean leftClicked(){
+        return getButton() == 1;
+    }
+    public static boolean rightClicked(){
+        return getButton() == 3;
+    }
     public static int getClickCount(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
         return mouse.getClickCount();

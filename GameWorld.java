@@ -76,7 +76,7 @@ public class GameWorld extends World
         screen = GAME;
 
         //add objects
-        setPaintOrder(CurrencyHandler.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(CurrencyHandler.class, Tools.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
@@ -88,7 +88,7 @@ public class GameWorld extends World
         addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
         
-        Common tool = new Common(ObjectID.BASIC_TOOL);
+        Common tool = new Common(ObjectID.DIAMOND_TOOL);
         addObject(tool, 0,0);
         Cursor.setTool(tool);
         
@@ -139,10 +139,11 @@ public class GameWorld extends World
         }
     }
     public void checkMouseAction(){
-        if(Greenfoot.mouseClicked(openShop)){
+        if(openShop.leftClickedThis()){
+            System.out.println("open");
             setScreen(SHOP);
         }
-        if(Greenfoot.mouseClicked(homeButton) && !shouldMove && distance  != 0){
+        if(homeButton.leftClickedThis() && !shouldMove && distance  != 0){
             shouldMove = true;
         }
     }
@@ -179,12 +180,15 @@ public class GameWorld extends World
 
     public void setScreen(String screen){
         this.screen = screen;
+        MouseInfo mouse = Cursor.getMouseInfo();
         switch(screen){
             case GAME:
                 resetButtons();
+                addObject(Cursor.getTool(), mouse.getX(), mouse.getY());
                 break;
             case SHOP:
                 removeButtons();
+                removeObject(Cursor.getTool());
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
         }

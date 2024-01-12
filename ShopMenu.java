@@ -34,7 +34,9 @@ public class ShopMenu extends SuperSmoothMover
     private Button menuUp;
     private Button menuDown;
     private MenuButton purchase;
-
+    
+    private boolean firstOpened;
+    
     private GameWorld myWorld;
     public ShopMenu(ArrayList<ObjectID> galleryIDs){
         initialize(galleryIDs);
@@ -46,10 +48,9 @@ public class ShopMenu extends SuperSmoothMover
 
     public void addedToWorld(World w){
         myWorld = (GameWorld) w;
-        myWorld.setScreen(myWorld.SHOP);
         addButtons();
         resetShop();
-
+        firstOpened = true;
     }
 
     public void act(){
@@ -158,17 +159,20 @@ public class ShopMenu extends SuperSmoothMover
     }
 
     public void checkMouseAction(){
-        if (Greenfoot.mouseClicked(returnButton)){
+        if (returnButton.leftClickedThis() && !firstOpened){
             myWorld.setScreen(myWorld.GAME);
             clearShop();
             myWorld.removeObject(this);
         }
+        else{
+            firstOpened = false;
+        }
         if(direction == 0){
-            if(Greenfoot.mouseClicked(menuUp)){
+            if(menuUp.leftClickedThis()){
                 direction = UP;
                 pageNumber++;
             }
-            if(Greenfoot.mouseClicked(menuDown)){
+            if(menuDown.leftClickedThis()){
                 direction = DOWN;
                 pageNumber--;
             }

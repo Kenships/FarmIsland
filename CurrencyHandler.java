@@ -18,7 +18,7 @@ public class CurrencyHandler extends SuperSmoothMover
     
     public void act(){
         GreenfootImage i = new GreenfootImage(64, 128);
-        i.drawString("$" + money, i.getWidth()/2, i.getHeight()/2);
+        i.drawString("$" + money, 0, i.getHeight()/2);
         setImage(i);
     }
     

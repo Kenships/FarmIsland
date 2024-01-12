@@ -56,7 +56,7 @@ public class MenuButton extends Button
     
     public boolean hoveringThis(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
-        if(mouse != null){
+        if(mouse != null && getWorld() != null){
             int leftBound = getX() - width/2;
             int rightBound = getX() + width/2;
             int topBound = getY() - height/2;
@@ -82,4 +82,6 @@ public class MenuButton extends Button
         clickImage[0].drawString(text, clickImage[0].getWidth()/2, clickImage[0].getHeight()/2);
         setImage(mainImage[0]);
     }
+    
+    
 }

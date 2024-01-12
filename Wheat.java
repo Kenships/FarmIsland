@@ -18,13 +18,13 @@ public class Wheat extends Plant
         super(Y_OFFSET);
         ID = ObjectID.WHEAT;
         initialize();
-        yeild = 1;
+        yield = 1;
     }
     public Wheat(int yeild){
         super(32);
         ID = ObjectID.WHEAT;
         initialize();
-        this.yeild = yeild;
+        this.yield = yield;
     }
     public void act()
     {
@@ -81,8 +81,15 @@ public class Wheat extends Plant
         }
     }
     public void collect(){
-        Inventory.add(ID, yeild);
-        CurrencyHandler.deposit(2);
+        Tools tool = Cursor.getTool();
+        int netYield = yield;
+        if(tool != null){
+            netYield *= tool.getEffiency();
+            tool.takeDurability();
+        }
+        
+        Inventory.add(ID, netYield);
+        CurrencyHandler.deposit(netYield * 2);
         myTile.unPlant();
         getWorld().removeObject(this);
     }
@@ -116,6 +123,7 @@ public class Wheat extends Plant
     
     //temporary
     public GreenfootImage getItemImage(){
-        return new GreenfootImage("Stubby Wheat Stage 0.png");
+        //fill
+        return new GreenfootImage(1,1);
     }
 }

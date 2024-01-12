@@ -15,7 +15,7 @@ public abstract class Plant extends Tile
     protected int growthStage;
     protected int lifeTime;
     protected boolean mature;
-    protected int yeild;
+    protected int yield;
 
     //[Growth Stage][Animation Frame];
     protected GreenfootImage[][] growthAnimations;
@@ -152,11 +152,11 @@ public abstract class Plant extends Tile
     }
 
     public int getYield(){
-        return yeild;
+        return yield;
     }
 
-    public void setYield(int yeild){
-        this.yeild = yeild;
+    public void setYield(int yield){
+        this.yield = yield;
     }
 
     public DirtTile getDirtTile(){

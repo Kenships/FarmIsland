@@ -17,12 +17,12 @@ public class StubbyWheat extends Plant implements ItemConvertible
         super();
         ID = ObjectID.STUBBY_WHEAT;
         initialize();
-        yeild = 1;
+        yield = 1;
     }
-    public StubbyWheat(int yeild){
+    public StubbyWheat(int yield){
         super();
         initialize();
-        this.yeild = yeild;
+        this.yield = yield;
     }
     public void act()
     {
@@ -76,8 +76,15 @@ public class StubbyWheat extends Plant implements ItemConvertible
         }
     }
     public void collect(){
-        Inventory.add(ID, yeild);
-        CurrencyHandler.deposit(50);
+        Tools tool = Cursor.getTool();
+        int netYield = yield;
+        if(tool != null){
+            netYield *= tool.getEffiency();
+            tool.takeDurability();
+        }
+        
+        Inventory.add(ID, netYield);
+        CurrencyHandler.deposit(netYield * 25);
         myTile.unPlant();
         getWorld().removeObject(this);
     }
