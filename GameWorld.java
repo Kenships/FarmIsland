@@ -83,7 +83,8 @@ public class GameWorld extends World
         //sets up the enventory from previous save
         Inventory.initialize(saveFile);
         CurrencyHandler.initialize(saveFile);
-
+        //Inventory.add(ObjectID.DIRT_TILE, 10000);
+        
         addObject(new CurrencyHandler(), 1200, 100);
         addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);

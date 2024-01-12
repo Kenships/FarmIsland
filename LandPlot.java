@@ -38,6 +38,7 @@ public class LandPlot extends SuperSmoothMover
     }
 
     public void addedToWorld (World w){
+        //fillTiles();
         startPlot();
     }
     //credit: ChatGPT
@@ -59,7 +60,6 @@ public class LandPlot extends SuperSmoothMover
         plot = new DirtTile[GRID_ROWS][GRID_COLS];
 
     }
-
     //credit: ChatGPT for the idea to store mouse info
     //used to check when mouse is dragging and calculates the movement per act and applies it to each tile
     public void moveAndDrag(){
@@ -168,9 +168,6 @@ public class LandPlot extends SuperSmoothMover
         }
     }
 
-    /**
-     * NEW METHOD
-     */
     public void zSort(){
         ArrayList<Actor> actors = new ArrayList<>();
         for(int row = 0; row < plot.length; row++){
@@ -187,9 +184,6 @@ public class LandPlot extends SuperSmoothMover
         Util.zSort(actors, getWorld());
     }
 
-    /**
-     * NEW 
-     */
     public GridPath[][] initMatrix(DirtTile destination){
         GridPath[][] matrix = new GridPath[plot.length][plot[0].length];
         for(int row = 0; row < matrix.length; row++){
@@ -205,10 +199,6 @@ public class LandPlot extends SuperSmoothMover
         }
         return matrix;
     }
-
-    /**
-     * NEW
-     */
 
     public boolean getPath(DirtTile startLocation, DirtTile endLocation){
         if (startLocation == null) return false;
@@ -248,9 +238,6 @@ public class LandPlot extends SuperSmoothMover
         return pathFound;
     }
 
-    /**
-     * NEW
-     */
     private void removeTiles(int x, int y){
         for (int i = 0; i < 4; i ++){
             int xUpdated = x + DIRECTIONS[i][0];
@@ -262,6 +249,26 @@ public class LandPlot extends SuperSmoothMover
                 }
                 else{
                     removeFromPlot(xUpdated, yUpdated);
+                }
+            }
+        }
+    }
+    
+    public void fillTiles(){
+        int startX = WIDTH/2;
+        int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
+        for (int row = 0; row < GRID_ROWS; row++){
+            for(int col = 0; col < GRID_COLS; col++){
+                
+                int x = startX + col * DirtTile.WIDTH;
+                int y = startY + row * DirtTile.HEIGHT + col * DirtTile.HEIGHT;
+                
+                if(plot[row][col] == null){
+                    plot[row][col] = new DirtTile(this, row, col, true);
+                    getWorld().addObject(plot[row][col], x,y);
+                }
+                else if(!plot[row][col].isActive()){
+                    plot[row][col].activate();
                 }
             }
         }
