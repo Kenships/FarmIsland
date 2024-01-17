@@ -76,7 +76,7 @@ public class StubbyWheat extends Plant implements ItemConvertible
         }
     }
     public void collect(){
-        Tools tool = Cursor.getTool();
+        Tool tool = Cursor.getTool();
         int netYield = yield;
         if(tool != null){
             netYield *= tool.getEffiency();
@@ -94,18 +94,8 @@ public class StubbyWheat extends Plant implements ItemConvertible
     }
 
     public void checkMouseAction(){
-        //planting if not planted
-        if(myTile == null && Cursor.getActor() == null && hoveringThis() && Greenfoot.mouseDragged(null)){
-            Cursor.pickUp(this);
-        }
 
-        if(Cursor.getActor() == this){
-            setLocation(Cursor.getX(), Cursor.getY());
-            if(Greenfoot.mouseDragEnded(null) && myTile == null){
-                Cursor.release();
-            }
-        }
-        if(mature && hoveringThis() && (Cursor.getActor() == null || PlayerStatus.isReplant()) && Cursor.getButton() == 1){
+        if(mature && hoveringThis() && (Cursor.getItem() == null || PlayerStatus.isReplant()) && Cursor.getButton() == 1){
             collect();
         }
     }

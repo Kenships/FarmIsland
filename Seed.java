@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Seed extends SuperSmoothMover
+public class Seed extends Item
 {
     private boolean disapearWhenEmpty;
 
@@ -16,7 +16,7 @@ public class Seed extends SuperSmoothMover
     private boolean display;
     private int frame;
     private int actCounter;
-    private int fixedX, fixedY;
+    
 
     public Seed(ObjectID ID, int amount, boolean disapear){
 
@@ -76,29 +76,21 @@ public class Seed extends SuperSmoothMover
         //fill later
     }
 
-    public void reposition(){
-        //check if seed is held in cursor
-        if(Cursor.getActor() == this){
-            MouseInfo mouse = Greenfoot.getMouseInfo();
-            if(mouse != null){
-                setLocation (mouse.getX(), mouse.getY());
-            }
-        }
-    }
+    
 
     public void checkMouseAction(){
         GameWorld myWorld = (GameWorld) getWorld();
         if(!myWorld.isScreen(GameWorld.GAME)){
             return;
         }
-        if(Greenfoot.mousePressed(null) && hoveringThis()){
+        /*if(Greenfoot.mousePressed(null) && hoveringThis()){
             System.out.println("pickedup");
             Cursor.pickUp(this);
-        }
-        if(Greenfoot.mouseClicked(null) && hoveringThis()){
-            setLocation (fixedX, fixedY);
+        }*/
+        /*if(Greenfoot.mouseClicked(null) && hoveringThis()){
+            
             Cursor.release();
-        }
+        }*/
     }
 
     /**
@@ -159,5 +151,8 @@ public class Seed extends SuperSmoothMover
     public boolean isDisplayed(){
         return display;
     }
-
+    
+    public ObjectID getID(){
+        return ID;
+    }
 }

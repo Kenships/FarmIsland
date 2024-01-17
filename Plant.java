@@ -9,7 +9,8 @@ import java.util.HashMap;
  */
 public abstract class Plant extends Tile
 {
-
+    protected ObjectID ID;
+    
     protected int growthRate;
     protected int maturity; 
     protected int growthStage;
@@ -23,10 +24,7 @@ public abstract class Plant extends Tile
     protected int deltaIndex;
     protected DirtTile myTile;
     protected HashMap<Integer, Integer> yOffsets;
-    /**
-     * NEW:
-     */
-    protected ObjectID ID;
+    
     public Plant(){
         this(0); 
     }
@@ -118,7 +116,15 @@ public abstract class Plant extends Tile
     public void setGrowthRate(int growthRate){
         this.growthRate = growthRate;
     }
-
+    
+    public ObjectID getID(){
+        return ID;
+    }
+    
+    public DirtTile getTile(){
+        return myTile;
+    }
+    
     public int getMaturity(){
         return maturity;
     }

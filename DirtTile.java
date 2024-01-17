@@ -112,7 +112,7 @@ public class DirtTile extends Tile
             /**
              * NEW: changed code below
              */
-            if (Cursor.getActor() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
+            if (Cursor.getItem() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
 
                 if(Inventory.getAmount(ID) != 0){
                     activate();
@@ -126,11 +126,11 @@ public class DirtTile extends Tile
 
         }
         //check for plant on cursor
-        Actor actor = Cursor.getActor();
+        Item item = Cursor.getItem();
         
 
-        if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && actor != null && actor instanceof Seed){
-            Seed seed = (Seed) Cursor.getActor();
+        if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && item != null && item instanceof Seed){
+            Seed seed = (Seed) Cursor.getItem();
             if(!seed.isDisplayed()){
                 plant = seed.plant(myPlot, this);
             }

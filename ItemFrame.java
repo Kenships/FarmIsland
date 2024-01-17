@@ -12,25 +12,19 @@ public class ItemFrame extends SuperSmoothMover
     protected GreenfootImage background;
     protected GreenfootImage foreground;
     protected GreenfootImage mainImage;
+    protected int width, height;
     public ItemFrame(ObjectID ID){
         this(ID, 128,128);
         
     }
     
     public ItemFrame(ObjectID ID, int width, int height){
-        if(ID != ObjectID.NONE){
-            this.ID = ID;
-            String s = ID.toString();
-            foreground = ID.getDisplayImage(); 
-        }
-        else{
-            foreground = new GreenfootImage(1,1);
-        }
+        this.width = width;
+        this.height = height;
         mainImage = new GreenfootImage(width, height);
         background = new GreenfootImage("Displays/Frames/Frame.png");
         background.scale(width, height);
-        drawFrame();
-        
+        updateID(ID);   
     }
     
     public ObjectID getID(){
@@ -38,6 +32,7 @@ public class ItemFrame extends SuperSmoothMover
     }
     
     public void updateID(ObjectID ID){
+        this.ID = ID;
         foreground = ID.getDisplayImage();
         drawFrame();
     }
@@ -53,5 +48,18 @@ public class ItemFrame extends SuperSmoothMover
         }
         mainImage.drawImage(foreground, marginX, marginY);
         setImage(mainImage);
+    }
+    
+    public boolean hoveringThis(){
+        MouseInfo mouse = Greenfoot.getMouseInfo();
+        if(mouse != null){
+
+            int leftBound = getX() - width/2;
+            int rightBound = getX() + width/2;
+            int topBound = getY() - height/2;
+            int bottomBound = getY() + height/2;
+            return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
+        }
+        return false;
     }
 }

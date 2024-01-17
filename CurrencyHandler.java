@@ -27,6 +27,8 @@ public class CurrencyHandler extends SuperSmoothMover
         priceIndex.put(ObjectID.DIRT_TILE, 10);
         priceIndex.put(ObjectID.STUBBY_WHEAT_SEED, 20);
         priceIndex.put(ObjectID.WHEAT_SEED, 1);
+        priceIndex.put(ObjectID.DIAMOND_TOOL, 10000);
+        priceIndex.put(ObjectID.BASIC_TOOL, 10);
     }
     
     

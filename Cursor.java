@@ -8,8 +8,8 @@ import greenfoot.*;
  */
 public class Cursor
 {
-    private static Actor holding;
-    private static Tools activeTool;
+    private static Item holding;
+    private static Tool activeTool;
     
     public static MouseInfo getMouseInfo(){
         return Greenfoot.getMouseInfo();
@@ -19,15 +19,15 @@ public class Cursor
         holding = null;
     }
     
-    public static void setTool(Tools tool){
+    public static void setTool(Tool tool){
         activeTool = tool;
     }
     
-    public static Tools getTool(){
+    public static Tool getTool(){
         return activeTool;
     }
     
-    public static Actor getActor(){
+    public static Item getItem(){
         return holding;
     }
     
@@ -57,7 +57,7 @@ public class Cursor
         return mouse.getY();
     }
     
-    public static void pickUp(Actor newActor){
-        holding = newActor;
+    public static void pickUp(Item item){
+        holding = item;
     }
 }

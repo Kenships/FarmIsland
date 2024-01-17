@@ -81,7 +81,7 @@ public class Wheat extends Plant
         }
     }
     public void collect(){
-        Tools tool = Cursor.getTool();
+        Tool tool = Cursor.getTool();
         int netYield = yield;
         if(tool != null){
             netYield *= tool.getEffiency();
@@ -99,17 +99,6 @@ public class Wheat extends Plant
     }
     
     public void checkMouseAction(){
-        //planting if not planted
-        if(myTile == null && Cursor.getActor() == null && hoveringThis() && Greenfoot.mouseDragged(null)){
-            Cursor.pickUp(this);
-        }
-        
-        if(Cursor.getActor() == this){
-            setLocation(Cursor.getX(), Cursor.getY());
-            if(Greenfoot.mouseDragEnded(null) && myTile == null){
-                Cursor.release();
-            }
-        }
         if(mature && hoveringThis() && Cursor.getButton() == 1){
             collect();
         }

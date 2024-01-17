@@ -24,7 +24,7 @@ public enum ObjectID
         return new GreenfootImage("Displays/Items/" + this.toString() + ".png");
     }
     
-    public GreenfootImage getToolImage(String rarity){
-        return new GreenfootImage("Tools/" + rarity + "/" + this.toString() + ".png");
+    public GreenfootImage getToolImage(){
+        return new GreenfootImage("Tools/" + this.toString() + ".png");
     }
 }

@@ -6,14 +6,29 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version December 2023
  */
-public abstract class Tools extends SuperSmoothMover
+public class Tool extends Item
 {
-    protected ObjectID ID;
-    protected int durability;
-    protected int efficiency;
-    protected String type;
-    protected boolean unbreakable;
-    protected GreenfootImage toolImage;
+    private ObjectID ID;
+    private int durability;
+    private int efficiency;
+    private boolean unbreakable;
+    private GreenfootImage toolImage;
+    private int rarity;
+    public Tool(ObjectID ID){
+        this.ID = ID;
+        toolImage = ID.getToolImage();
+        switch(ID){
+            case BASIC_TOOL:
+                efficiency = 1;
+                unbreakable = true;
+                break;
+            case DIAMOND_TOOL:
+                efficiency = 10;
+                unbreakable = true;
+                break;
+        }
+        setImage(toolImage);
+    }
     /**
      * Gets the name of the tool.
      * 
@@ -48,7 +63,12 @@ public abstract class Tools extends SuperSmoothMover
     /**
      * Effect that the tool has.
      */
-    public abstract void effect();
+    public void activateEffect(){
+        //place effects here
+        switch(ID){
+            
+        }
+    }
     
     /**
      * Act - do whatever the Tools wants to do. This method is called whenever
@@ -60,8 +80,5 @@ public abstract class Tools extends SuperSmoothMover
             return;
         }
         
-        if(Cursor.getTool() == this && Cursor.getMouseInfo() != null){
-            setLocation(Cursor.getX(), Cursor.getY());
-        }
     }
 }

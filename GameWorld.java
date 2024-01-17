@@ -36,6 +36,7 @@ public class GameWorld extends World
     public static final String ACHIEVEMENT = "Achievement";
 
     private LandPlot landPlot;
+    private EquipDisplay equip;
     private Button homeButton;
     private boolean shouldMove;
     private double exactDistancePerFrame;
@@ -76,7 +77,7 @@ public class GameWorld extends World
         screen = GAME;
 
         //add objects
-        setPaintOrder(CurrencyHandler.class, Tools.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(CurrencyHandler.class, Tool.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
@@ -85,13 +86,19 @@ public class GameWorld extends World
         CurrencyHandler.initialize(saveFile);
         //Inventory.add(ObjectID.DIRT_TILE, 10000);
         
-        addObject(new CurrencyHandler(), 1200, 100);
-        addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
-        addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
+        equip = new EquipDisplay();
+        Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
+        equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
+        equip.equipTool(tool);
+        addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
         
-        Common tool = new Common(ObjectID.DIAMOND_TOOL);
-        addObject(tool, 0,0);
-        Cursor.setTool(tool);
+        addObject(new CurrencyHandler(), 1200, 100);
+        //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
+        //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
+        
+        
+        
+      
         
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
@@ -185,11 +192,13 @@ public class GameWorld extends World
         switch(screen){
             case GAME:
                 resetButtons();
-                addObject(Cursor.getTool(), mouse.getX(), mouse.getY());
+                equip.showDisplay();
+                //addObject(Cursor.getTool(), mouse.getX(), mouse.getY());
                 break;
             case SHOP:
                 removeButtons();
-                removeObject(Cursor.getTool());
+                equip.hideDisplay();
+                //removeObject(Cursor.getTool());
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
         }
