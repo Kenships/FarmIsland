@@ -11,7 +11,6 @@ public class Seed extends Item
     private boolean disapearWhenEmpty;
 
     private GreenfootImage seedImage;
-    private ObjectID ID;
     //is this item a display item or item in play
     private boolean display;
     private int frame;
@@ -21,11 +20,11 @@ public class Seed extends Item
     public Seed(ObjectID ID, int amount, boolean disapear){
 
         disapearWhenEmpty = disapear;
+        this.ID = ID.getSeedID();
+        Inventory.add(this.ID, amount);
+        
 
-        Inventory.add(ID, amount);
-        this.ID = ID;
-
-        seedImage = ID.getSeedID().getDisplayImage();
+        seedImage = this.ID.getDisplayImage();
         display = false;
         setImage(seedImage);
     }
@@ -39,7 +38,7 @@ public class Seed extends Item
     }
 
     public void addedToWorld(World w){
-        fixLocation(getX(), getY());
+        super.addedToWorld(w);
     }
 
     public void act()
@@ -64,6 +63,9 @@ public class Seed extends Item
             case STUBBY_WHEAT_SEED:
                 plant = new StubbyWheat();
                 break;
+             case CARROT_SEED:
+                plant = new Carrot();
+                break;    
         }
         return plant;
     }
@@ -139,10 +141,7 @@ public class Seed extends Item
         
         return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
     }
-    public void fixLocation(int x, int y){
-        fixedX = x;
-        fixedY = y;
-    }
+    
 
     public void setDisplay(boolean toggle){
         display = toggle;
@@ -151,8 +150,5 @@ public class Seed extends Item
     public boolean isDisplayed(){
         return display;
     }
-    
-    public ObjectID getID(){
-        return ID;
-    }
+
 }

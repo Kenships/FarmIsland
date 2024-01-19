@@ -50,9 +50,7 @@ public abstract class Plant extends Tile
         if(getWorld() == null){
             return;
         }
-        /**
-         * NEW: tile y offset
-         */
+        
         if(myTile != null){
             if(myTile.getWorld() != null){
                 setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
@@ -62,7 +60,7 @@ public abstract class Plant extends Tile
                 //collects if mature returns seed if not
                 myTile.unPlant();
                 if(mature){
-                    collect();
+                    CollectionHandler.collect(this);
                 }
                 else{
                     Inventory.add(ID.getSeedID());

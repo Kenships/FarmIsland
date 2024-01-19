@@ -7,8 +7,11 @@ import greenfoot.*;
  */
 public class Item extends SuperSmoothMover 
 {
+    protected ObjectID ID;
     protected int fixedX, fixedY;
-
+    public void addedToWorld(World w){
+        fixLocation(getX(), getY());
+    }
     public void reposition(){
         //check if seed is held in cursor
         if(Cursor.getItem() == this){
@@ -20,5 +23,12 @@ public class Item extends SuperSmoothMover
         else{
             setLocation (fixedX, fixedY);
         }
+    }
+    public void fixLocation(int x, int y){
+        fixedX = x;
+        fixedY = y;
+    }
+    public ObjectID getID(){
+        return ID;
     }
 }

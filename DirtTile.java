@@ -129,7 +129,7 @@ public class DirtTile extends Tile
         Item item = Cursor.getItem();
         
 
-        if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && item != null && item instanceof Seed){
+        if(active && plant == null && activeTile.getTransparency() > TRANSLUCENT && hoveringThis() && Cursor.leftClicked() && item != null && item instanceof Seed){
             Seed seed = (Seed) Cursor.getItem();
             if(!seed.isDisplayed()){
                 plant = seed.plant(myPlot, this);

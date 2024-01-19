@@ -94,9 +94,8 @@ public class StubbyWheat extends Plant implements ItemConvertible
     }
 
     public void checkMouseAction(){
-
         if(mature && hoveringThis() && (Cursor.getItem() == null || PlayerStatus.isReplant()) && Cursor.getButton() == 1){
-            collect();
+            CollectionHandler.collect(this);
         }
     }
 

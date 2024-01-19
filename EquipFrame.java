@@ -20,6 +20,10 @@ public class EquipFrame extends ItemFrame
     private boolean selected;
     public EquipFrame(ObjectID ID, int width, int height){
         super(ID, width, height);
+        mainImage = new GreenfootImage(width, height);
+        background = new GreenfootImage("Displays/Frames/Wooden Frame.png");
+        background.scale(width, height);
+        updateID(ID);   
         updateHighlight();
     }
     public void act()

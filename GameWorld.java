@@ -46,6 +46,9 @@ public class GameWorld extends World
     private String screen;
     private ShopMenu shop;
     private Button openShop;
+    
+    private Button openInventory;
+    private InventoryDisplay inventoryDisplay;
     /**
      * Constructor for objects of class GameWorld.
      * 
@@ -77,28 +80,9 @@ public class GameWorld extends World
         screen = GAME;
 
         //add objects
-        setPaintOrder(CurrencyHandler.class, Tool.class, Button.class, ItemFrame.class, ShopMenu.class, Seed.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(Effect.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, ShopMenu.class, InventoryDisplay.class, Plant.class, DirtTile.class, LandPlot.class);
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-        //sets up the enventory from previous save
-        Inventory.initialize(saveFile);
-        CurrencyHandler.initialize(saveFile);
-        //Inventory.add(ObjectID.DIRT_TILE, 10000);
-        
-        equip = new EquipDisplay();
-        Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
-        equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
-        equip.equipTool(tool);
-        addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
-        
-        addObject(new CurrencyHandler(), 1200, 100);
-        //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
-        //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
-        
-        
-        
-      
         
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
@@ -107,8 +91,32 @@ public class GameWorld extends World
         shop = new ShopMenu(temp);
         openShop = new MenuButton("Shop");
         homeButton = new MenuButton("Home");
-        addObject(openShop, 64, 656);
-        addObject(homeButton, 64, 600);
+        openInventory = new MenuButton("Inventory");
+        ArrayList<Button> buttons = new ArrayList<>();
+        buttons.add(homeButton);
+        buttons.add(openShop);
+        buttons.add(openInventory);
+        inventoryDisplay = new InventoryDisplay(buttons);
+        addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
+        //addObject(openShop, 64, 656);
+        //addObject(homeButton, 64, 600);
+        
+        //sets up the enventory from previous save
+        Inventory.initialize(saveFile, inventoryDisplay);
+        CurrencyHandler.initialize(saveFile);
+        CollectionHandler.initialize(this);
+        //Inventory.add(ObjectID.DIRT_TILE, 10000);
+        
+        equip = new EquipDisplay();
+        Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
+        equip.equipSeed(new Seed(ObjectID.CARROT, 1, false));
+        equip.equipTool(tool);
+        addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
+        
+        addObject(new CurrencyHandler(), 1200, 100);
+        //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
+        //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
+        
     }
     public void homeIslands(){
         DirtTile centreTile = landPlot.getTile(LandPlot.STARTING_ROW, LandPlot.STARTING_COL);
@@ -154,16 +162,22 @@ public class GameWorld extends World
         if(homeButton.leftClickedThis() && !shouldMove && distance  != 0){
             shouldMove = true;
         }
+        if(openInventory.leftClickedThis()){
+            if(inventoryDisplay.isOpen()){
+                inventoryDisplay.close();
+            }
+            else{
+                inventoryDisplay.open();
+            }
+        }    
     }
 
     public void removeButtons(){
-        removeObject(openShop);
-        removeObject(homeButton);
+        inventoryDisplay.forceClose();
     }
 
     public void resetButtons(){
-        addObject(openShop, 64, 656);
-        addObject(homeButton, 64, 600);
+        inventoryDisplay.addButtons();
     }
 
     public static boolean getEditMode(){

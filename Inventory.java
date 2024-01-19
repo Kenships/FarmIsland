@@ -11,12 +11,15 @@ import java.util.ArrayList;
 public class Inventory
 {
     private static HashMap <ObjectID, Integer> inventory;
+    private static InventoryDisplay display;
     public void act()
     {
         // Add your action code here.
     }
     
-    public static void initialize(String saveFile){
+    
+    public static void initialize(String saveFile, InventoryDisplay d){
+        display = d;
         inventory = new HashMap<>();
         loadGame(saveFile);
     }
@@ -30,40 +33,48 @@ public class Inventory
         inventory.clear();
     }
     
+    public static HashMap <ObjectID, Integer> getInventory(){
+        return inventory;
+    }
+    
     public static int getAmount(ObjectID id){
         if(!inventory.containsKey(id)){
             return 0;
         }
         return inventory.get(id);
     }
-    /**
-     * NEW:
-     */
+   
     public static boolean removeAll(ObjectID id){
         if(inventory.containsKey(id)){;
             inventory.remove(id);
             return true;
         }
-        output();
+        
         return false;
     }
     
     public static boolean remove(ObjectID id, int amount){
         if(inventory.containsKey(id)){
-            inventory.put(id,inventory.get(id) - amount);
+            if(inventory.get(id) - amount == 0){
+                inventory.remove(id);
+                display.removeItem(id);
+            }
+            else if(inventory.get(id) - amount < 0){
+                return false;
+            }
+            else{
+                inventory.put(id,inventory.get(id) - amount);
+            }
+            
             return true;
         }
-        output();
+        
         return false;
     }
     
     public static boolean remove(ObjectID id){
-        if(inventory.containsKey(id)){;
-            inventory.put(id,inventory.get(id) - 1);
-            return true;
-        }
-        output();
-        return false;
+        return remove(id, 1);
+        
     }
     
     //adds 1 item to inventory
@@ -75,6 +86,7 @@ public class Inventory
     public static void add(ObjectID id, int amount){
         if(!inventory.containsKey(id)){;
             inventory.put(id,amount);
+            display.addItem(id);
         }
         else{
             inventory.put(id, inventory.get(id) + amount);

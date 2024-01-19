@@ -8,7 +8,6 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Tool extends Item
 {
-    private ObjectID ID;
     private int durability;
     private int efficiency;
     private boolean unbreakable;
@@ -29,14 +28,9 @@ public class Tool extends Item
         }
         setImage(toolImage);
     }
-    /**
-     * Gets the name of the tool.
-     * 
-     * @return ObjectID - ID of the tool
-     */
-    public ObjectID getID()
-    {
-        return ID;
+    
+    public void addedToWorld(World w){
+        super.addedToWorld(w);
     }
     
     /**
@@ -79,6 +73,6 @@ public class Tool extends Item
         if(getWorld() == null){
             return;
         }
-        
+        reposition();
     }
 }
