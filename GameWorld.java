@@ -65,7 +65,8 @@ public class GameWorld extends World
             checkMouseAction();
             homeIslands();
         }
-
+        
+        spawnClouds();
         
 
     }
@@ -74,13 +75,14 @@ public class GameWorld extends World
          * PLEASE REMOVE EDITMODE = TRUE LATOR
          */
         editMode = true;
-
+        
+        setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
         //initializes starting screen
 
         screen = GAME;
 
         //add objects
-        setPaintOrder(Effect.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, ShopMenu.class, InventoryDisplay.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, ShopMenu.class, InventoryDisplay.class, Plant.class, DirtTile.class, LandPlot.class);
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
         
@@ -116,6 +118,16 @@ public class GameWorld extends World
         addObject(new CurrencyHandler(), 1200, 100);
         //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
+        
+    }
+    
+    public void spawnClouds(){
+        if(Greenfoot.getRandomNumber(300) == 0){
+            int cloudNum = Greenfoot.getRandomNumber(6) + 1;
+            int startY = SCREEN_HEIGHT/(Greenfoot.getRandomNumber(20) + 1);
+            GreenfootImage cloud = new GreenfootImage("BackGrounds/Cloud " + cloudNum + ".png");
+            addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() * 2, 1), -cloud.getWidth(), startY);
+        }
         
     }
     public void homeIslands(){

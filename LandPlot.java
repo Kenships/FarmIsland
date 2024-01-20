@@ -15,9 +15,7 @@ public class LandPlot extends SuperSmoothMover
     public static final int STARTING_COL = 15;
     public static final int GRID_ROWS = 32;
     public static final int GRID_COLS = 32;
-    /**
-     * NEW 
-     */
+
     public static final int[][] DIRECTIONS = {{-1,0},{1,0},{0,1},{0,-1}};
 
     public static final int MARGIN = 128;
@@ -50,8 +48,7 @@ public class LandPlot extends SuperSmoothMover
     public void initialize(){
         //sets a temporary image for the "moveable screen"
         myImage = new GreenfootImage(GameWorld.SCREEN_WIDTH - 2 * MARGIN, GameWorld.SCREEN_HEIGHT - 2 * MARGIN);
-        myImage.setColor(BABY_BLUE);
-        myImage.fill();
+        
         setImage(myImage);
 
         //puts many objects on screen

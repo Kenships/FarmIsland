@@ -13,6 +13,7 @@ public class Effect extends SuperSmoothMover
      */
     public static final int PULSE = 0;
     public static final int ROCK = 1;
+    public static final int SLIDE = 2;
     
     private GreenfootImage image;
     private int effect;
@@ -21,10 +22,18 @@ public class Effect extends SuperSmoothMover
     private int initX, initY;
     private double ratio;
     private int actCounter = 0;
+    private int duration;
     public Effect(int effect, String image){
         this(effect, new GreenfootImage(image));
     }
     public Effect(int effect, GreenfootImage i){
+        this(effect, i, 10);
+    }
+    public Effect(int effect, GreenfootImage i, int duration){
+        this(effect, i , duration, 0.1);
+    }
+    public Effect(int effect, GreenfootImage i, int duration, double speed){
+        this.duration = duration;
         this.image = i;
         this.effect = effect;
         
@@ -34,7 +43,7 @@ public class Effect extends SuperSmoothMover
         
         setImage(image);
         index = 0;
-        deltaIndex = 0.1;
+        deltaIndex = speed;
     }
     public void addedToWorld(World w){
         initX = getX();
@@ -50,6 +59,9 @@ public class Effect extends SuperSmoothMover
                 case ROCK:
                     rock();
                     break;    
+                case SLIDE:
+                    slide();
+                    break;
             }
         
         
@@ -59,7 +71,7 @@ public class Effect extends SuperSmoothMover
     
     public void pulse(){
         GreenfootImage scaled = new GreenfootImage(image);
-        if(index <= 10){
+        if(index <= duration){
             scaled.scale(width + (int) (index * ratio), height + (int) index);
         }
         if(index == 0){
@@ -67,13 +79,13 @@ public class Effect extends SuperSmoothMover
         }
         
         index += deltaIndex;
-        if(index > 10 || index < 0){
+        if(index > duration || index < 0){
             deltaIndex *= -1;
         }
         setImage(scaled);
     }
     public void rock(){
-        if(index <= 10){
+        if(index <= duration){
             setLocation(initX + (int)index, initY);
         }
         if(index == 0){
@@ -81,8 +93,21 @@ public class Effect extends SuperSmoothMover
         }
         
         index += deltaIndex;
-        if(index > 10 || index < 0){
+        if(index > duration || index < 0){
             deltaIndex *= -1;
+        }
+    }
+    
+    public void slide(){
+        if(index <= duration){
+            enableStaticRotation();
+            setRotation(0);
+            move(deltaIndex);
+            index += deltaIndex;
+        }
+        else{
+            move(deltaIndex);
+            getWorld().removeObject(this);
         }
     }
 }
