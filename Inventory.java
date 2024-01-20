@@ -12,13 +12,15 @@ public class Inventory
 {
     private static HashMap <ObjectID, Integer> inventory;
     private static InventoryDisplay display;
+    private static EquipDisplay equip;
     public void act()
     {
         // Add your action code here.
     }
     
     
-    public static void initialize(String saveFile, InventoryDisplay d){
+    public static void initialize(String saveFile, InventoryDisplay d, EquipDisplay e){
+        equip = e;
         display = d;
         inventory = new HashMap<>();
         loadGame(saveFile);
@@ -34,6 +36,10 @@ public class Inventory
     
     public static void resetData(){
         inventory.clear();
+    }
+    
+    public static void equipItem(ObjectID ID){
+        equip.equipItem(ID);
     }
     
     public static int getAmount(ObjectID id){

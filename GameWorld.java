@@ -99,6 +99,7 @@ public class GameWorld extends World
         temp.put(ObjectID.WHEAT_SEED, -1);
         temp.put(ObjectID.STUBBY_WHEAT_SEED, -1);
         temp.put(ObjectID.FERTILIZER, -1);
+        temp.put(ObjectID.CARROT_SEED, -1);
         shop = new ShopMenu(temp);
         
         // Initializes buttons
@@ -115,11 +116,10 @@ public class GameWorld extends World
         buttons.add(leave);
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
-        //addObject(openShop, 64, 656);
-        //addObject(homeButton, 64, 600);
         
+        equip = new EquipDisplay();
         // Set up the inventory from the previous save
-        Inventory.initialize(savedFile, inventoryDisplay);
+        Inventory.initialize(savedFile, inventoryDisplay, equip);
         CurrencyHandler.initialize(savedFile);
         CollectionHandler.initialize(this);
 
@@ -128,9 +128,9 @@ public class GameWorld extends World
         achievementManager = new AchievementManager();
 
         
-        equip = new EquipDisplay();
+        
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
-        equip.equipSeed(new Seed(ObjectID.CARROT, 1, false));
+        equip.equipSeed(new Seed(ObjectID.CARROT_SEED, 1, false));
         equip.equipTool(tool);
         addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
         

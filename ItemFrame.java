@@ -34,6 +34,7 @@ public class ItemFrame extends SuperSmoothMover
     public void updateID(ObjectID ID){
         this.ID = ID;
         foreground = ID.getDisplayImage();
+        System.out.println(ID);
         drawFrame();
     }
     //use this method to set your own image

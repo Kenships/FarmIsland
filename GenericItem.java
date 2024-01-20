@@ -28,6 +28,10 @@ public class GenericItem extends Item
     }
     
     public void checkMouseAction(){
+        if(hoveringThis() && Greenfoot.mouseClicked(null) && Cursor.leftClicked()){
+            Inventory.equipItem(ID);
+        }
+        
         if(hoveringThis()){
             setImage(hover);
         }

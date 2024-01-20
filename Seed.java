@@ -20,11 +20,11 @@ public class Seed extends Item
 
     public Seed(ObjectID ID, int amount, boolean disapear){
         disapearWhenEmpty = disapear;
-        this.ID = ID.getSeedID();
-        Inventory.add(this.ID, amount);
+        this.ID = ID;
+        Inventory.add(ID, amount);
         
 
-        seedImage = this.ID.getDisplayImage();
+        seedImage = ID.getDisplayImage();
         display = false;
         setImage(seedImage);
     }
@@ -34,11 +34,15 @@ public class Seed extends Item
     }
 
     public Seed(ObjectID ID){
-        this(ID, -1);
+        this.ID = ID;
+        seedImage = ID.getDisplayImage();
+        display = false;
+        setImage(seedImage);
     }
 
     public void addedToWorld(World w){
         super.addedToWorld(w);
+        
     }
 
     public void act()

@@ -56,6 +56,7 @@ public class EquipFrame extends ItemFrame
     }
     public void updateID(ObjectID ID){
         super.updateID(ID);
+        System.out.println(ID);
         updateHighlight();
     }
 }

@@ -13,15 +13,17 @@ public class EquipDisplay extends SuperSmoothMover
     private GreenfootImage background;
     private EquipFrame toolFrame;
     private EquipFrame seedFrame;
-    private EquipFrame fertalizerFrame;
+    private EquipFrame fertilizerFrame;
     private Tool tool;
     private Seed seed;
+    private Fertilizer fertilizer;
     private GameWorld w;
+    
     public EquipDisplay()
     {
         toolFrame = new EquipFrame(ObjectID.NONE, 86, 86);
         seedFrame = new EquipFrame(ObjectID.NONE, 86, 86);
-        fertalizerFrame = new EquipFrame(ObjectID.NONE, 86, 86);
+        fertilizerFrame = new EquipFrame(ObjectID.NONE, 86, 86);
     }
 
     public void addedToWorld(World w){
@@ -37,7 +39,7 @@ public class EquipDisplay extends SuperSmoothMover
 
         toolFrame.setLocation(getX() - SPACING, getY());
         seedFrame.setLocation(getX(), getY());
-        fertalizerFrame.setLocation(getX() + SPACING, getY()); 
+        fertilizerFrame.setLocation(getX() + SPACING, getY()); 
     }
 
     public void checkMouseAction(){
@@ -51,7 +53,7 @@ public class EquipDisplay extends SuperSmoothMover
             toolFrame.select();
             Cursor.pickUp(tool);
             seedFrame.unselect();
-            fertalizerFrame.unselect();
+            fertilizerFrame.unselect();
         }
         if(seedFrame.hoveringThis() && Cursor.leftClicked()){
             if(seed != null){
@@ -63,9 +65,10 @@ public class EquipDisplay extends SuperSmoothMover
             Cursor.pickUp(seed);
             seedFrame.select();
             toolFrame.unselect();
-            fertalizerFrame.unselect();
+            fertilizerFrame.unselect();
         }
-        if(fertalizerFrame.hoveringThis() && Cursor.leftClicked()){
+        if(fertilizerFrame.hoveringThis() && Cursor.leftClicked()){
+            
             if(tool.getWorld() != null){
                 getWorld().removeObject(tool);
             }
@@ -73,7 +76,7 @@ public class EquipDisplay extends SuperSmoothMover
                 getWorld().removeObject(seed);
             }
             Cursor.release();
-            fertalizerFrame.select();
+            fertilizerFrame.select();
             seedFrame.unselect();
             toolFrame.unselect();
         }
@@ -82,35 +85,58 @@ public class EquipDisplay extends SuperSmoothMover
     public void showDisplay(){
         World w = getWorld();
         w.addObject(toolFrame,getX() - SPACING, getY());
-        if(tool != null){
-            w.addObject(tool,getX() - SPACING, getY());
-        }
         w.addObject(seedFrame, getX(), getY());
-        if(seed != null){
-            w.addObject(seed, getX(), getY());
-        }
-        w.addObject(fertalizerFrame, getX() + SPACING, getY());
+        w.addObject(fertilizerFrame, getX() + SPACING, getY());
     }
 
     public void hideDisplay(){
         getWorld().removeObject(toolFrame);
         getWorld().removeObject(seedFrame);
-        getWorld().removeObject(fertalizerFrame);
+        getWorld().removeObject(fertilizerFrame);
         getWorld().removeObject(tool);
         getWorld().removeObject(seed);
     }
 
     public void equipTool(Tool tool){
+        if(tool.getWorld() != null){
+            getWorld().removeObject(tool);
+        }
+
         this.tool = tool;
         toolFrame.updateID(tool.getID());
     }
 
     public void equipSeed(Seed seed){
+        if(seed.getWorld() != null){
+            getWorld().removeObject(seed);
+        }
         this.seed = seed;
         seedFrame.updateID(seed.getID());
     }
+    
+    public void equipFertilizer(Fertilizer fertilizer){
+        if(fertilizer.getWorld() != null){
+            getWorld().removeObject(fertilizer);
+        }
 
-    public void equipItem(){
-
+        this.fertilizer = fertilizer;
+        fertilizerFrame.updateID(fertilizer.getID());
+    }
+    
+    public void equipItem(ObjectID ID){
+        switch(ID){
+            case STUBBY_WHEAT_SEED:
+            case WHEAT_SEED:
+            case CARROT_SEED:
+                equipSeed(new Seed(ID));
+                break;
+            case DIAMOND_TOOL: 
+            case BASIC_TOOL:
+                equipTool(new Tool(ID));
+                break;
+            case FERTILIZER:
+                
+                break;    
+        }
     }
 }
