@@ -55,8 +55,8 @@ public class LandPlot extends SuperSmoothMover
 
         //initialize the plot
         plot = new DirtTile[GRID_ROWS][GRID_COLS];
-
     }
+
     //credit: ChatGPT for the idea to store mouse info
     //used to check when mouse is dragging and calculates the movement per act and applies it to each tile
     public void moveAndDrag(){

@@ -18,20 +18,23 @@ public class CurrencyHandler extends SuperSmoothMover
     
     public void act(){
         GreenfootImage i = new GreenfootImage(64, 128);
-        i.drawString("$" + money, 0, i.getHeight()/2);
+        i.drawString("$" + money, i.getWidth()/2, i.getHeight()/2);
         setImage(i);
     }
     
-    public static void initialize(String saveFile){
+    public static void initialize(String savedFile){
         priceIndex = new HashMap<>();
         priceIndex.put(ObjectID.DIRT_TILE, 10);
         priceIndex.put(ObjectID.STUBBY_WHEAT_SEED, 20);
         priceIndex.put(ObjectID.WHEAT_SEED, 1);
         priceIndex.put(ObjectID.DIAMOND_TOOL, 10000);
         priceIndex.put(ObjectID.BASIC_TOOL, 10);
+        priceIndex.put(ObjectID.FERTILIZER, 5);
+        resetBalance();
+        if(savedFile != null){
+            GameInfo.loadMoney(savedFile);
+        }
     }
-    
-    
     public static void purchase(ObjectID ID, int amount){
         if(isAffordable(ID, amount)){
             money -= amount * priceIndex.get(ID);
@@ -69,5 +72,9 @@ public class CurrencyHandler extends SuperSmoothMover
     
     public static void withdraw (int amount){
         money -= amount;
+    }
+    
+    private static void resetBalance(){
+        money = 0;
     }
 }

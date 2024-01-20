@@ -8,9 +8,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Seed extends Item
 {
+    public static int totalPlantCount;
     private boolean disapearWhenEmpty;
 
     private GreenfootImage seedImage;
+    private ObjectID ID;
     //is this item a display item or item in play
     private boolean display;
     private int frame;
@@ -18,7 +20,6 @@ public class Seed extends Item
     
 
     public Seed(ObjectID ID, int amount, boolean disapear){
-
         disapearWhenEmpty = disapear;
         this.ID = ID.getSeedID();
         Inventory.add(this.ID, amount);
@@ -115,9 +116,9 @@ public class Seed extends Item
             plant.plant(plot, tile);
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
-
+                
                 getWorld().removeObject(this);
-
+            
             }
         }
         else{
@@ -141,7 +142,6 @@ public class Seed extends Item
         
         return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
     }
-    
 
     public void setDisplay(boolean toggle){
         display = toggle;

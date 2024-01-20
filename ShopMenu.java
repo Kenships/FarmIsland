@@ -104,7 +104,7 @@ public class ShopMenu extends SuperSmoothMover
     public void sortItemGallery(){
         //to be filled
     }
-    
+
     public void resetShop(){
         int index = 0;
         for(ShopItem item : itemGallery){
@@ -125,7 +125,7 @@ public class ShopMenu extends SuperSmoothMover
         myWorld.addObject(featuredItem, x, y);
 
     }
-    
+
     public void addButtons(){
         int x = LEFT_MARGIN/3;
         int y = GameWorld.SCREEN_HEIGHT - LEFT_MARGIN/3;
@@ -144,7 +144,7 @@ public class ShopMenu extends SuperSmoothMover
         y = GameWorld.SCREEN_HEIGHT/2;
         myWorld.addObject(purchase, x,y);
     }
-    
+
     public void clearShop(){
         ArrayList<Actor> components = new ArrayList<>();
         components.add(returnButton);

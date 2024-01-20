@@ -27,14 +27,13 @@ public class Inventory
     public static void loadGame(String saveFile){
         //will read from game save file
         resetData();
+        if(saveFile!= null){
+            GameInfo.loadInventory(saveFile);
+        }
     }
     
     public static void resetData(){
         inventory.clear();
-    }
-    
-    public static HashMap <ObjectID, Integer> getInventory(){
-        return inventory;
     }
     
     public static int getAmount(ObjectID id){
@@ -84,7 +83,7 @@ public class Inventory
     
     //adds multiple items to inventory
     public static void add(ObjectID id, int amount){
-        if(!inventory.containsKey(id)){;
+        if(!inventory.containsKey(id)){
             inventory.put(id,amount);
             display.addItem(id);
         }
@@ -99,5 +98,9 @@ public class Inventory
         for(ObjectID id : inventory.keySet()){
             System.out.println(id + " : " + inventory.get(id));
         }
+    }
+    
+    public static HashMap<ObjectID, Integer> getInventory(){
+        return inventory;
     }
 }

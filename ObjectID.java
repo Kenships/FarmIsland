@@ -8,7 +8,7 @@ import greenfoot.*;
 public enum ObjectID  
 {
     NONE, DIRT_TILE, LANDPLOT, STUBBY_WHEAT, STUBBY_WHEAT_SEED, WHEAT, WHEAT_SEED, CARROT, CARROT_SEED,
-    BASIC_TOOL, DIAMOND_TOOL;
+    BASIC_TOOL, DIAMOND_TOOL, FERTILIZER;
     
     public ObjectID getSeedID(){
         switch(this){
@@ -18,6 +18,8 @@ public enum ObjectID
                 return STUBBY_WHEAT_SEED; 
             case CARROT:
                 return CARROT_SEED;
+            case FERTILIZER:
+                return FERTILIZER;
         }
         return WHEAT_SEED;
     }

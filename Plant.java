@@ -41,7 +41,7 @@ public abstract class Plant extends Tile
         //nextFrame would be 0
         animationIndex = -1;
 
-        yOffsets = new HashMap<>();    
+        yOffsets = new HashMap<>();
     }
 
     public void act()

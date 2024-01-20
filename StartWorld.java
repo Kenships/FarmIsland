@@ -1,13 +1,22 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.Scanner;
+import java.util.NoSuchElementException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.awt.Desktop;
 /**
  * Changes:
  * StartWorld
  */
 public class StartWorld extends World
 {
-    /**
-     * NEW
-     */
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
     
@@ -21,6 +30,11 @@ public class StartWorld extends World
     private Button load;
     private Button settings;
     private Button quit;
+    
+    private Scanner scan;
+    private Scanner fileScanner;
+    private String fileName;
+    private static ArrayList<String> saveFile;
     public StartWorld()
     {   
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false);
@@ -39,7 +53,20 @@ public class StartWorld extends World
             Greenfoot.setWorld(new GameWorld(null));
         }
         if(Greenfoot.mouseClicked(load)){
-            //brings you to load world/menu
+            //Open();
+        
+            scan = new Scanner(System.in);
+            System.out.println("Enter Your File Name: ");
+            fileName = scan.nextLine();
+            scan.close();
+            try{
+                fileScanner = new Scanner (new File(fileName));
+                Greenfoot.setWorld(new GameWorld(fileName));
+            }
+            catch(FileNotFoundException e){
+                System.out.println("Invalid File");
+            }
+            fileScanner.close();
         }
         if(Greenfoot.mouseClicked(settings)){
             //brings you to settings world/menu
@@ -50,9 +77,6 @@ public class StartWorld extends World
     }
     
     public void initialize(){
-        /**
-         * NEW: initialize method edited
-         */
         setPaintOrder(Button.class, Effect.class);
         startButton = new MenuButton("Start");
         load = new MenuButton("Load");
@@ -65,4 +89,29 @@ public class StartWorld extends World
         addObject(new Effect(Effect.ROCK, island), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
         addObject(new Effect(Effect.PULSE, clouds), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     }
+    
+    /*
+    private void Open(){
+        Desktop desktop = null;
+        if (!Desktop.isDesktopSupported()) {
+            return;
+        }
+        desktop = Desktop.getDesktop();
+        String path = "C:\\Users";
+        try {
+            File fPath=new File(path);
+            if(!fPath.exists()){
+                return;
+            }
+            if(!fPath.isDirectory()){
+                return;
+                
+            }
+            desktop.open(fPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+    */
 }

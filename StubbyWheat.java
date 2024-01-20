@@ -45,7 +45,7 @@ public class StubbyWheat extends Plant implements ItemConvertible
 
         setImage(growthAnimations[growthStage][0]);
     }
-
+    
     public void grow(){
         maturity += growthRate;
         if(maturity % 300 == 0 && growthStage < GROWTH_STAGES - 1){
