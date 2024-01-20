@@ -244,7 +244,11 @@ public class DirtTile extends Tile
         myPlot.zSort();
         active = true;
     }
-
+    
+    public double getGrowthMultiplier(){
+        return growthMultiplier;
+    }
+    
     /**
      * NEW 
      */

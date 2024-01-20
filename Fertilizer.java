@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Fertilizer extends SuperSmoothMover
+public class Fertilizer extends Item
 {
     private boolean disapearWhenEmpty;
     private GreenfootImage fertilizerImage;
@@ -49,7 +49,7 @@ public class Fertilizer extends SuperSmoothMover
     
     public void reposition(){
         //check if Fertilizer is held in cursor
-        if(Cursor.getActor() == this){
+        if(Cursor.getItem() == this){
             MouseInfo mouse = Greenfoot.getMouseInfo();
             if(mouse != null){
                 setLocation (mouse.getX(), mouse.getY());

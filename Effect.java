@@ -14,7 +14,7 @@ public class Effect extends SuperSmoothMover
     public static final int PULSE = 0;
     public static final int ROCK = 1;
     public static final int SLIDE = 2;
-    
+    public static final int FADE = 3;
     private GreenfootImage image;
     private int effect;
     private double index, deltaIndex;
@@ -62,13 +62,21 @@ public class Effect extends SuperSmoothMover
                 case SLIDE:
                     slide();
                     break;
+                case FADE:
+                    fade();
+                    break;
             }
         
         
         
         actCounter ++;
     }
-    
+    public void fade(){
+        image.setTransparency(image.getTransparency() - 1);
+        if(image.getTransparency() == 0){
+            getWorld().removeObject(this);
+        }
+    }
     public void pulse(){
         GreenfootImage scaled = new GreenfootImage(image);
         if(index <= duration){

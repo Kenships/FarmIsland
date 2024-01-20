@@ -48,7 +48,7 @@ public class GameWorld extends World
     private Button openShop;
     private AchievementMenu achievement;
     private Button openAchievement;
-    private Leave leave;
+    private Button leave;
     
     private AchievementManager achievementManager;
 
@@ -84,20 +84,14 @@ public class GameWorld extends World
         //initializes starting screen
 
         screen = GAME;
-        setPaintOrder(AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, Fertilizer.class, Plant.class, Effect.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
         
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 
-        // Set up the inventory from the previous save
-        Inventory.initialize(savedFile);
-        CurrencyHandler.initialize(savedFile);
-        CollectionHandler.initialize(this);
-
+        
         addObject(new CurrencyHandler(), 1200, 100);
-        addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
-        addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
-        addObject(new Fertilizer(ObjectID.FERTILIZER, 10, false), 1000, 650); // Testing
+
         
         // Initializes shop menu
         HashMap<ObjectID, Integer> temp = new HashMap<>();
@@ -112,16 +106,23 @@ public class GameWorld extends World
         homeButton = new MenuButton("Home");
         openAchievement = new MenuButton("Achievement");
         openInventory = new MenuButton("Inventory");
+        leave = new MenuButton("Leave");
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(homeButton);
         buttons.add(openShop);
         buttons.add(openInventory);
         buttons.add(openAchievement);
+        buttons.add(leave);
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
         //addObject(openShop, 64, 656);
         //addObject(homeButton, 64, 600);
         
+        // Set up the inventory from the previous save
+        Inventory.initialize(savedFile, inventoryDisplay);
+        CurrencyHandler.initialize(savedFile);
+        CollectionHandler.initialize(this);
+
         // Initializes achievement menu
         achievement = new AchievementMenu();
         achievementManager = new AchievementManager();
@@ -138,8 +139,8 @@ public class GameWorld extends World
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
         
         // temp
-        leave = new Leave();
-        addObject(leave, 100, 100);
+        
+        
     }
     
     public void spawnClouds(){
@@ -191,7 +192,7 @@ public class GameWorld extends World
         if(openShop.leftClickedThis()){
             setScreen(SHOP);
         }
-        if(Greenfoot.mouseClicked(openAchievement)){
+        if(openAchievement.leftClickedThis()){
             setScreen(ACHIEVEMENT);
         }
         if(homeButton.leftClickedThis() && !shouldMove && distance  != 0){
@@ -205,7 +206,7 @@ public class GameWorld extends World
                 inventoryDisplay.open();
             }
         }    
-        if(Greenfoot.mouseClicked(leave)){
+        if(leave.leftClickedThis()){
             GameInfo.saveGame(this);
         }
     }

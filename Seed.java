@@ -12,7 +12,6 @@ public class Seed extends Item
     private boolean disapearWhenEmpty;
 
     private GreenfootImage seedImage;
-    private ObjectID ID;
     //is this item a display item or item in play
     private boolean display;
     private int frame;

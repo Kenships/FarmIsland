@@ -97,8 +97,6 @@ public abstract class Plant extends Tile
 
     public abstract void nextFrame();
 
-    public abstract void collect();
-
     public GreenfootImage[] getSeedImages(){
         return growthAnimations[0];
     }

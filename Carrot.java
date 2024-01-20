@@ -80,19 +80,6 @@ public class Carrot extends Plant
             setImage(growthAnimations[growthStage][animationIndex]);
         }
     }
-    public void collect(){
-        Tool tool = Cursor.getTool();
-        int netYield = yield;
-        if(tool != null){
-            netYield *= tool.getEffiency();
-            tool.takeDurability();
-        }
-        
-        Inventory.add(ID, netYield);
-        CurrencyHandler.deposit(netYield * 2);
-        myTile.unPlant();
-        getWorld().removeObject(this);
-    }
     
     public void checkKeypressAction(){
         
