@@ -18,6 +18,7 @@ public class StubbyWheat extends Plant implements ItemConvertible
         ID = ObjectID.STUBBY_WHEAT;
         initialize();
         yield = 1;
+        sellPrice = 25;
     }
     public StubbyWheat(int yield){
         super();

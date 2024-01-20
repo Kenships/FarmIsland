@@ -19,7 +19,9 @@ public class Carrot extends Plant
         ID = ObjectID.CARROT;
         initialize();
         yield = 1;
+        sellPrice = 3;
     }
+
     public Carrot(int yeild){
         super(32);
         ID = ObjectID.WHEAT;

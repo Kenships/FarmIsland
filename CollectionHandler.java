@@ -28,7 +28,7 @@ public class CollectionHandler extends SuperSmoothMover
             }
             
             Inventory.add(plant.getID(), netYield);
-            CurrencyHandler.deposit(netYield * 2); 
+            CurrencyHandler.deposit(netYield * plant.getSellPrice()); 
             w.removeObject(plant);
             plant.getTile().unPlant();
             

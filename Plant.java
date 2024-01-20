@@ -17,6 +17,7 @@ public abstract class Plant extends Tile
     protected int lifeTime;
     protected boolean mature;
     protected int yield;
+    protected int sellPrice;
 
     //[Growth Stage][Animation Frame];
     protected GreenfootImage[][] growthAnimations;
@@ -105,6 +106,10 @@ public abstract class Plant extends Tile
         yOffsets.put(growthStage, pixels);
     }
     //getters and setters
+    public int getSellPrice(){
+        return sellPrice;
+    }
+    
     public int getGrowthRate(){
         return growthRate;
     }
