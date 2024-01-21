@@ -25,6 +25,10 @@ public class Seed extends Item
         
 
         seedImage = ID.getDisplayImage();
+        double ratio = (double) seedImage.getHeight()/seedImage.getWidth();
+        
+        seedImage.scale(32,(int)(32 * ratio + 0.5));
+        
         display = false;
         setImage(seedImage);
     }
@@ -115,9 +119,10 @@ public class Seed extends Item
         if(Inventory.getAmount(ID) > 0 || Inventory.getAmount(ID) < 0){
 
             //remove one count of seed in inventory
-            Inventory.remove(ID);
+            
             plant.plant(plot, tile);
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
+            Inventory.remove(ID);
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
                 
                 getWorld().removeObject(this);

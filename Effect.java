@@ -21,8 +21,8 @@ public class Effect extends SuperSmoothMover
     private int width, height;
     private int initX, initY;
     private double ratio;
-    private int actCounter = 0;
-    private int duration;
+    private double duration;
+    private SimpleTimer actTimer;
     public Effect(int effect, String image){
         this(effect, new GreenfootImage(image));
     }
@@ -32,7 +32,9 @@ public class Effect extends SuperSmoothMover
     public Effect(int effect, GreenfootImage i, int duration){
         this(effect, i , duration, 0.1);
     }
-    public Effect(int effect, GreenfootImage i, int duration, double speed){
+    public Effect(int effect, GreenfootImage i, double duration, double speed){
+        actTimer = new SimpleTimer();
+        
         this.duration = duration;
         this.image = i;
         this.effect = effect;
@@ -51,6 +53,8 @@ public class Effect extends SuperSmoothMover
     }
     public void act()
     {
+        if(actTimer.millisElapsed() >= 17){
+            actTimer.mark();
         
             switch(effect){
                 case PULSE:
@@ -66,10 +70,7 @@ public class Effect extends SuperSmoothMover
                     fade();
                     break;
             }
-        
-        
-        
-        actCounter ++;
+        }
     }
     public void fade(){
         image.setTransparency(image.getTransparency() - 1);

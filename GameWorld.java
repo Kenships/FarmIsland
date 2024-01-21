@@ -35,6 +35,8 @@ public class GameWorld extends World
     public static final String SHOP = "Shop";
     public static final String ACHIEVEMENT = "Achievement";
 
+    private int previousY;
+
     private LandPlot landPlot;
     private EquipDisplay equip;
     private Button homeButton;
@@ -49,11 +51,17 @@ public class GameWorld extends World
     private AchievementMenu achievement;
     private Button openAchievement;
     private Button leave;
-    
+
     private AchievementManager achievementManager;
 
     private Button openInventory;
     private InventoryDisplay inventoryDisplay;
+    private SimpleTimer actTimer;
+    private SimpleTimer cloudTimer;
+    
+    //for keypress only
+    private boolean inventoryMoving;
+    
     /**
      * Constructor for objects of class GameWorld.
      * 
@@ -68,30 +76,33 @@ public class GameWorld extends World
     public void act(){
         if(screen.equals(GAME)){
             checkMouseAction();
-            homeIslands();
+            checkKeyAction();
+            if(actTimer.millisElapsed() >= 17){
+                actTimer.mark();
+                homeIslands();
+                spawnClouds();
+            }
         }
-        
-        spawnClouds();
+
         
 
     }
-    
+
     // I WILL FILL THIS OUT
     public void initialize(String savedFile){
         editMode = true;
+
+        actTimer = new SimpleTimer();
+        cloudTimer = new SimpleTimer();
         
         setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
         //initializes starting screen
 
         screen = GAME;
-        setPaintOrder(AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
-        
+        setPaintOrder(SuperTextBox.class, AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
+
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-
-        
-        addObject(new CurrencyHandler(), 1200, 100);
-
         
         // Initializes shop menu
         HashMap<ObjectID, Integer> temp = new HashMap<>();
@@ -101,7 +112,7 @@ public class GameWorld extends World
         temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
         shop = new ShopMenu(temp);
-        
+
         // Initializes buttons
         openShop = new MenuButton("Shop");
         homeButton = new MenuButton("Home");
@@ -116,7 +127,7 @@ public class GameWorld extends World
         buttons.add(leave);
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
-        
+
         equip = new EquipDisplay();
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
@@ -128,30 +139,45 @@ public class GameWorld extends World
         achievementManager = new AchievementManager();
 
         
-        
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
         equip.equipSeed(new Seed(ObjectID.CARROT_SEED, 1, false));
         equip.equipTool(tool);
         addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
-        
-        addObject(new CurrencyHandler(), 1200, 100);
+
+        addObject(new CurrencyHandler(), 100, 100);
         //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
-        
-        // temp
-        
-        
+
+        fillClouds();
+
     }
-    
-    public void spawnClouds(){
-        if(Greenfoot.getRandomNumber(300) == 0){
+    public void fillClouds(){
+        for(int i = 0; i < 10; i++){
             int cloudNum = Greenfoot.getRandomNumber(6) + 1;
-            int startY = SCREEN_HEIGHT/(Greenfoot.getRandomNumber(20) + 1);
+            int startY = (Greenfoot.getRandomNumber(12) + 1) * SCREEN_HEIGHT/12;
+            int startX = (Greenfoot.getRandomNumber(12) + 1) * SCREEN_WIDTH/12;
+            while(startY < previousY + 32 && startY > previousY - 32){
+                startY = (Greenfoot.getRandomNumber(12) + 1) * SCREEN_HEIGHT/12;
+            }
             GreenfootImage cloud = new GreenfootImage("BackGrounds/Cloud " + cloudNum + ".png");
-            addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() * 2, 1), -cloud.getWidth(), startY);
+            addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() - startX, 1.0/(Greenfoot.getRandomNumber(4) + 1.0)), startX, startY);
         }
-        
     }
+    public void spawnClouds(){
+
+        if(cloudTimer.millisElapsed() > 4000){
+            cloudTimer.mark();
+            int cloudNum = Greenfoot.getRandomNumber(6) + 1;
+            int startY = (Greenfoot.getRandomNumber(12) + 1) * SCREEN_HEIGHT/12;
+            while(startY < previousY + 16 && startY > previousY - 16){
+                startY = (Greenfoot.getRandomNumber(12) + 1) * SCREEN_HEIGHT/12;
+            }
+            GreenfootImage cloud = new GreenfootImage("BackGrounds/Cloud " + cloudNum + ".png");
+            addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() * 2, 1.0/(Greenfoot.getRandomNumber(4) + 1.0)), -cloud.getWidth(), startY);
+        }
+
+    }
+
     public void homeIslands(){
         DirtTile centreTile = landPlot.getTile(LandPlot.STARTING_ROW, LandPlot.STARTING_COL);
         int centreX = SCREEN_WIDTH/2;
@@ -188,6 +214,23 @@ public class GameWorld extends World
             i++;
         }
     }
+    
+    public void checkKeyAction(){
+        
+        if(Greenfoot.isKeyDown("b")){
+            setScreen(SHOP);
+        }
+        if(!inventoryDisplay.isMoving() && (Greenfoot.isKeyDown("i") || Greenfoot.isKeyDown("e"))){
+            if(inventoryDisplay.isOpen()){
+                inventoryDisplay.close();
+            }
+            else{
+                inventoryDisplay.open();
+            }
+        }
+        
+    }
+    
     public void checkMouseAction(){
         if(openShop.leftClickedThis()){
             setScreen(SHOP);

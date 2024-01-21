@@ -204,7 +204,9 @@ public class SuperTextBox extends SuperSmoothMover
     public void update (){
 
         int xPos, yPos;
-
+        
+        image.clear();
+        
         image.setColor(backColor);
         image.fill();
 

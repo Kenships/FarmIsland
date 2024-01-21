@@ -1,12 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Wheat here.
+ * Write a description of class CopyOfCarrot here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Wheat extends Plant
+public class Berry extends Plant
 {
     public static final int Y_OFFSET = 32;
     public static final int DEFAULT_GROWTHRATE = 1;
@@ -14,14 +14,15 @@ public class Wheat extends Plant
     /**
      * NEW: ID moved and initialized in constructor
      */
-    public Wheat(){
+    public Berry(){
         super(Y_OFFSET);
-        sellPrice = 2;
-        ID = ObjectID.WHEAT;
+        ID = ObjectID.CARROT;
         initialize();
         yield = 1;
+        sellPrice = 3;
     }
-    public Wheat(int yeild){
+
+    public Berry(int yeild){
         super(32);
         ID = ObjectID.WHEAT;
         initialize();
@@ -41,10 +42,10 @@ public class Wheat extends Plant
         
         growthRate = DEFAULT_GROWTHRATE;
         
-        growthAnimations = new GreenfootImage[GROWTH_STAGES][5];
+        growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
-                growthAnimations[stage][frame] = new GreenfootImage("Plants/Wheat/Stage " + stage + "/"+ frame + ".png");
+                growthAnimations[stage][frame] = new GreenfootImage("Plants/Carrot/Stage " + stage + "/"+ frame + ".png");
             }
 
         }

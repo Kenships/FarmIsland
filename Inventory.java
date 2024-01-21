@@ -63,6 +63,7 @@ public class Inventory
             if(inventory.get(id) - amount == 0){
                 inventory.remove(id);
                 display.removeItem(id);
+                equip.unEquipItem(id);
             }
             else if(inventory.get(id) - amount < 0){
                 return false;

@@ -12,14 +12,17 @@ public class CurrencyHandler extends SuperSmoothMover
 
     private static HashMap<ObjectID, Integer> priceIndex;
     
+    private static SuperTextBox CashDisplay;
     public CurrencyHandler(){
-        setImage(new GreenfootImage(64, 128));
+        //setImage(new GreenfootImage(64, 128));
     }
     
     public void act(){
-        GreenfootImage i = new GreenfootImage(64, 128);
-        i.drawString("$" + money, i.getWidth()/2, i.getHeight()/2);
+        GreenfootImage i = new GreenfootImage("BackGrounds/Money.png");
+        i.setFont(new Font("Tekton Pro", true, false,  20));
+        i.drawString("$" + money, 14, i.getHeight()/2);
         setImage(i);
+        
     }
     
     public static void initialize(String savedFile){

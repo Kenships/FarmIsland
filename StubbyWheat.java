@@ -34,10 +34,11 @@ public class StubbyWheat extends Plant implements ItemConvertible
     public void initialize(){
         growthRate = DEFAULT_GROWTHRATE;
         
+        
         growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             //initialize offsets
-            setYOffset(stage, 0);
+            setYOffset(stage, -16);
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
                 growthAnimations[stage][frame] = new GreenfootImage("Plants/StubbyWheat/Stage " + stage + "/" + frame + ".png");
             }

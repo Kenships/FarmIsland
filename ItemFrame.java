@@ -34,18 +34,19 @@ public class ItemFrame extends SuperSmoothMover
     public void updateID(ObjectID ID){
         this.ID = ID;
         foreground = ID.getDisplayImage();
-        System.out.println(ID);
         drawFrame();
     }
     //use this method to set your own image
     public void drawFrame(){
+        mainImage.clear();
         mainImage.drawImage(background, 0, 0);
         int marginY = (background.getHeight() - foreground.getHeight())/2;
         int marginX = (background.getWidth() - foreground.getWidth())/2;
         if(marginY < 0 || marginX < 0){
-            foreground.scale(background.getWidth(), background.getHeight());
-            marginY = 0;
-            marginX = 0;
+            double ratio = (double) foreground.getHeight()/foreground.getWidth();
+            foreground.scale(background.getWidth(), (int)(background.getWidth() * ratio + 0.5));
+            marginY = (background.getHeight() - foreground.getHeight())/2;;
+            marginX = (background.getWidth() - foreground.getWidth())/2;
         }
         mainImage.drawImage(foreground, marginX, marginY);
         setImage(mainImage);

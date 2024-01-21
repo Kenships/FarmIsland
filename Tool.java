@@ -16,6 +16,8 @@ public class Tool extends Item
     public Tool(ObjectID ID){
         this.ID = ID;
         toolImage = ID.getToolImage();
+        double ratio = (double) toolImage.getHeight()/toolImage.getWidth();
+        toolImage.scale(50,(int)(50 * ratio + 0.5));
         switch(ID){
             case BASIC_TOOL:
                 efficiency = 1;

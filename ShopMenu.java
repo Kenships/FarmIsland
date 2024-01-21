@@ -16,7 +16,7 @@ public class ShopMenu extends SuperSmoothMover
 {
     public static final int ROW_MAX = 4;
     public static final int SPACING = ShopItem.FRAME_WIDTH + 32;
-    public static final int TOP_MARGIN = 128;
+    public static final int TOP_MARGIN = 256;
     public static final int LEFT_MARGIN = 200;
     private static final int UP = 1;
     private static final int DOWN = -1;
@@ -34,10 +34,12 @@ public class ShopMenu extends SuperSmoothMover
     private Button menuUp;
     private Button menuDown;
     private MenuButton purchase;
-    
+
     private boolean firstOpened;
-    
+
     private GameWorld myWorld;
+
+    private SimpleTimer actTimer;
     public ShopMenu(ArrayList<ObjectID> galleryIDs){
         initialize(galleryIDs);
     }
@@ -56,15 +58,23 @@ public class ShopMenu extends SuperSmoothMover
     public void act(){
         if(myWorld.isScreen(myWorld.SHOP)){
             checkMouseAction();
-            if(direction != 0){
-                slide();
+            checkKeyAction();
+            if(actTimer.millisElapsed() >= 17){
+                actTimer.mark();
+                if(direction != 0){
+                    slide();
+                }
             }
+
         }
 
     }
 
     public void initialize(ArrayList<ObjectID> galleryIDs){
-        background = new GreenfootImage("Shop Background.png");
+        actTimer = new SimpleTimer();
+
+        background = new GreenfootImage("Shop.png");
+        
         setImage(background);
 
         returnButton = new MenuButton("Shop");
@@ -79,16 +89,18 @@ public class ShopMenu extends SuperSmoothMover
     }
 
     public void initialize(HashMap<ObjectID, Integer> galleryIDs){
-        background = new GreenfootImage("Backgrounds/Shop Background.png");
+        actTimer = new SimpleTimer();
+        
+        background = new GreenfootImage("Backgrounds/Shop.png");
+        background.drawImage(new GreenfootImage("Backgrounds/Shop Mascot.png"), 0, 0);
         setImage(background);
 
         returnButton = new MenuButton("Shop");
-        menuUp = new MenuButton("Arrow");
-        menuDown = new MenuButton("Arrow");
-        purchase = new MenuButton("Purchase");
-        menuDown.setRotation(180);
+        menuUp = new MenuButton("Shop Up");
+        menuDown = new MenuButton("Shop Down");
+        purchase = new MenuButton("Buy");
         itemGallery = new ArrayList<>();
-        
+
         for(ObjectID ID : galleryIDs.keySet()){
             if(galleryIDs.get(ID) == -1){
                 itemGallery.add(new ShopItem(ID, true));
@@ -100,7 +112,7 @@ public class ShopMenu extends SuperSmoothMover
         }
         sortItemGallery();
     }
-    
+
     public void sortItemGallery(){
         //to be filled
     }
@@ -120,8 +132,8 @@ public class ShopMenu extends SuperSmoothMover
         }
 
         featuredItem = new FeaturedFrame(itemGallery.get(0),purchase);
-        int x = SPACING * (ROW_MAX + 1) + 256;
-        int y = GameWorld.SCREEN_HEIGHT/2;
+        int x = 1043;
+        int y = 400;
         myWorld.addObject(featuredItem, x, y);
 
     }
@@ -131,18 +143,13 @@ public class ShopMenu extends SuperSmoothMover
         int y = GameWorld.SCREEN_HEIGHT - LEFT_MARGIN/3;
         myWorld.addObject(returnButton, x, y);
         getWorld().addObject(returnButton, 64, 656);
-        x = LEFT_MARGIN + SPACING * ROW_MAX;
-        y = TOP_MARGIN;
-
-        myWorld.addObject(menuUp,x,y);
-
-        y = GameWorld.SCREEN_HEIGHT - y;
-        myWorld.addObject(menuDown,x,y);
+        
+        myWorld.addObject(menuUp, 814, 250);
 
         
-        x = SPACING * (ROW_MAX + 1) + 256;
-        y = GameWorld.SCREEN_HEIGHT/2;
-        myWorld.addObject(purchase, x,y);
+        myWorld.addObject(menuDown,814, 570);
+
+        myWorld.addObject(purchase, 1040, 526);
     }
 
     public void clearShop(){
@@ -157,7 +164,19 @@ public class ShopMenu extends SuperSmoothMover
             myWorld.removeObject(component);
         }
     }
-
+    
+    public void checkKeyAction(){
+        if(Greenfoot.isKeyDown("b") == !firstOpened){
+            firstOpened = false;
+            myWorld.setScreen(GameWorld.GAME);
+            clearShop();
+            myWorld.removeObject(this);
+        }
+        else{
+            firstOpened = false;
+        }
+    }
+    
     public void checkMouseAction(){
         if (returnButton.leftClickedThis() && !firstOpened){
             myWorld.setScreen(myWorld.GAME);

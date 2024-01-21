@@ -10,7 +10,7 @@ public class Carrot extends Plant
 {
     public static final int Y_OFFSET = 32;
     public static final int DEFAULT_GROWTHRATE = 1;
-    public static final int GROWTH_STAGES = 3;
+    public static final int GROWTH_STAGES = 4;
     /**
      * NEW: ID moved and initialized in constructor
      */

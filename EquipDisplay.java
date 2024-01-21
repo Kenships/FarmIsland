@@ -47,7 +47,7 @@ public class EquipDisplay extends SuperSmoothMover
             if(tool != null){
                 getWorld().addObject(tool,getX() - SPACING, getY());
             }
-            if(seed.getWorld() != null){
+            if(seed != null && seed.getWorld() != null){
                 getWorld().removeObject(seed);
             }
             toolFrame.select();
@@ -59,7 +59,7 @@ public class EquipDisplay extends SuperSmoothMover
             if(seed != null){
                 getWorld().addObject(seed ,getX() - SPACING, getY());
             }
-            if(tool.getWorld() != null){
+            if(tool != null && tool.getWorld() != null){
                 getWorld().removeObject(tool);
             }
             Cursor.pickUp(seed);
@@ -69,10 +69,10 @@ public class EquipDisplay extends SuperSmoothMover
         }
         if(fertilizerFrame.hoveringThis() && Cursor.leftClicked()){
             
-            if(tool.getWorld() != null){
+            if(tool != null && tool.getWorld() != null){
                 getWorld().removeObject(tool);
             }
-            if(seed.getWorld() != null){
+            if(seed != null && seed.getWorld() != null){
                 getWorld().removeObject(seed);
             }
             Cursor.release();
@@ -98,8 +98,8 @@ public class EquipDisplay extends SuperSmoothMover
     }
 
     public void equipTool(Tool tool){
-        if(tool.getWorld() != null){
-            getWorld().removeObject(tool);
+        if(this.tool != null && this.tool.getWorld() != null){
+            getWorld().removeObject(this.tool);
         }
 
         this.tool = tool;
@@ -107,20 +107,63 @@ public class EquipDisplay extends SuperSmoothMover
     }
 
     public void equipSeed(Seed seed){
-        if(seed.getWorld() != null){
-            getWorld().removeObject(seed);
+        if(this.seed != null && this.seed.getWorld() != null){
+            getWorld().removeObject(this.seed);
         }
         this.seed = seed;
         seedFrame.updateID(seed.getID());
     }
     
     public void equipFertilizer(Fertilizer fertilizer){
-        if(fertilizer.getWorld() != null){
-            getWorld().removeObject(fertilizer);
+        if(this.fertilizer != null && this.fertilizer.getWorld() != null){
+            getWorld().removeObject(this.fertilizer);
         }
 
         this.fertilizer = fertilizer;
         fertilizerFrame.updateID(fertilizer.getID());
+    }
+    
+    public void unEquipTool(){
+        if(this.tool != null && this.tool.getWorld() != null){
+            getWorld().removeObject(this.tool);
+        }
+
+        this.tool = null;
+        toolFrame.updateID(ObjectID.NONE);
+    }
+
+    public void unEquipSeed(){
+        if(this.seed != null && this.seed.getWorld() != null){
+            getWorld().removeObject(this.seed);
+        }
+        this.seed = null;
+        seedFrame.updateID(ObjectID.NONE);
+    }
+    
+    public void unEquipFertilizer(){
+        if(this.fertilizer != null && this.fertilizer.getWorld() != null){
+            getWorld().removeObject(this.fertilizer);
+        }
+
+        this.fertilizer = null;
+        fertilizerFrame.updateID(ObjectID.NONE);
+    }
+    
+    public void unEquipItem(ObjectID ID){
+        switch(ID){
+            case STUBBY_WHEAT_SEED:
+            case WHEAT_SEED:
+            case CARROT_SEED:
+                unEquipSeed();
+                break;
+            case DIAMOND_TOOL: 
+            case BASIC_TOOL:
+                unEquipTool();
+                break;
+            case FERTILIZER:
+                unEquipFertilizer();
+                break;    
+        }
     }
     
     public void equipItem(ObjectID ID){
@@ -135,7 +178,7 @@ public class EquipDisplay extends SuperSmoothMover
                 equipTool(new Tool(ID));
                 break;
             case FERTILIZER:
-                
+                equipFertilizer(new Fertilizer(ID));
                 break;    
         }
     }

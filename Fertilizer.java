@@ -13,10 +13,8 @@ public class Fertilizer extends Item
     private ObjectID ID;
     private boolean display;
     private int fixedX, fixedY;
-    private static int fertilizerSize;
     
     public Fertilizer(ObjectID ID, int amount, boolean disapear){
-        fertilizerSize = 5;
         disapearWhenEmpty = disapear;
 
         Inventory.add(ID, amount);
@@ -28,11 +26,11 @@ public class Fertilizer extends Item
     }
 
     public Fertilizer(ObjectID ID, int amount){
-        this(ID, amount, true);
+        this(ID, amount, false);
     }
-
+    
     public Fertilizer(ObjectID ID){
-        this(ID, -1);
+        this.ID = ID;
     }
     
     public void addedToWorld(){
@@ -73,10 +71,7 @@ public class Fertilizer extends Item
     }
     
     public void removeOne(){
-        fertilizerSize --;
+        Inventory.remove(ID);
     }
     
-    public int getFertilizerSize(){
-        return fertilizerSize;
-    }
 }

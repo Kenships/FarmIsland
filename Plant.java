@@ -10,7 +10,7 @@ import java.util.HashMap;
 public abstract class Plant extends Tile
 {
     protected ObjectID ID;
-    
+
     protected int growthRate;
     protected int maturity; 
     protected int growthStage;
@@ -25,7 +25,8 @@ public abstract class Plant extends Tile
     protected int deltaIndex;
     protected DirtTile myTile;
     protected HashMap<Integer, Integer> yOffsets;
-    
+    protected SimpleTimer actTimer;
+
     public Plant(){
         this(0); 
     }
@@ -42,6 +43,7 @@ public abstract class Plant extends Tile
         //nextFrame would be 0
         animationIndex = -1;
 
+        actTimer = new SimpleTimer();
         yOffsets = new HashMap<>();
     }
 
@@ -51,38 +53,40 @@ public abstract class Plant extends Tile
         if(getWorld() == null){
             return;
         }
-        
-        if(myTile != null){
-            if(myTile.getWorld() != null){
-                setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
-                grow();
-            }
-            else{
-                //collects if mature returns seed if not
-                myTile.unPlant();
-                if(mature){
-                    CollectionHandler.collect(this);
+        // 1/60 of a second is 16.666 milliseconds
+        if(actTimer.millisElapsed() >= 17){
+            actTimer.mark();
+            if(myTile != null){
+                if(myTile.getWorld() != null){
+                    setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
+                    grow();
                 }
                 else{
-                    Inventory.add(ID.getSeedID());
-                }
-                if(getWorld() != null){
-                    getWorld().removeObject(this);
-                }
+                    //collects if mature returns seed if not
+                    myTile.unPlant();
+                    if(mature){
+                        CollectionHandler.collect(this);
+                    }
+                    else{
+                        Inventory.add(ID.getSeedID());
+                    }
+                    if(getWorld() != null){
+                        getWorld().removeObject(this);
+                    }
 
-                return;
+                    return;
+                }
+            }
+            //animate
+            if(lifeTime % 12 == 0 && growthStage >= 0){
+                nextFrame();
+            }
+            //fade
+            if(growthStage >= 0){
+                fadeOval(getImage());
+                lifeTime++;
             }
         }
-        //animate
-        if(lifeTime % 12 == 0 && growthStage >= 0){
-            nextFrame();
-        }
-        //fade
-        if(growthStage >= 0){
-            fadeOval(getImage());
-            lifeTime++;
-        }
-
     }
 
     public abstract void grow();
@@ -109,7 +113,7 @@ public abstract class Plant extends Tile
     public int getSellPrice(){
         return sellPrice;
     }
-    
+
     public int getGrowthRate(){
         return growthRate;
     }
@@ -117,15 +121,15 @@ public abstract class Plant extends Tile
     public void setGrowthRate(int growthRate){
         this.growthRate = growthRate;
     }
-    
+
     public ObjectID getID(){
         return ID;
     }
-    
+
     public DirtTile getTile(){
         return myTile;
     }
-    
+
     public int getMaturity(){
         return maturity;
     }

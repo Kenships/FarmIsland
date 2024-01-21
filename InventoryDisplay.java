@@ -25,6 +25,7 @@ public class InventoryDisplay extends SuperSmoothMover
     private int page;
     private Button nextPage;
     private Button prevPage;
+    private SimpleTimer actTimer;
     public InventoryDisplay(ArrayList<Button> buttons){
         this.buttons = buttons;
         initialize();
@@ -40,35 +41,49 @@ public class InventoryDisplay extends SuperSmoothMover
             index++;
         }
 
-        w.addObject(nextPage, getX() + 136, getY() - 300);
-        w.addObject(prevPage, getX() - 120, getY() - 300);
+        w.addObject(nextPage, getX() + 130, getY() - 290);
+        w.addObject(prevPage, getX() - 110, getY() - 290);
+        
 
     }
+
     public void act()
     {
-        if(direction == 1){
-            open();
+        if(actTimer.millisElapsed() >= 4){
+            actTimer.mark();
+            if(direction == 1){
+                open();
+            }
+            if(direction == -1){
+                close();
+            }
         }
-        if(direction == -1){
-            close();
-        }
+
     }
 
     public void initialize(){
         pages = new ArrayList<>();
-        background = new GreenfootImage("BackGrounds/inventory.png");
-        nextPage = new MenuButton("Arrow");
-        prevPage = new MenuButton("Arrow");
-        nextPage.setRotation(90);
-        prevPage.setRotation(270);
-
+        
+        
+        background = new GreenfootImage("Backgrounds/inventory.png");
+        nextPage = new MenuButton("Inventory Right");
+        prevPage = new MenuButton("Inventory Left");
+        
+        Font font = new Font("Tekton Pro", true, false,  30);
+        SuperTextBox box = new SuperTextBox("INVENTORY", new Color(0,0,0,0), Color.BLACK, font, true, background.getWidth(), 0, null);
+        
+        background.drawImage(box.getImage(), 10,24);
+        actTimer = new SimpleTimer();
         setImage(background);
     }
 
     public boolean isOpen(){
         return open;
     }
-
+    
+    public boolean isMoving(){
+        return direction != 0;
+    }
     public void removeItem(ObjectID ID){
         ArrayList<GenericItem> items = pages.get(page);
         for(Item i : items){
@@ -124,8 +139,8 @@ public class InventoryDisplay extends SuperSmoothMover
         for(Button b : buttons){
             getWorld().removeObject(b);
         }
-        nextPage.setLocation(getX() + 136, getY() - 300);
-        prevPage.setLocation(getX() - 120, getY() - 300);
+        nextPage.setLocation(getX() + 130, getY() - 290);
+        prevPage.setLocation(getX() - 110, getY() - 290);
         reloadItems();
         open = false;
     }
@@ -168,8 +183,8 @@ public class InventoryDisplay extends SuperSmoothMover
                 b.setLocation(getX() - background.getWidth()/2 - BUTTON_OFFSET, b.getY());
             }
             reloadItems();
-            nextPage.setLocation(getX() + 136, getY() - 300);
-            prevPage.setLocation(getX() - 120, getY() - 300);
+            nextPage.setLocation(getX() + 130, getY() - 290);
+            prevPage.setLocation(getX() - 110, getY() - 290);
         }
     }
 
@@ -194,8 +209,8 @@ public class InventoryDisplay extends SuperSmoothMover
                 b.setLocation(getX() - background.getWidth()/2 - BUTTON_OFFSET, b.getY());
             }
             reloadItems();
-            nextPage.setLocation(getX() + 136, getY() - 300);
-            prevPage.setLocation(getX() - 120, getY() - 300);
+            nextPage.setLocation(getX() + 130, getY() - 290);
+            prevPage.setLocation(getX() - 110, getY() - 290);
         }
     }
 }
