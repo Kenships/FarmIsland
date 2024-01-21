@@ -23,7 +23,9 @@ public class EquipFrame extends ItemFrame
         mainImage = new GreenfootImage(width, height);
         background = new GreenfootImage("Displays/Frames/Wooden Frame.png");
         background.scale(width, height);
-        updateID(ID);   
+        updateID(ID); 
+        
+        
         updateHighlight();
     }
     public void act()
@@ -56,7 +58,8 @@ public class EquipFrame extends ItemFrame
     }
     public void updateID(ObjectID ID){
         super.updateID(ID);
-        System.out.println(ID);
+        double ratio = (double) foreground.getHeight()/foreground.getWidth();
+        foreground.scale(64, (int) (64 * ratio + 0.5));
         updateHighlight();
     }
 }

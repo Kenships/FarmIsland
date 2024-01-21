@@ -15,8 +15,8 @@ public class PorcusWheat extends Plant implements ItemConvertible
         super();
         ID = ObjectID.PORCUS_WHEAT;
         initialize();
-        yield = 1;
-        sellPrice = 25;
+        yield = 5;
+        sellPrice = 100;
     }
 
     public PorcusWheat(int yield){
@@ -78,12 +78,6 @@ public class PorcusWheat extends Plant implements ItemConvertible
 
     public void checkKeypressAction(){
 
-    }
-
-    public void checkMouseAction(){
-        if(mature && hoveringThis() && (Cursor.getItem() == null || PlayerStatus.isReplant()) && Cursor.getButton() == 1){
-            CollectionHandler.collect(this);
-        }
     }
 
     public void playPlaceSound(){

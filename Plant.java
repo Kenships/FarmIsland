@@ -53,13 +53,16 @@ public abstract class Plant extends Tile
         if(getWorld() == null){
             return;
         }
+        
         // 1/60 of a second is 16.666 milliseconds
         if(actTimer.millisElapsed() >= 17){
             actTimer.mark();
             if(myTile != null){
                 if(myTile.getWorld() != null){
                     setLocation(myTile.getX(), myTile.getY() + yOffsets.get(growthStage) + myTile.getTileYOffset()/2);
-                    grow();
+                    if(!mature){
+                        grow();
+                    }
                 }
                 else{
                     //collects if mature returns seed if not
@@ -91,9 +94,17 @@ public abstract class Plant extends Tile
 
     public abstract void grow();
 
-    /**
-     * NEW: plant method changed
-     */
+    public void checkMouseAction(){
+        if(hoveringThis() && Cursor.leftClicked()){
+            if(mature){
+                CollectionHandler.collect(this);
+            }
+            else{
+                CollectionHandler.shovel(this);
+            }
+        }
+    }
+    
     public void plant(LandPlot plot, DirtTile tile){
         myPlot = plot;
         myTile = tile;
@@ -143,6 +154,9 @@ public abstract class Plant extends Tile
     }
 
     public void setGrowthStage(int growthStage){
+        if(this.growthStage > growthStage && mature){
+            mature = false;
+        }
         this.growthStage = growthStage;
     }
 

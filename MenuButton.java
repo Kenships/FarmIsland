@@ -14,9 +14,23 @@ public class MenuButton extends Button
     public MenuButton(String imageName){
         //(imageName, width, height)
         super(imageName);
+        
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + " 1.png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
+        setImage(mainImage[0]);
+        width = mainImage[0].getWidth();
+        height = mainImage[0].getHeight();
     }
     public MenuButton(String imageName, String text){
         super(imageName);
+        
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + " 1.png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
+        setImage(mainImage[0]);
+        width = mainImage[0].getWidth();
+        height = mainImage[0].getHeight();
         mainImage[0].drawString(text,10,height - 10);
     }
     public void addedToWorld(World w){

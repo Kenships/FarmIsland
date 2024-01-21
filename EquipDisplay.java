@@ -18,7 +18,7 @@ public class EquipDisplay extends SuperSmoothMover
     private Seed seed;
     private Fertilizer fertilizer;
     private GameWorld w;
-    
+
     public EquipDisplay()
     {
         toolFrame = new EquipFrame(ObjectID.NONE, 86, 86);
@@ -68,7 +68,7 @@ public class EquipDisplay extends SuperSmoothMover
             fertilizerFrame.unselect();
         }
         if(fertilizerFrame.hoveringThis() && Cursor.leftClicked()){
-            
+
             if(tool != null && tool.getWorld() != null){
                 getWorld().removeObject(tool);
             }
@@ -113,7 +113,7 @@ public class EquipDisplay extends SuperSmoothMover
         this.seed = seed;
         seedFrame.updateID(seed.getID());
     }
-    
+
     public void equipFertilizer(Fertilizer fertilizer){
         if(this.fertilizer != null && this.fertilizer.getWorld() != null){
             getWorld().removeObject(this.fertilizer);
@@ -122,7 +122,7 @@ public class EquipDisplay extends SuperSmoothMover
         this.fertilizer = fertilizer;
         fertilizerFrame.updateID(fertilizer.getID());
     }
-    
+
     public void unEquipTool(){
         if(this.tool != null && this.tool.getWorld() != null){
             getWorld().removeObject(this.tool);
@@ -139,7 +139,7 @@ public class EquipDisplay extends SuperSmoothMover
         this.seed = null;
         seedFrame.updateID(ObjectID.NONE);
     }
-    
+
     public void unEquipFertilizer(){
         if(this.fertilizer != null && this.fertilizer.getWorld() != null){
             getWorld().removeObject(this.fertilizer);
@@ -148,16 +148,18 @@ public class EquipDisplay extends SuperSmoothMover
         this.fertilizer = null;
         fertilizerFrame.updateID(ObjectID.NONE);
     }
-    
+
     public void unEquipItem(ObjectID ID){
         switch(ID){
             case PORCUS_WHEAT_SEED:
             case WHEAT_SEED:
             case CARROT_SEED:
+            case TOMATO_SEED:
                 unEquipSeed();
                 break;
             case DIAMOND_TOOL: 
             case BASIC_TOOL:
+            case SHOVEL:    
                 unEquipTool();
                 break;
             case FERTILIZER:
@@ -165,16 +167,18 @@ public class EquipDisplay extends SuperSmoothMover
                 break;    
         }
     }
-    
+
     public void equipItem(ObjectID ID){
         switch(ID){
             case PORCUS_WHEAT_SEED:
             case WHEAT_SEED:
             case CARROT_SEED:
+            case TOMATO_SEED:
                 equipSeed(new Seed(ID));
                 break;
             case DIAMOND_TOOL: 
             case BASIC_TOOL:
+            case SHOVEL:
                 equipTool(new Tool(ID));
                 break;
             case FERTILIZER:

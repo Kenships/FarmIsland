@@ -23,10 +23,11 @@ public class Carrot extends Plant
     }
 
     public Carrot(int yeild){
-        super(32);
-        ID = ObjectID.WHEAT;
+        super(Y_OFFSET);
+        ID = ObjectID.CARROT;
         initialize();
         this.yield = yield;
+        sellPrice = 3;
     }
     public void act()
     {
@@ -87,12 +88,7 @@ public class Carrot extends Plant
     public void checkKeypressAction(){
         
     }
-    
-    public void checkMouseAction(){
-        if(mature && hoveringThis() && Cursor.leftClicked()){
-            CollectionHandler.collect(this);
-        }
-    }
+
     public void playPlaceSound(){
         
     }

@@ -93,6 +93,7 @@ public class Inventory
         if(!inventory.containsKey(id)){
             inventory.put(id,amount);
             display.addItem(id);
+            equip.equipItem(id);
         }
         else{
             inventory.put(id, inventory.get(id) + amount);

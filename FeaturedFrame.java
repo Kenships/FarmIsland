@@ -42,7 +42,8 @@ public class FeaturedFrame extends ItemFrame
     }
     
     public void updatePrice(int amount){
-        purchase.drawText("$" + (cost * amount), 0, -8);
+        cost = CurrencyHandler.getPrice(ID, amount);
+        purchase.drawText("$" + cost, 0, -8);
     }
     
     public void updateID(ObjectID ID){

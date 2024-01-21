@@ -27,6 +27,10 @@ public class Tool extends Item
                 efficiency = 10;
                 unbreakable = true;
                 break;
+            case SHOVEL:
+                efficiency = 1;
+                unbreakable = true;
+                break;
         }
         setImage(toolImage);
     }

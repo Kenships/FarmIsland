@@ -16,19 +16,17 @@ public class Seed extends Item
     private boolean display;
     private int frame;
     private int actCounter;
-    
 
     public Seed(ObjectID ID, int amount, boolean disapear){
         disapearWhenEmpty = disapear;
         this.ID = ID;
         Inventory.add(ID, amount);
-        
 
         seedImage = ID.getDisplayImage();
         double ratio = (double) seedImage.getHeight()/seedImage.getWidth();
-        
+
         seedImage.scale(32,(int)(32 * ratio + 0.5));
-        
+
         display = false;
         setImage(seedImage);
     }
@@ -48,7 +46,7 @@ public class Seed extends Item
 
     public void addedToWorld(World w){
         super.addedToWorld(w);
-        
+
     }
 
     public void act()
@@ -73,9 +71,12 @@ public class Seed extends Item
             case PORCUS_WHEAT_SEED:
                 plant = new PorcusWheat();
                 break;
-             case CARROT_SEED:
+            case CARROT_SEED:
                 plant = new Carrot();
-                break;    
+                break;  
+            case TOMATO_SEED:
+                plant = new Tomato();
+                break;     
         }
         return plant;
     }
@@ -88,7 +89,6 @@ public class Seed extends Item
         //fill later
     }
 
-    
 
     public void checkMouseAction(){
         GameWorld myWorld = (GameWorld) getWorld();
@@ -96,12 +96,12 @@ public class Seed extends Item
             return;
         }
         /*if(Greenfoot.mousePressed(null) && hoveringThis()){
-            System.out.println("pickedup");
-            Cursor.pickUp(this);
+        System.out.println("pickedup");
+        Cursor.pickUp(this);
         }*/
         /*if(Greenfoot.mouseClicked(null) && hoveringThis()){
-            
-            Cursor.release();
+
+        Cursor.release();
         }*/
     }
 
@@ -121,14 +121,14 @@ public class Seed extends Item
         if(Inventory.getAmount(ID) > 0 || Inventory.getAmount(ID) < 0){
 
             //remove one count of seed in inventory
-            
-            plant.plant(plot, tile);
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
+            plant.plant(plot, tile);
+            
             Inventory.remove(ID);
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
-                
+
                 getWorld().removeObject(this);
-            
+
             }
         }
         else{
@@ -149,7 +149,7 @@ public class Seed extends Item
         int rightBound = getX() + getImage().getWidth()/2;
         int topBound = getY() - getImage().getHeight()/2;
         int bottomBound = getY() + getImage().getHeight()/2;
-        
+
         return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
     }
 

@@ -77,9 +77,7 @@ public class DirtTile extends Tile
         //initialize projected to be invisable
         projectedTile = new GreenfootImage("Tiles/Dirt Tile.png");
         projectedTile.setTransparency(TRANSPARENT);
-        /**
-         * NEW: image
-         */
+  
         activeTile = new GreenfootImage(projectedTile);
         if(active){
             setImage(activeTile);

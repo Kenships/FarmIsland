@@ -9,10 +9,12 @@ public class AchievementManager
 {
     public static final String AGRICULTURE_A = "AgricultureA";
     public static int totalPlants;
+    public static int totalTiles;
     public static ObjectID currentPlant;
     public static ArrayList<Achievement> agricultureA, agricultureB;
     
     public AchievementManager(){
+        totalTiles = 0;
         totalPlants = 0;
         initializeAgricultureA();
         initializeAgricultureB();

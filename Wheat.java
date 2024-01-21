@@ -21,26 +21,28 @@ public class Wheat extends Plant
         initialize();
         yield = 1;
     }
+
     public Wheat(int yeild){
         super(32);
         ID = ObjectID.WHEAT;
         initialize();
         this.yield = yield;
     }
+
     public void act()
     {
         super.act();
     }
-    
+
     public void initialize(){
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             setYOffset(stage, -Y_OFFSET);
         }
-        
+
         growthRate = DEFAULT_GROWTHRATE;
-        
+
         growthAnimations = new GreenfootImage[GROWTH_STAGES][5];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
@@ -51,7 +53,7 @@ public class Wheat extends Plant
 
         setImage(growthAnimations[growthStage][0]);
     }
-    
+
     public void grow(){
         maturity += growthRate + myTile.getGrowthMultiplier();
         if(maturity % 300 == 0 && growthStage < GROWTH_STAGES - 1){
@@ -60,14 +62,14 @@ public class Wheat extends Plant
             fadeOval(growthAnimations[growthStage][0]);
             setImage(growthAnimations[growthStage][0]);
         }
-        
+
         //when the growthStage is at max the crop is mature
         if(growthStage == GROWTH_STAGES - 1){
             mature = true;
         }
-        
+
     }
-    
+
     public void nextFrame(){
         animationIndex += deltaIndex;
         if(animationIndex >= 0 && animationIndex < growthAnimations[growthStage].length){
@@ -81,23 +83,15 @@ public class Wheat extends Plant
             setImage(growthAnimations[growthStage][animationIndex]);
         }
     }
-    
+
     public void checkKeypressAction(){
-        
+
     }
-    
-    public void checkMouseAction(){
-        if(mature && hoveringThis() && Cursor.leftClicked()){
-            CollectionHandler.collect(this);
-        }
-    }
+
     public void playPlaceSound(){
-        
     }
     public void playRemoveSound(){
-        
     }
-    
     //temporary
     public GreenfootImage getItemImage(){
         //fill

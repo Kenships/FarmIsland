@@ -56,8 +56,12 @@ public class GameWorld extends World
 
     private Button openInventory;
     private InventoryDisplay inventoryDisplay;
+    private Button openPorcus;
+    private PorcusMenu porcus;
+    
     private SimpleTimer actTimer;
     private SimpleTimer cloudTimer;
+
     
     //for keypress only
     private boolean inventoryMoving;
@@ -102,7 +106,7 @@ public class GameWorld extends World
         //initializes starting screen
 
         screen = GAME;
-        setPaintOrder(SuperTextBox.class, AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(SuperTextBox.class, AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, PorcusMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
 
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -114,14 +118,18 @@ public class GameWorld extends World
         temp.put(ObjectID.PORCUS_WHEAT_SEED, -1);
         temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
+        temp.put(ObjectID.TOMATO_SEED, -1);
         shop = new ShopMenu(temp);
 
         // Initializes buttons
-        openShop = new MenuButton("Shop");
-        homeButton = new MenuButton("Home");
-        openAchievement = new MenuButton("Achievement");
-        openInventory = new MenuButton("Inventory");
-        leave = new MenuButton("Leave");
+        openShop = new GameButton("Shop");
+        homeButton = new GameButton("Home");
+        openAchievement = new GameButton("Achievement");
+        openInventory = new GameButton("Inventory");
+        leave = new GameButton("Leave");
+        openPorcus = new MenuButton("Porcus H");
+        porcus = new PorcusMenu(openPorcus);
+        
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(homeButton);
         buttons.add(openShop);
@@ -130,11 +138,12 @@ public class GameWorld extends World
         buttons.add(leave);
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
-
+        //addObject(porcus, 0, SCREEN_HEIGHT/2);
         equip = new EquipDisplay();
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
-        
+        Inventory.add(ObjectID.SHOVEL, 1);
+        Inventory.add(ObjectID.DIAMOND_TOOL, 1);
 
         // Initializes achievement menu
         achievement = new AchievementMenu();
@@ -142,7 +151,7 @@ public class GameWorld extends World
 
         
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
-        equip.equipSeed(new Seed(ObjectID.CARROT_SEED, 1, false));
+        equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
         equip.equipTool(tool);
         addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
 
@@ -253,6 +262,14 @@ public class GameWorld extends World
         }    
         if(leave.leftClickedThis()){
             GameInfo.saveGame(this);
+        }
+        if(openPorcus.leftClickedThis()){
+            if(porcus.isOpen()){
+                porcus.close();
+            }
+            else{
+                porcus.open();
+            }
         }
     }
 

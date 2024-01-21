@@ -238,6 +238,7 @@ public class ShopMenu extends SuperSmoothMover
                     if(item.removeOne()){
                         CurrencyHandler.purchase(item.getID(), purchaseAmount);
                     }
+                    featuredItem.updatePrice(purchaseAmount);
                 }
 
             }

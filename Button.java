@@ -20,6 +20,13 @@ public abstract class Button extends SuperSmoothMover
         hoverImage = new GreenfootImage[1];
         clickImage = new GreenfootImage[1];
 
+    }
+    public Button(String imageName, int width, int height){
+        this.imageName = imageName;
+        mainImage = new GreenfootImage[1];
+        hoverImage = new GreenfootImage[1];
+        clickImage = new GreenfootImage[1];
+
         clickImage[0] = new GreenfootImage("Buttons/" + imageName + " 1.png");        
         hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
         mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
