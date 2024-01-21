@@ -151,7 +151,7 @@ public class EquipDisplay extends SuperSmoothMover
     
     public void unEquipItem(ObjectID ID){
         switch(ID){
-            case STUBBY_WHEAT_SEED:
+            case PORCUS_WHEAT_SEED:
             case WHEAT_SEED:
             case CARROT_SEED:
                 unEquipSeed();
@@ -168,7 +168,7 @@ public class EquipDisplay extends SuperSmoothMover
     
     public void equipItem(ObjectID ID){
         switch(ID){
-            case STUBBY_WHEAT_SEED:
+            case PORCUS_WHEAT_SEED:
             case WHEAT_SEED:
             case CARROT_SEED:
                 equipSeed(new Seed(ID));

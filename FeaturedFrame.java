@@ -13,12 +13,12 @@ public class FeaturedFrame extends ItemFrame
     private ShopItem item;
     private int cost;
     private MenuButton purchase;
-    public FeaturedFrame(ShopItem item, MenuButton purchase){
+    private Font font;
+    public FeaturedFrame(MenuButton purchase){
         super(ObjectID.NONE, FRAME_WIDTH, FRAME_HEIGHT);
         cost = CurrencyHandler.getPrice(ID);
         this.purchase = purchase;
-        this.item = item;
-        Font font = new Font("Tekton Pro", true, false,  30);
+        font = new Font("Tekton Pro", true, false,  30);
         SuperTextBox box = new SuperTextBox(" ", new Color(0,0,0,15), Color.BLACK, font, true, FRAME_WIDTH, 0, null);
         background = new GreenfootImage(FRAME_WIDTH,FRAME_HEIGHT);
         background.drawImage(box.getImage(), 0, 70);
@@ -32,16 +32,19 @@ public class FeaturedFrame extends ItemFrame
         for(int i = 0; i < nameSplit.length; i++){
             nameString += nameSplit[i] + " ";
         }
-        Font font = new Font("Tekton Pro", true, false,  30);
         SuperTextBox box = new SuperTextBox(nameString, new Color(0,0,0,15), Color.BLACK, font, true, FRAME_WIDTH, 0, null);
         background.clear();
         background.drawImage(box.getImage(), 0, 70);
         this.item = item;
         cost = CurrencyHandler.getPrice(ID);
-        purchase.drawText("$" + cost);
+        purchase.drawText("$" + cost, 0, -8);
         updateID(ID);
     }
-
+    
+    public void updatePrice(int amount){
+        purchase.drawText("$" + (cost * amount), 0, -8);
+    }
+    
     public void updateID(ObjectID ID){
         this.ID = ID;
         
@@ -53,7 +56,30 @@ public class FeaturedFrame extends ItemFrame
         
         drawFrame();
     }
-
+    
+    public void drawFrame(){
+        mainImage.clear();
+        mainImage.drawImage(background, 0, 0);
+        int marginY = (background.getHeight() - foreground.getHeight())/2;
+        int marginX = (background.getWidth() - foreground.getWidth())/2;
+        if(marginY < 0 || marginX < 0){
+            double ratio = (double) foreground.getHeight()/foreground.getWidth();
+            foreground.scale(background.getWidth(), (int)(background.getWidth() * ratio + 0.5));
+            marginY = (background.getHeight() - foreground.getHeight())/2;;
+            marginX = (background.getWidth() - foreground.getWidth())/2;
+        }
+        mainImage.drawImage(foreground, marginX, marginY - 35);
+        setImage(mainImage);
+    }
+    
+    public void reset(){
+        SuperTextBox box = new SuperTextBox("CHOOSE ITEM", new Color(0,0,0,15), Color.BLACK, font, true, FRAME_WIDTH, 0, null);
+        background.clear();
+        background.drawImage(box.getImage(), 0, 70);
+        purchase.drawText(" ", 0, -8);
+        updateID(ObjectID.NONE);
+    }
+    
     public ShopItem getItem(){
         return item;
     }

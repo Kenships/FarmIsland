@@ -40,6 +40,8 @@ public class Seed extends Item
     public Seed(ObjectID ID){
         this.ID = ID;
         seedImage = ID.getDisplayImage();
+        double ratio = (double) seedImage.getHeight()/seedImage.getWidth();
+        seedImage.scale(32,(int)(32 * ratio + 0.5));
         display = false;
         setImage(seedImage);
     }
@@ -68,8 +70,8 @@ public class Seed extends Item
             case WHEAT_SEED:
                 plant = new Wheat();
                 break;
-            case STUBBY_WHEAT_SEED:
-                plant = new StubbyWheat();
+            case PORCUS_WHEAT_SEED:
+                plant = new PorcusWheat();
                 break;
              case CARROT_SEED:
                 plant = new Carrot();

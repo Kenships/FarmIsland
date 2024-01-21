@@ -53,7 +53,7 @@ public class Wheat extends Plant
     }
     
     public void grow(){
-        maturity += growthRate;
+        maturity += growthRate + myTile.getGrowthMultiplier();
         if(maturity % 300 == 0 && growthStage < GROWTH_STAGES - 1){
             growthStage ++;
             //fade before setting

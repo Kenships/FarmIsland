@@ -28,7 +28,7 @@ public class CurrencyHandler extends SuperSmoothMover
     public static void initialize(String savedFile){
         priceIndex = new HashMap<>();
         priceIndex.put(ObjectID.DIRT_TILE, 10);
-        priceIndex.put(ObjectID.STUBBY_WHEAT_SEED, 20);
+        priceIndex.put(ObjectID.PORCUS_WHEAT_SEED, 20);
         priceIndex.put(ObjectID.WHEAT_SEED, 1);
         priceIndex.put(ObjectID.CARROT_SEED, 2);
         priceIndex.put(ObjectID.DIAMOND_TOOL, 10000);

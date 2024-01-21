@@ -74,17 +74,22 @@ public class MenuButton extends Button
     }
     
     public void drawText(String text){
-        Font font = new Font("Tekton Pro", true, false,  40);
+        drawText(text, 0, 0);
+    }
+    
+    public void drawText(String text, int x, int y){
+        drawText(text, x, y, 35);
+    }
+    public void drawText(String text, int x, int y, int textSize){
+        Font font = new Font("Tekton Pro", true, false,  textSize);
         SuperTextBox box = new SuperTextBox(text, new Color(0,0,0,0), Color.BLACK, font, true, mainImage[0].getWidth(), 0, null);
         clickImage[0] = new GreenfootImage("Buttons/" + imageName + " 1.png");        
         hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
         mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
         
-        mainImage[0].drawImage(box.getImage(), 0, 0);
-        hoverImage[0].drawImage(box.getImage(), 0, 0);
-        clickImage[0].drawImage(box.getImage(), 0, 0);
+        mainImage[0].drawImage(box.getImage(), x, y);
+        hoverImage[0].drawImage(box.getImage(), x, y);
+        clickImage[0].drawImage(box.getImage(), x, y);
         setImage(mainImage[0]);
     }
-    
-    
 }

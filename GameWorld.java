@@ -95,6 +95,9 @@ public class GameWorld extends World
         actTimer = new SimpleTimer();
         cloudTimer = new SimpleTimer();
         
+        CurrencyHandler.initialize(savedFile);
+        CollectionHandler.initialize(this);
+        
         setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
         //initializes starting screen
 
@@ -108,7 +111,7 @@ public class GameWorld extends World
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
         temp.put(ObjectID.WHEAT_SEED, -1);
-        temp.put(ObjectID.STUBBY_WHEAT_SEED, -1);
+        temp.put(ObjectID.PORCUS_WHEAT_SEED, -1);
         temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
         shop = new ShopMenu(temp);
@@ -131,8 +134,7 @@ public class GameWorld extends World
         equip = new EquipDisplay();
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
-        CurrencyHandler.initialize(savedFile);
-        CollectionHandler.initialize(this);
+        
 
         // Initializes achievement menu
         achievement = new AchievementMenu();

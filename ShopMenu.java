@@ -34,12 +34,18 @@ public class ShopMenu extends SuperSmoothMover
     private Button menuUp;
     private Button menuDown;
     private MenuButton purchase;
+    private MenuButton plus;
+    private MenuButton minus;
+    private int purchaseAmount;
+    private SuperTextBox amountDisplay;
 
     private boolean firstOpened;
+    private boolean dragging;
 
     private GameWorld myWorld;
 
     private SimpleTimer actTimer;
+    private SimpleTimer objectTimer;
     public ShopMenu(ArrayList<ObjectID> galleryIDs){
         initialize(galleryIDs);
     }
@@ -59,6 +65,7 @@ public class ShopMenu extends SuperSmoothMover
         if(myWorld.isScreen(myWorld.SHOP)){
             checkMouseAction();
             checkKeyAction();
+
             if(actTimer.millisElapsed() >= 17){
                 actTimer.mark();
                 if(direction != 0){
@@ -72,9 +79,10 @@ public class ShopMenu extends SuperSmoothMover
 
     public void initialize(ArrayList<ObjectID> galleryIDs){
         actTimer = new SimpleTimer();
+        objectTimer = new SimpleTimer();
 
         background = new GreenfootImage("Shop.png");
-        
+
         setImage(background);
 
         returnButton = new MenuButton("Shop");
@@ -90,7 +98,7 @@ public class ShopMenu extends SuperSmoothMover
 
     public void initialize(HashMap<ObjectID, Integer> galleryIDs){
         actTimer = new SimpleTimer();
-        
+        objectTimer = new SimpleTimer();
         background = new GreenfootImage("Backgrounds/Shop.png");
         background.drawImage(new GreenfootImage("Backgrounds/Shop Mascot.png"), 0, 0);
         setImage(background);
@@ -99,6 +107,15 @@ public class ShopMenu extends SuperSmoothMover
         menuUp = new MenuButton("Shop Up");
         menuDown = new MenuButton("Shop Down");
         purchase = new MenuButton("Buy");
+        featuredItem = new FeaturedFrame(purchase);
+        plus = new MenuButton("Shop mod");
+        minus = new MenuButton("Shop mod");
+        plus.drawText("+",-1,-16,30);
+        minus.drawText("-",-5,-16,30);
+        Font font = new Font("Tekton Pro", true, false,  20);
+
+        amountDisplay = new SuperTextBox(" ", new Color(0,0,0,40), Color.BLACK, font, true, featuredItem.getImage().getWidth(), 0, null);
+
         itemGallery = new ArrayList<>();
 
         for(ObjectID ID : galleryIDs.keySet()){
@@ -131,11 +148,13 @@ public class ShopMenu extends SuperSmoothMover
             index++;
         }
 
-        featuredItem = new FeaturedFrame(itemGallery.get(0),purchase);
+        featuredItem.reset();
         int x = 1043;
         int y = 400;
         myWorld.addObject(featuredItem, x, y);
-
+        myWorld.addObject(plus, 1105, 460);
+        myWorld.addObject(minus, 976, 460);
+        myWorld.addObject(amountDisplay, x, 460);
     }
 
     public void addButtons(){
@@ -143,12 +162,10 @@ public class ShopMenu extends SuperSmoothMover
         int y = GameWorld.SCREEN_HEIGHT - LEFT_MARGIN/3;
         myWorld.addObject(returnButton, x, y);
         getWorld().addObject(returnButton, 64, 656);
-        
+
         myWorld.addObject(menuUp, 814, 250);
 
-        
         myWorld.addObject(menuDown,814, 570);
-
         myWorld.addObject(purchase, 1040, 526);
     }
 
@@ -159,12 +176,15 @@ public class ShopMenu extends SuperSmoothMover
         components.add(menuDown);
         components.add(purchase);
         components.add(featuredItem);
+        components.add(amountDisplay);
+        components.add(plus);
+        components.add(minus);
         components.addAll(myWorld.getObjects(ShopItem.class));
         for(Actor component : components){
             myWorld.removeObject(component);
         }
     }
-    
+
     public void checkKeyAction(){
         if(Greenfoot.isKeyDown("b") == !firstOpened){
             firstOpened = false;
@@ -176,7 +196,7 @@ public class ShopMenu extends SuperSmoothMover
             firstOpened = false;
         }
     }
-    
+
     public void checkMouseAction(){
         if (returnButton.leftClickedThis() && !firstOpened){
             myWorld.setScreen(myWorld.GAME);
@@ -198,19 +218,60 @@ public class ShopMenu extends SuperSmoothMover
             for(ShopItem item : itemGallery){
                 if(Greenfoot.mouseClicked(item)){
                     featuredItem.updateDisplay(item);
+                    purchaseAmount = 1;
+                    amountDisplay.update(String.valueOf(purchaseAmount));
+
                 }
             }
         }
-        if(featuredItem.getID() != ObjectID.NONE && Greenfoot.mouseClicked(purchase) ){
-            ShopItem item = featuredItem.getItem();
-            if(CurrencyHandler.isAffordable(item.getID())){
-                if(item.removeOne()){
-                    CurrencyHandler.purchase(item.getID(), 1);
+        if(Greenfoot.mousePressed(null)){
+            objectTimer.mark();
+            dragging = true;
+        }
+        if(Greenfoot.mouseClicked(null)){
+            dragging = false;
+        }
+        if(featuredItem.getID() != ObjectID.NONE){
+            if(purchase.leftClickedThis()){
+                ShopItem item = featuredItem.getItem();
+                if(CurrencyHandler.isAffordable(item.getID(), purchaseAmount)){
+                    if(item.removeOne()){
+                        CurrencyHandler.purchase(item.getID(), purchaseAmount);
+                    }
+                }
+
+            }
+            if(plus.leftClickedThis()){
+                ShopItem item = featuredItem.getItem();
+                if(CurrencyHandler.isAffordable(item.getID(), purchaseAmount + 1)){
+                    purchaseAmount ++;
+                    amountDisplay.update(String.valueOf(purchaseAmount));
+                    featuredItem.updatePrice(purchaseAmount);
                 }
             }
-
+            else if(plus.hoveringThis() && dragging && objectTimer.millisElapsed() > 1000){
+                ShopItem item = featuredItem.getItem();
+                if(CurrencyHandler.isAffordable(item.getID(), purchaseAmount + 2)){
+                    purchaseAmount += 2;
+                    amountDisplay.update(String.valueOf(purchaseAmount));
+                    featuredItem.updatePrice(purchaseAmount);
+                }
+            }
+            if(minus.leftClickedThis()){
+                if(purchaseAmount - 1 >= 1){
+                    purchaseAmount --;
+                    amountDisplay.update(String.valueOf(purchaseAmount));
+                    featuredItem.updatePrice(purchaseAmount);
+                }       
+            }
+            else if(minus.hoveringThis() && dragging && objectTimer.millisElapsed() > 1000){
+                if(purchaseAmount - 2 >= 1){
+                    purchaseAmount -= 2;
+                    amountDisplay.update(String.valueOf(purchaseAmount));
+                    featuredItem.updatePrice(purchaseAmount);
+                }  
+            }
         }
-
     }
 
     public void slide(){
