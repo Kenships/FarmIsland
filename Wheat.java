@@ -11,6 +11,8 @@ public class Wheat extends Plant
     public static final int Y_OFFSET = 32;
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
+    private GreenfootSound[] harvestingSound;
+    private int soundIndex;
     /**
      * NEW: ID moved and initialized in constructor
      */
@@ -20,6 +22,14 @@ public class Wheat extends Plant
         ID = ObjectID.WHEAT;
         initialize();
         yield = 1;
+        
+        harvestingSound = new GreenfootSound[40];
+
+        for (int i = 0; i < harvestingSound.length; i++){
+            harvestingSound[i] = new GreenfootSound ("HarvestingSound.wav");
+            harvestingSound[i].setVolume(90);
+        }
+        soundIndex = 0;
     }
 
     public Wheat(int yeild){
@@ -83,15 +93,32 @@ public class Wheat extends Plant
             setImage(growthAnimations[growthStage][animationIndex]);
         }
     }
-
+    //MOVE TO COLLECTION HANDLER
+    public void collect(){
+        Inventory.add(ID, yeild);
+        CurrencyHandler.deposit(2);
+        myTile.unPlant();
+        getWorld().removeObject(this);
+        
+        harvestingSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == harvestingSound.length)
+        {
+            soundIndex=0;
+        }   
+    }
+    
     public void checkKeypressAction(){
 
     }
 
     public void playPlaceSound(){
+        
     }
     public void playRemoveSound(){
+        
     }
+    
     //temporary
     public GreenfootImage getItemImage(){
         //fill

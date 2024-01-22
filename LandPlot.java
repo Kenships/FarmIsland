@@ -30,8 +30,20 @@ public class LandPlot extends SuperSmoothMover
 
     private MouseInfo lastMouseInfo;
     private boolean isDragging;
-    public LandPlot(){
+    
+    private GreenfootSound[] removingDirtSound;
 
+    private int soundIndex;
+
+    public LandPlot(){
+        removingDirtSound = new GreenfootSound[20];
+
+        for (int i = 0; i < removingDirtSound.length; i++){
+            removingDirtSound[i] = new GreenfootSound ("RemoveDirt.wav");
+            removingDirtSound[i].setVolume(70);
+        }
+        soundIndex = 0;
+        
         initialize();
     }
 
@@ -55,6 +67,7 @@ public class LandPlot extends SuperSmoothMover
 
         //initialize the plot
         plot = new DirtTile[GRID_ROWS][GRID_COLS];
+
     }
 
     //credit: ChatGPT for the idea to store mouse info
@@ -75,6 +88,7 @@ public class LandPlot extends SuperSmoothMover
                 for (Tile obj : getWorld().getObjects(DirtTile.class)) {
                     Tile object = obj;
                     object.setLocation(object.getX() + deltaX, object.getY() + deltaY);
+                    
                 }
 
                 lastMouseInfo = mouse; // Update last mouse info at the end of drag
@@ -110,11 +124,13 @@ public class LandPlot extends SuperSmoothMover
         if(row >= 0 && col >= 0 && row < plot.length && col < plot.length && plot[row][col] == null){
             plot[row][col] = new DirtTile(this, row, col, false);
             return plot[row][col];
+
         }
         return null;
     }
     //gets tile at row/col
     public DirtTile getTile(int row, int col){
+        
         return plot[row][col];
     }
     //removes only from the matrix
@@ -135,11 +151,15 @@ public class LandPlot extends SuperSmoothMover
             if(remove.isActive()){
                 Inventory.add(remove.getID());
                 remove.stopProjection();
+                
             }
             if(remove.getWorld() != null){
                 getWorld().removeObject(remove);
             }
             plot[row][col] = null;  
+            
+            removeTileSound();
+
         }
 
     }
@@ -268,6 +288,16 @@ public class LandPlot extends SuperSmoothMover
                     plot[row][col].activate();
                 }
             }
+        }
+    }
+
+    public void removeTileSound()
+    {
+        removingDirtSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == removingDirtSound.length)
+        {
+            soundIndex=0;
         }
     }
 }

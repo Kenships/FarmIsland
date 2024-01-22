@@ -79,6 +79,8 @@ public abstract class Plant extends Tile
 
                     return;
                 }
+
+                return;
             }
             //animate
             if(lifeTime % 12 == 0 && growthStage >= 0){
@@ -90,6 +92,7 @@ public abstract class Plant extends Tile
                 lifeTime++;
             }
         }
+
     }
 
     public abstract void grow();
@@ -110,7 +113,8 @@ public abstract class Plant extends Tile
         myTile = tile;
         plot.zSort();
     }
-
+    
+    
     public abstract void nextFrame();
 
     public GreenfootImage[] getSeedImages(){

@@ -35,6 +35,10 @@ public class StartWorld extends World
     private Scanner fileScanner;
     private String fileName;
     private static ArrayList<String> saveFile;
+    private GreenfootSound TitleScreenMusic;
+    
+    public static int startVolumeMax = 100; 
+
     public StartWorld()
     {   
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false);
@@ -44,13 +48,20 @@ public class StartWorld extends World
         background.drawImage(screen, 0, 0);
         setBackground(background);
         
+        TitleScreenMusic = new GreenfootSound ("TItleScreenMusic.mp3");
+        TitleScreenMusic.setVolume(startVolumeMax);
+        
+        
         initialize();
     }
     
     public void act(){
+        
         //button actions here
         if(Greenfoot.mouseClicked(startButton)){
+            TitleScreenMusic.stop();
             Greenfoot.setWorld(new GameWorld(null));
+            
         }
         if(Greenfoot.mouseClicked(load)){
             //Open();
@@ -70,6 +81,8 @@ public class StartWorld extends World
         }
         if(Greenfoot.mouseClicked(settings)){
             //brings you to settings world/menu
+            Greenfoot.setWorld(new SettingsWorld());
+            TitleScreenMusic.stop();
         }
         if(Greenfoot.mouseClicked(quit)){
             Greenfoot.stop();
@@ -90,28 +103,22 @@ public class StartWorld extends World
         addObject(new Effect(Effect.PULSE, clouds), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     }
     
-    /*
-    private void Open(){
-        Desktop desktop = null;
-        if (!Desktop.isDesktopSupported()) {
-            return;
-        }
-        desktop = Desktop.getDesktop();
-        String path = "C:\\Users";
-        try {
-            File fPath=new File(path);
-            if(!fPath.exists()){
-                return;
-            }
-            if(!fPath.isDirectory()){
-                return;
-                
-            }
-            desktop.open(fPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+    public void started()
+    {
+        TitleScreenMusic.playLoop();
     }
-    */
+    
+    public void stopped()
+    {
+        TitleScreenMusic.pause();
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        startVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return startVolumeMax;
+    }
 }

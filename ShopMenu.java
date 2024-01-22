@@ -117,7 +117,7 @@ public class ShopMenu extends SuperSmoothMover
         amountDisplay = new SuperTextBox(" ", new Color(0,0,0,40), Color.BLACK, font, true, featuredItem.getImage().getWidth(), 0, null);
 
         itemGallery = new ArrayList<>();
-
+        
         for(ObjectID ID : galleryIDs.keySet()){
             if(galleryIDs.get(ID) == -1){
                 itemGallery.add(new ShopItem(ID, true));

@@ -78,6 +78,7 @@ public class Effect extends SuperSmoothMover
             getWorld().removeObject(this);
         }
     }
+    
     public void pulse(){
         GreenfootImage scaled = new GreenfootImage(image);
         if(index <= duration){

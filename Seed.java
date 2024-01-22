@@ -17,6 +17,8 @@ public class Seed extends Item
     private int frame;
     private int actCounter;
 
+    private GreenfootSound[] plantingSound;
+    private int soundIndex;
     public Seed(ObjectID ID, int amount, boolean disapear){
         disapearWhenEmpty = disapear;
         this.ID = ID;
@@ -29,6 +31,14 @@ public class Seed extends Item
 
         display = false;
         setImage(seedImage);
+        
+        
+        plantingSound = new GreenfootSound[40];
+        for (int i = 0; i < plantingSound.length; i++){
+            plantingSound[i] = new GreenfootSound ("PlantingSeed.wav");
+            plantingSound[i].setVolume(90);
+        }
+        soundIndex = 0;
     }
 
     public Seed(ObjectID ID, int amount){
@@ -95,14 +105,6 @@ public class Seed extends Item
         if(!myWorld.isScreen(GameWorld.GAME)){
             return;
         }
-        /*if(Greenfoot.mousePressed(null) && hoveringThis()){
-        System.out.println("pickedup");
-        Cursor.pickUp(this);
-        }*/
-        /*if(Greenfoot.mouseClicked(null) && hoveringThis()){
-
-        Cursor.release();
-        }*/
     }
 
     /**
@@ -125,6 +127,7 @@ public class Seed extends Item
             plant.plant(plot, tile);
             
             Inventory.remove(ID);
+            plantingSound();
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
 
                 getWorld().removeObject(this);
@@ -138,7 +141,6 @@ public class Seed extends Item
         }
         return plant;
     }
-
     public boolean hoveringThis(){
         MouseInfo mouse = Cursor.getMouseInfo();
         if(mouse == null){
@@ -152,6 +154,15 @@ public class Seed extends Item
 
         return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
     }
+    public void plantingSound(){
+        plantingSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == plantingSound.length)
+        {
+            soundIndex=0;
+        }       
+    }
+
 
     public void setDisplay(boolean toggle){
         display = toggle;

@@ -14,15 +14,14 @@ public class CurrencyHandler extends SuperSmoothMover
 
     private static SuperTextBox CashDisplay;
     public CurrencyHandler(){
-        //setImage(new GreenfootImage(64, 128));
+        
     }
-
+    
     public void act(){
         GreenfootImage i = new GreenfootImage("BackGrounds/Money.png");
         i.setFont(new Font("Tekton Pro", true, false,  20));
         i.drawString("$" + money, 14, i.getHeight()/2);
         setImage(i);
-
     }
 
     public static void initialize(String savedFile){
@@ -58,11 +57,10 @@ public class CurrencyHandler extends SuperSmoothMover
             Inventory.add(ID, amount);
         }
     }
-
+    
     public static boolean isAffordable(ObjectID ID){
         return isAffordable(ID, 1);
     }
-
     public static boolean isAffordable(ObjectID ID, int amount){
         int total = 0;
         if(ID == ObjectID.DIRT_TILE){
@@ -75,11 +73,10 @@ public class CurrencyHandler extends SuperSmoothMover
         }
         return money >= total;
     }
-
     public static void adjustPrice(ObjectID ID){
-
+        //fill method
     }
-
+    
     public static int getPrice(ObjectID ID){
         return getPrice(ID, 1);
     }
@@ -103,15 +100,15 @@ public class CurrencyHandler extends SuperSmoothMover
             return -1;
         }
     }
-
+    
     public static int getBallance(){
         return money;
     }
-
+    
     public static void deposit(int amount){
         money += amount;
     }
-
+    
     public static void withdraw (int amount){
         money -= amount;
     }

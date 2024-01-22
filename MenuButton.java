@@ -8,9 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MenuButton extends Button
 {
-    private boolean offseted;
 
+
+    private boolean offseted;
     private int offset;
+    private boolean soundPlayed;
+    
+    
     public MenuButton(String imageName){
         //(imageName, width, height)
         super(imageName);
@@ -22,6 +26,7 @@ public class MenuButton extends Button
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
+
     public MenuButton(String imageName, String text){
         super(imageName);
         
@@ -61,10 +66,12 @@ public class MenuButton extends Button
     }
 
     public void release(){
+
         if(offseted) {
             setLocation(getX() - offset, getY() + 2 * offset);
             offseted = false;
         }
+        
         setImage(mainImage[0]);
     }
     

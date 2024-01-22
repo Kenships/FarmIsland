@@ -23,6 +23,11 @@ public class DirtTile extends Tile
 
     //edit mode toggle
     private boolean offseted;
+    
+    private int soundIndex;
+
+    private GreenfootSound[] placingDirtSound;
+
     /**
      * Constructor
      * 
@@ -37,6 +42,14 @@ public class DirtTile extends Tile
         //10 is y offset;
         super(-10);
         Initialize(plot, row, col, active);
+        
+        placingDirtSound = new GreenfootSound[40];
+        for (int i = 0; i < placingDirtSound.length; i++){
+
+            placingDirtSound[i] = new GreenfootSound ("PlacingDirt.wav");
+            placingDirtSound[i].setVolume(90);
+        }
+        soundIndex = 0;
     }
 
     public void addedToWorld(World w){
@@ -107,9 +120,7 @@ public class DirtTile extends Tile
             }
             //activate tile when clicked
             //NOTE: can remove Cursor.getActor() == null after editmode is implemented
-            /**
-             * NEW: changed code below
-             */
+
             if (Cursor.getItem() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
 
                 if(Inventory.getAmount(ID) != 0){
@@ -131,6 +142,7 @@ public class DirtTile extends Tile
             Seed seed = (Seed) Cursor.getItem();
             if(!seed.isDisplayed()){
                 plant = seed.plant(myPlot, this);
+                
             }
         }
 
@@ -162,6 +174,7 @@ public class DirtTile extends Tile
             DirtTile neighbour = myPlot.createTile(row + drow, col + dcol);
             if(neighbour != null){
                 getWorld().addObject(neighbour, getX() + dx, getY() + dy);
+                
             }
         }
     }
@@ -211,15 +224,18 @@ public class DirtTile extends Tile
         return CurrencyHandler.isAffordable(ID);
     }
 
-    /**
-     * NEW: getter method
-     */
+
     public Plant getPlant(){
         return plant;
     }
 
     public void playPlaceSound(){
-        //start the place sound here
+        placingDirtSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == placingDirtSound.length)
+        {
+            soundIndex=0;
+        }       
     }
 
     public void playRemoveSound(){
@@ -233,37 +249,25 @@ public class DirtTile extends Tile
         return active;
     }
 
-    /**
-     * NEW: activate method changed
-     */
+
     public void activate(){
         setImage(activeTile);
         projectTiles();
         myPlot.zSort();
         active = true;
     }
-    
-    public double getGrowthMultiplier(){
-        return growthMultiplier;
-    }
-    
-    /**
-     * NEW 
-     */
+
+
     public ObjectID getID(){
         return ID;
     }
 
-    /**
-     * NEW 
-     */
+
     public int getRow(){
         return row;
     }
 
-    /**
-     * NEW
-     */
+
     public int getCol(){
         return col;
     }

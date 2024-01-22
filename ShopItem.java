@@ -50,25 +50,26 @@ public class ShopItem extends ItemFrame
             mainImage.setTransparency(255);
         }
     }
-
+    
     public boolean isEmpty(){
         return getStock() == 0;
     }
-
+    
     public int getStock(){
         return stock;
     }
-
+    
     public void setStock(int stock){
         this.stock = stock;
     }
-
+    
+    
     public boolean removeOne(){
         //will do nothing if unlimeted
         if(unlimited){
             return true;
         }
-
+        
         //return false if zero or remove from stock
         if(stock == 0){
             return false;
@@ -81,7 +82,7 @@ public class ShopItem extends ItemFrame
             return true;
         }
     }
-
+    
     public void addOne(){
         stock++;
     }

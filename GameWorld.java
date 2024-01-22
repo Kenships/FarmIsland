@@ -62,22 +62,33 @@ public class GameWorld extends World
     private SimpleTimer actTimer;
     private SimpleTimer cloudTimer;
 
+    private GreenfootSound GamePlayMusic;
+    private GreenfootSound ShopMusic;
     
     //for keypress only
     private boolean inventoryMoving;
     
+    public static int gameVolumeMax = 100; 
     /**
      * Constructor for objects of class GameWorld.
      * 
      */
     public GameWorld(String savedFile)
     {    
+        
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false); 
+        GamePlayMusic = new GreenfootSound ("GamePlayMusic.mp3");
+        GamePlayMusic.setVolume(gameVolumeMax);
+        ShopMusic = new GreenfootSound ("ShopMusic.mp3");
+        ShopMusic.setVolume(gameVolumeMax);
+        
+        
         initialize(savedFile);
     }
 
     public void act(){
+        
         if(screen.equals(GAME)){
             checkMouseAction();
             checkKeyAction();
@@ -86,13 +97,13 @@ public class GameWorld extends World
                 homeIslands();
                 spawnClouds();
             }
+            
         }
-
+        
+        
         
 
     }
-
-    // I WILL FILL THIS OUT
     public void initialize(String savedFile){
         editMode = true;
 
@@ -188,7 +199,6 @@ public class GameWorld extends World
         }
 
     }
-
     public void homeIslands(){
         DirtTile centreTile = landPlot.getTile(LandPlot.STARTING_ROW, LandPlot.STARTING_COL);
         int centreX = SCREEN_WIDTH/2;
@@ -307,11 +317,14 @@ public class GameWorld extends World
             case GAME:
                 resetButtons();
                 equip.showDisplay();
+                ShopMusic.stop();
                 //addObject(Cursor.getTool(), mouse.getX(), mouse.getY());
                 break;
             case SHOP:
                 removeButtons();
                 equip.hideDisplay();
+                GamePlayMusic.stop();
+                ShopMusic.play();                
                 //removeObject(Cursor.getTool());
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
@@ -320,5 +333,21 @@ public class GameWorld extends World
                 addObject(achievement, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
         }
+    }
+    
+    public void started()
+    {
+        GamePlayMusic.playLoop();
+    }
+    
+    public void stopped()
+    {
+        GamePlayMusic.pause();
+        ShopMusic.pause();
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
     }
 }
