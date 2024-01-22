@@ -93,7 +93,7 @@ public class InventoryDisplay extends SuperSmoothMover
                 break;
             }
         }
-        System.out.println(pages.get(page).size());
+
         reloadItems();
     }
 

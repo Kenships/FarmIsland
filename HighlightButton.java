@@ -1,23 +1,18 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class GameButton here.
+ * Write a description of class HighlightButton here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class GameButton extends Button
+public class HighlightButton extends Button
 {
-    public GameButton(String name){
+    public HighlightButton(String name){
         super(name);
-        
         clickImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
-        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + " H.png");        
         mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
-        clickImage[0].scale(56, 56);
-        hoverImage[0].scale(64, 64);
-        mainImage[0].scale(56,56);
-        setImage(mainImage[0]);
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
@@ -45,5 +40,19 @@ public class GameButton extends Button
     public void hover(){
         setImage(hoverImage[0]);
     }
+    public void drawText(String text, int x, int y, int textSize){
+        Font font = new Font("Tekton Pro", true, false,  textSize);
+        SuperTextBox box = new SuperTextBox(text, new Color(0,0,0,0), Color.BLACK, font, true, mainImage[0].getWidth(), 0, null);
+        mainImage[0].drawImage(box.getImage(), x, y);
+        hoverImage[0].drawImage(box.getImage(), x, y);
+        clickImage[0].drawImage(box.getImage(), x, y);
+        setImage(mainImage[0]);
+    }
     
+    public void setTransparancy(int transparency){
+        mainImage[0].setTransparency(transparency);
+        hoverImage[0].setTransparency(transparency);
+        clickImage[0].setTransparency(transparency);
+        setImage(mainImage[0]);
+    }
 }

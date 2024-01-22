@@ -289,7 +289,6 @@ public class ShopMenu extends SuperSmoothMover
             }
             distanceTraveled = 0;
             direction = 0;
-            System.out.println("Distance: " + distanceTraveled + " end: " + end + "Direction: " + direction);
             return;
         }
         for(ShopItem item : itemGallery){

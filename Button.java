@@ -37,6 +37,7 @@ public abstract class Button extends SuperSmoothMover
             clickSound[i] = new GreenfootSound("Clickmp3.mp3");
             clickSound[i].setVolume(90);
         }
+    
         soundIndex = 0;
     }
 
@@ -104,5 +105,27 @@ public abstract class Button extends SuperSmoothMover
 
     public boolean leftClickedThis(){
         return Greenfoot.mouseClicked(null) && hoveringThis() && Cursor.leftClicked();
+    }
+    
+    public void drawText(String text){
+        drawText(text, 0, 0);
+    }
+    public void drawText(String text, int size){
+        drawText(text,0,0, size);
+    }
+    public void drawText(String text, int x, int y){
+        drawText(text, x, y, 35);
+    }
+    public void drawText(String text, int x, int y, int textSize){
+        Font font = new Font("Tekton Pro", true, false,  textSize);
+        SuperTextBox box = new SuperTextBox(text, new Color(0,0,0,0), Color.BLACK, font, true, mainImage[0].getWidth(), 0, null);
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
+        
+        mainImage[0].drawImage(box.getImage(), x, y);
+        hoverImage[0].drawImage(box.getImage(), x, y);
+        clickImage[0].drawImage(box.getImage(), x, y);
+        setImage(mainImage[0]);
     }
 }

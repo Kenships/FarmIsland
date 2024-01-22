@@ -98,7 +98,6 @@ public class Inventory
         else{
             inventory.put(id, inventory.get(id) + amount);
         }
-        output();
     }
     //method for debugging only
     public static void output(){
