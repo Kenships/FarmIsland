@@ -20,8 +20,10 @@ public class EquipDisplay extends SuperSmoothMover
 
     private GreenfootSound[] clickSound;
     private int soundIndex;
-    public EquipDisplay()
+    public EquipDisplay(GameWorld w)
     {
+
+        this.w = w;
         toolFrame = new EquipFrame(ObjectID.NONE, 86, 86);
         seedFrame = new EquipFrame(ObjectID.NONE, 86, 86);
         fertilizerFrame = new EquipFrame(ObjectID.NONE, 86, 86);
@@ -34,7 +36,6 @@ public class EquipDisplay extends SuperSmoothMover
     }
 
     public void addedToWorld(World w){
-        this.w = (GameWorld) w;
         showDisplay();
         //fill in later
     }
@@ -42,6 +43,7 @@ public class EquipDisplay extends SuperSmoothMover
     public void act(){
         if(w.getScreen() == GameWorld.GAME){
             checkMouseAction();
+            checkSelection();
         }
 
         toolFrame.setLocation(getX() - SPACING, getY());
@@ -49,87 +51,138 @@ public class EquipDisplay extends SuperSmoothMover
         fertilizerFrame.setLocation(getX() + SPACING, getY()); 
     }
 
-    public void checkMouseAction(){
-        if(toolFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
-            clickSound();
-            if(tool != null){
-                getWorld().addObject(tool,getX() - SPACING, getY());
-            }
-            if(seed != null && seed.getWorld() != null){
-                getWorld().removeObject(seed);
-            }
-            toolFrame.select();
-            Cursor.pickUp(tool);
+    public void checkSelection(){
+        if(toolFrame.isSelected()){
             seedFrame.unselect();
             fertilizerFrame.unselect();
+            if(tool != null && tool.getWorld() == null){
+                w.addObject(tool, Cursor.getX(), Cursor.getY());
+            }
         }
-        if(seedFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
-            clickSound();
-            if(seed != null){
-                getWorld().addObject(seed ,getX() - SPACING, getY());
-            }
+        else{
             if(tool != null && tool.getWorld() != null){
-                getWorld().removeObject(tool);
+                w.removeObject(tool);
             }
-            Cursor.pickUp(seed);
-            seedFrame.select();
-            toolFrame.unselect();
+        }
+        if(seedFrame.isSelected()){
             fertilizerFrame.unselect();
-        }
-        if(fertilizerFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
-            clickSound();
-            if(tool != null && tool.getWorld() != null){
-                getWorld().removeObject(tool);
-            }
-            if(seed != null && seed.getWorld() != null){
-                getWorld().removeObject(seed);
-            }
-            Cursor.release();
-            fertilizerFrame.select();
-            seedFrame.unselect();
             toolFrame.unselect();
+            if(seed != null && seed.getWorld() == null){
+                w.addObject(seed, Cursor.getX(), Cursor.getY());
+            }
+        }
+        else{
+            if(seed != null && seed.getWorld() != null){
+                w.removeObject(seed);
+            }
+        }
+        if(fertilizerFrame.isSelected()){
+            toolFrame.unselect();
+            seedFrame.unselect();
+            if(fertilizer != null && fertilizer.getWorld() == null){
+                w.addObject(fertilizer, Cursor.getX(), Cursor.getY());
+            }
+        }
+        else{
+            if(fertilizer != null && fertilizer.getWorld() != null){
+                w.removeObject(fertilizer);
+            }
         }
     }
 
+    public void checkMouseAction(){
+        if(toolFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
+            if(clickedItself(toolFrame)){
+                toolFrame.unselect();
+            }
+            else{
+                toolFrame.select();
+                Cursor.pickUp(tool);
+                seedFrame.unselect();
+                fertilizerFrame.unselect();
+            }
+
+        }
+        if(seedFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
+            if(clickedItself(seedFrame)){
+                seedFrame.unselect();
+            }
+            else{
+                Cursor.pickUp(seed);
+                seedFrame.select();
+                toolFrame.unselect();
+                fertilizerFrame.unselect();
+            }
+
+        }
+        if(fertilizerFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
+            if(clickedItself(fertilizerFrame)){
+                fertilizerFrame.unselect();
+            }
+            else{
+                Cursor.release();
+                fertilizerFrame.select();
+                seedFrame.unselect();
+                toolFrame.unselect();                
+            }
+
+        }
+
+    }
+
+    public boolean clickedItself(EquipFrame frame){
+        if(frame.isSelected()){
+            return true;
+        }
+        return false;
+    }
+
     public void showDisplay(){
-        World w = getWorld();
         w.addObject(toolFrame,getX() - SPACING, getY());
         w.addObject(seedFrame, getX(), getY());
         w.addObject(fertilizerFrame, getX() + SPACING, getY());
     }
 
     public void hideDisplay(){
-        getWorld().removeObject(toolFrame);
-        getWorld().removeObject(seedFrame);
-        getWorld().removeObject(fertilizerFrame);
-        getWorld().removeObject(tool);
-        getWorld().removeObject(seed);
+        w.removeObject(toolFrame);
+        w.removeObject(seedFrame);
+        w.removeObject(fertilizerFrame);
+        w.removeObject(tool);
+        w.removeObject(seed);
     }
 
     public void equipTool(Tool tool){
         if(this.tool != null && this.tool.getWorld() != null){
-            getWorld().removeObject(this.tool);
+            w.removeObject(this.tool);
         }
-
+        Cursor.pickUp(tool);
         this.tool = tool;
         toolFrame.updateID(tool.getID());
+        toolFrame.select();
     }
 
     public void equipSeed(Seed seed){
         if(this.seed != null && this.seed.getWorld() != null){
-            getWorld().removeObject(this.seed);
+            w.removeObject(this.seed);
         }
         this.seed = seed;
+        Cursor.pickUp(seed);
         seedFrame.updateID(seed.getID());
+        seedFrame.select();
     }
 
     public void equipFertilizer(Fertilizer fertilizer){
         if(this.fertilizer != null && this.fertilizer.getWorld() != null){
-            getWorld().removeObject(this.fertilizer);
+            w.removeObject(this.fertilizer);
         }
-
+        Cursor.pickUp(fertilizer);
         this.fertilizer = fertilizer;
+
         fertilizerFrame.updateID(fertilizer.getID());
+        fertilizerFrame.select();                                                             
     }
 
     public void unEquipTool(){
@@ -139,23 +192,26 @@ public class EquipDisplay extends SuperSmoothMover
 
         this.tool = null;
         toolFrame.updateID(ObjectID.NONE);
+        toolFrame.unselect();
     }
 
     public void unEquipSeed(){
         if(this.seed != null && this.seed.getWorld() != null){
-            getWorld().removeObject(this.seed);
+            w.removeObject(this.seed);
         }
         this.seed = null;
         seedFrame.updateID(ObjectID.NONE);
+        seedFrame.unselect();
     }
 
     public void unEquipFertilizer(){
         if(this.fertilizer != null && this.fertilizer.getWorld() != null){
-            getWorld().removeObject(this.fertilizer);
+            w.removeObject(this.fertilizer);
         }
 
         this.fertilizer = null;
         fertilizerFrame.updateID(ObjectID.NONE);
+        fertilizerFrame.unselect();
     }
 
     public void unEquipItem(ObjectID ID){

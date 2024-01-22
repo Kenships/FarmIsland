@@ -13,7 +13,7 @@ public abstract class Button extends SuperSmoothMover
     protected GreenfootImage[] clickImage;
     protected String imageName;
     protected int width, height;
-    private boolean clicked;
+    protected boolean clicked;
     private boolean mouseOver;
     private GreenfootSound hoverSound;
     private GreenfootSound[] releaseSound;
@@ -48,7 +48,7 @@ public abstract class Button extends SuperSmoothMover
     public void act()
     {
         //mouse pressed + mouse release combo to check for hold
-        if(Greenfoot.mousePressed(this)){
+        if(Greenfoot.mousePressed(null) && hoveringThis()){
             click();
             clickSound();
             clicked = true;

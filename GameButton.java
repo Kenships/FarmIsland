@@ -18,6 +18,7 @@ public class GameButton extends Button
         hoverImage[0].scale(64, 64);
         mainImage[0].scale(56,56);
         setImage(mainImage[0]);
+        
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }

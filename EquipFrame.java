@@ -45,7 +45,11 @@ public class EquipFrame extends ItemFrame
             setImage(mainImage);
         }
     }
-
+    
+    public boolean isSelected(){
+        return selected;
+    }
+    
     public void select(){
         selected = true;
     }

@@ -145,8 +145,9 @@ public class GameWorld extends World
         buttons.add(leave);
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
+        
         //addObject(porcus, 0, SCREEN_HEIGHT/2);
-        equip = new EquipDisplay();
+        equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
         Inventory.add(ObjectID.SHOVEL, 1);
@@ -161,7 +162,7 @@ public class GameWorld extends World
         equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
         equip.equipTool(tool);
         addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
-
+        addObject(new ToggleButton("Toggle"), equip.getX(), equip.getY() - 64);
         addObject(new CurrencyHandler(), 100, 100);
         //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
