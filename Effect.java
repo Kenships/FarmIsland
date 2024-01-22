@@ -15,6 +15,8 @@ public class Effect extends SuperSmoothMover
     public static final int ROCK = 1;
     public static final int SLIDE = 2;
     public static final int FADE = 3;
+    public static final int FLOAT = 4;
+    
     private GreenfootImage image;
     private int effect;
     private double index, deltaIndex;
@@ -69,14 +71,30 @@ public class Effect extends SuperSmoothMover
                 case FADE:
                     fade();
                     break;
+                case FLOAT:
+                    fly();
+                    break;
             }
         }
     }
+    public void fly(){
+        fade();
+        enableStaticRotation();
+        setRotation(270);
+        move(deltaIndex);
+    }
     public void fade(){
-        image.setTransparency(image.getTransparency() - 1);
-        if(image.getTransparency() == 0){
+        int newTransparency = image.getTransparency() - 1;
+        index += deltaIndex;
+        
+        if(newTransparency <= 0 || index >= duration){
             getWorld().removeObject(this);
         }
+        else{
+            image.setTransparency(newTransparency);
+        }
+        
+        
     }
     public void pulse(){
         GreenfootImage scaled = new GreenfootImage(image);

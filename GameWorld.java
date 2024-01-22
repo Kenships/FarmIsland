@@ -61,7 +61,9 @@ public class GameWorld extends World
     
     private SimpleTimer actTimer;
     private SimpleTimer cloudTimer;
-
+    
+    private GreenfootSound GamePlayMusic;
+    private GreenfootSound ShopMusic;
     
     //for keypress only
     private boolean inventoryMoving;
@@ -99,14 +101,19 @@ public class GameWorld extends World
         actTimer = new SimpleTimer();
         cloudTimer = new SimpleTimer();
         
-        CurrencyHandler.initialize(savedFile);
+        GamePlayMusic = new GreenfootSound ("GamePlayMusic.mp3");
+        GamePlayMusic.setVolume(50);
+        ShopMusic = new GreenfootSound ("ShopMusic.mp3");
+        ShopMusic.setVolume(50);
+        
+        CurrencyHandler.initialize(savedFile, this);
         CollectionHandler.initialize(this);
         
         setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
         //initializes starting screen
 
         screen = GAME;
-        setPaintOrder(SuperTextBox.class, AchievementNotification.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, PorcusMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
+        setPaintOrder(SuperTextBox.class, AchievementNotification.class,ForegroundEffect.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, PorcusMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
 
         landPlot = new LandPlot();
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -160,7 +167,7 @@ public class GameWorld extends World
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
 
         fillClouds();
-
+        GamePlayMusic.playLoop();
     }
     public void fillClouds(){
         for(int i = 0; i < 10; i++){
@@ -307,18 +314,38 @@ public class GameWorld extends World
             case GAME:
                 resetButtons();
                 equip.showDisplay();
-                //addObject(Cursor.getTool(), mouse.getX(), mouse.getY());
+                GamePlayMusic.playLoop();
+                ShopMusic.stop();
                 break;
             case SHOP:
                 removeButtons();
                 equip.hideDisplay();
-                //removeObject(Cursor.getTool());
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+                GamePlayMusic.stop();
+                ShopMusic.playLoop();
                 break;
             case ACHIEVEMENT:
                 removeButtons();
                 addObject(achievement, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
         }
+    }
+    
+    public void started()
+    {
+        switch(screen){
+            case GAME:
+                GamePlayMusic.playLoop();
+                break;
+            case SHOP:
+                ShopMusic.playLoop();
+        }
+        
+    }
+    
+    public void stopped()
+    {
+        GamePlayMusic.pause();
+        ShopMusic.pause();
     }
 }

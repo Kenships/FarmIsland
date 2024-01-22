@@ -9,9 +9,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class CollectionHandler extends SuperSmoothMover
 {
     private static GameWorld w;
+    private static GreenfootSound[] harvestingSound;
+    private static int soundIndex;
 
     public static void initialize(GameWorld world){
         w = world;
+        harvestingSound = new GreenfootSound[20];
+        for (int i = 0; i < harvestingSound.length; i++){
+            harvestingSound[i] = new GreenfootSound ("HarvestingSound.wav");
+            harvestingSound[i].setVolume(80);
+        }
     }
 
     public void act()
@@ -29,11 +36,13 @@ public class CollectionHandler extends SuperSmoothMover
             }
 
             if(tool.getID() == ObjectID.SHOVEL){
+                harvestSound();
                 shovel(plant);
                 return;
             }
             Inventory.add(plant.getID(), netYield);
             CurrencyHandler.deposit(netYield * plant.getSellPrice()); 
+            harvestSound();
             if(!(plant instanceof Tomato || plant instanceof PorcusWheat) || tool.getID() == ObjectID.SHOVEL){
                 w.removeObject(plant);
                 plant.getTile().unPlant();
@@ -58,5 +67,14 @@ public class CollectionHandler extends SuperSmoothMover
                 plant.getTile().unPlant();
             }
         }
+    }
+
+    public static void harvestSound(){
+        harvestingSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == harvestingSound.length)
+        {
+            soundIndex=0;
+        }   
     }
 }

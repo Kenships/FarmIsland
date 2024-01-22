@@ -43,6 +43,8 @@ public abstract class Plant extends Tile
         //nextFrame would be 0
         animationIndex = -1;
 
+        
+
         actTimer = new SimpleTimer();
         yOffsets = new HashMap<>();
     }
@@ -53,7 +55,7 @@ public abstract class Plant extends Tile
         if(getWorld() == null){
             return;
         }
-        
+
         // 1/60 of a second is 16.666 milliseconds
         if(actTimer.millisElapsed() >= 17){
             actTimer.mark();
@@ -68,6 +70,7 @@ public abstract class Plant extends Tile
                     //collects if mature returns seed if not
                     myTile.unPlant();
                     if(mature){
+
                         CollectionHandler.collect(this);
                     }
                     else{
@@ -104,7 +107,7 @@ public abstract class Plant extends Tile
             }
         }
     }
-    
+
     public void plant(LandPlot plot, DirtTile tile){
         myPlot = plot;
         myTile = tile;

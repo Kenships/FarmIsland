@@ -13,19 +13,33 @@ public class CurrencyHandler extends SuperSmoothMover
     private static HashMap<ObjectID, Integer> priceIndex;
 
     private static SuperTextBox CashDisplay;
+    
+    private static GameWorld myWorld;
+    
+    private static GreenfootImage background;
+    private static GreenfootImage myImage;
+    
+    private static int x, y;
     public CurrencyHandler(){
-        //setImage(new GreenfootImage(64, 128));
+        
     }
-
+    public void addedToWorld(World w){
+        x = getX();
+        y = getY();
+    }
     public void act(){
-        GreenfootImage i = new GreenfootImage("BackGrounds/Money.png");
-        i.setFont(new Font("Tekton Pro", true, false,  20));
-        i.drawString("$" + money, 14, i.getHeight()/2);
-        setImage(i);
+        myImage.clear();
+        myImage.drawImage(background, 0, 0);
+        myImage.drawString("$" + money, 14, myImage.getHeight()/2);
+        setImage(myImage);
 
     }
 
-    public static void initialize(String savedFile){
+    public static void initialize(String savedFile, GameWorld w){
+        myWorld = w;
+        background = new GreenfootImage("BackGrounds/Money.png");
+        myImage = new GreenfootImage(background.getWidth(), background.getHeight());
+        myImage.setFont(new Font("Tekton Pro", true, false,  20));
         priceIndex = new HashMap<>();
         priceIndex.put(ObjectID.DIRT_TILE, 10);
         priceIndex.put(ObjectID.PORCUS_WHEAT_SEED, 888);
@@ -109,6 +123,11 @@ public class CurrencyHandler extends SuperSmoothMover
     }
 
     public static void deposit(int amount){
+        GreenfootImage effect = new GreenfootImage(myImage.getWidth(), 20);
+        effect.setColor(new Color(123,168,124));
+        effect.setFont(new Font("Tekton Pro", true, false,  20));
+        effect.drawString("$" + amount,0, 20);
+        myWorld.addObject(new ForegroundEffect(Effect.FLOAT, effect, 20, 0.5), x + 14, y - 10);
         money += amount;
     }
 

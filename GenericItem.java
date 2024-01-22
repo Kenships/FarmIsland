@@ -16,8 +16,21 @@ public class GenericItem extends Item
     private SuperTextBox name;
     private SuperTextBox amount;
     private int width, height;
+
+    private GreenfootSound hoverSound;
+    private GreenfootSound[] clickSound;
+    private int soundIndex;
+    private boolean mouseOver;
     public GenericItem(ObjectID ID){
         this.ID = ID;
+
+        hoverSound = new GreenfootSound ("HoverSoundmp3.mp3");
+        hoverSound.setVolume(50);
+        clickSound = new GreenfootSound[6];
+        for(int i = 0; i < clickSound.length; i++){
+            clickSound[i] = new GreenfootSound("Clickmp3.mp3");
+            clickSound[i].setVolume(90);
+        }
 
         sFont = new Font("Tekton Pro", true, false,  16);
         lFont = new Font("Tekton Pro", true, false,  20);
@@ -49,11 +62,21 @@ public class GenericItem extends Item
 
     public void checkMouseAction(){
         if(hoveringThis() && Greenfoot.mouseClicked(null) && Cursor.leftClicked()){
+            clickSound();
             Inventory.equipItem(ID);
         }
 
+        if(hoveringThis() != mouseOver){
+            mouseOver = ! mouseOver;
+            if (mouseOver) // hover begins?
+            {
+                hoverSound.play();
+            }
+        }
         World w = getWorld();
+
         if(hoveringThis()){
+
             w.addObject(name, getX(), getY() -40);
             amount.update(String.valueOf(Inventory.getAmount(ID)));
             w.addObject(amount, getX() + 28, getY() + 32);
@@ -77,5 +100,14 @@ public class GenericItem extends Item
             return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
         }
         return false;
+    }
+
+    public void clickSound()
+    {
+        clickSound[soundIndex].play();
+        soundIndex++;
+        if (soundIndex == clickSound.length){
+            soundIndex = 0;
+        }
     }
 }

@@ -30,6 +30,10 @@ public class LandPlot extends SuperSmoothMover
 
     private MouseInfo lastMouseInfo;
     private boolean isDragging;
+
+    private GreenfootSound[] removingDirtSound;
+
+    private int soundIndex;
     public LandPlot(){
 
         initialize();
@@ -48,7 +52,14 @@ public class LandPlot extends SuperSmoothMover
     public void initialize(){
         //sets a temporary image for the "moveable screen"
         myImage = new GreenfootImage(GameWorld.SCREEN_WIDTH - 2 * MARGIN, GameWorld.SCREEN_HEIGHT - 2 * MARGIN);
-        
+
+        removingDirtSound = new GreenfootSound[10];
+        for (int i = 0; i < removingDirtSound.length; i++){
+            removingDirtSound[i] = new GreenfootSound ("RemoveDirt.wav");
+            removingDirtSound[i].setVolume(70);
+        }
+        soundIndex = 0;
+
         setImage(myImage);
 
         //puts many objects on screen
@@ -138,6 +149,7 @@ public class LandPlot extends SuperSmoothMover
             }
             if(remove.getWorld() != null){
                 getWorld().removeObject(remove);
+                removeTileSound();
             }
             plot[row][col] = null;  
         }
@@ -250,16 +262,16 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-    
+
     public void fillTiles(){
         int startX = WIDTH/2;
         int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
         for (int row = 0; row < GRID_ROWS; row++){
             for(int col = 0; col < GRID_COLS; col++){
-                
+
                 int x = startX + col * DirtTile.WIDTH;
                 int y = startY + row * DirtTile.HEIGHT + col * DirtTile.HEIGHT;
-                
+
                 if(plot[row][col] == null){
                     plot[row][col] = new DirtTile(this, row, col, true);
                     getWorld().addObject(plot[row][col], x,y);
@@ -268,6 +280,16 @@ public class LandPlot extends SuperSmoothMover
                     plot[row][col].activate();
                 }
             }
+        }
+    }
+
+    public void removeTileSound()
+    {
+        removingDirtSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == removingDirtSound.length)
+        {
+            soundIndex=0;
         }
     }
 }

@@ -17,6 +17,8 @@ public class Seed extends Item
     private int frame;
     private int actCounter;
 
+    private GreenfootSound[] plantingSound;
+    private int soundIndex;
     public Seed(ObjectID ID, int amount, boolean disapear){
         disapearWhenEmpty = disapear;
         this.ID = ID;
@@ -29,6 +31,13 @@ public class Seed extends Item
 
         display = false;
         setImage(seedImage);
+
+        plantingSound = new GreenfootSound[20];
+        for (int i = 0; i < plantingSound.length; i++){
+            plantingSound[i] = new GreenfootSound ("PlantingSeed.wav");
+            plantingSound[i].setVolume(80);
+        }
+        soundIndex = 0;
     }
 
     public Seed(ObjectID ID, int amount){
@@ -42,6 +51,12 @@ public class Seed extends Item
         seedImage.scale(32,(int)(32 * ratio + 0.5));
         display = false;
         setImage(seedImage);
+        plantingSound = new GreenfootSound[20];
+        for (int i = 0; i < plantingSound.length; i++){
+            plantingSound[i] = new GreenfootSound ("PlantingSeed.wav");
+            plantingSound[i].setVolume(80);
+        }
+        soundIndex = 0;
     }
 
     public void addedToWorld(World w){
@@ -89,7 +104,6 @@ public class Seed extends Item
         //fill later
     }
 
-
     public void checkMouseAction(){
         GameWorld myWorld = (GameWorld) getWorld();
         if(!myWorld.isScreen(GameWorld.GAME)){
@@ -123,7 +137,7 @@ public class Seed extends Item
             //remove one count of seed in inventory
             getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
             plant.plant(plot, tile);
-            
+            plantingSound();
             Inventory.remove(ID);
             if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
 
@@ -160,5 +174,12 @@ public class Seed extends Item
     public boolean isDisplayed(){
         return display;
     }
-
+        public void plantingSound(){
+        plantingSound[soundIndex].play();
+        soundIndex++;
+        if(soundIndex == plantingSound.length)
+        {
+            soundIndex=0;
+        }       
+    }
 }

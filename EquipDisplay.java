@@ -1,5 +1,4 @@
-import greenfoot.GreenfootImage;
-import greenfoot.World;
+import greenfoot.*;
 
 /**
  * Write a description of class EquipDisplay here.
@@ -19,11 +18,19 @@ public class EquipDisplay extends SuperSmoothMover
     private Fertilizer fertilizer;
     private GameWorld w;
 
+    private GreenfootSound[] clickSound;
+    private int soundIndex;
     public EquipDisplay()
     {
         toolFrame = new EquipFrame(ObjectID.NONE, 86, 86);
         seedFrame = new EquipFrame(ObjectID.NONE, 86, 86);
         fertilizerFrame = new EquipFrame(ObjectID.NONE, 86, 86);
+
+        clickSound = new GreenfootSound[6];
+        for(int i = 0; i < clickSound.length; i++){
+            clickSound[i] = new GreenfootSound("Clickmp3.mp3");
+            clickSound[i].setVolume(90);
+        }
     }
 
     public void addedToWorld(World w){
@@ -43,7 +50,8 @@ public class EquipDisplay extends SuperSmoothMover
     }
 
     public void checkMouseAction(){
-        if(toolFrame.hoveringThis() && Cursor.leftClicked()){
+        if(toolFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
             if(tool != null){
                 getWorld().addObject(tool,getX() - SPACING, getY());
             }
@@ -55,7 +63,8 @@ public class EquipDisplay extends SuperSmoothMover
             seedFrame.unselect();
             fertilizerFrame.unselect();
         }
-        if(seedFrame.hoveringThis() && Cursor.leftClicked()){
+        if(seedFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
             if(seed != null){
                 getWorld().addObject(seed ,getX() - SPACING, getY());
             }
@@ -67,8 +76,8 @@ public class EquipDisplay extends SuperSmoothMover
             toolFrame.unselect();
             fertilizerFrame.unselect();
         }
-        if(fertilizerFrame.hoveringThis() && Cursor.leftClicked()){
-
+        if(fertilizerFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
+            clickSound();
             if(tool != null && tool.getWorld() != null){
                 getWorld().removeObject(tool);
             }
@@ -184,6 +193,15 @@ public class EquipDisplay extends SuperSmoothMover
             case FERTILIZER:
                 equipFertilizer(new Fertilizer(ID));
                 break;    
+        }
+    }
+
+    public void clickSound()
+    {
+        clickSound[soundIndex].play();
+        soundIndex++;
+        if (soundIndex == clickSound.length){
+            soundIndex = 0;
         }
     }
 }

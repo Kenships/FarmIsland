@@ -23,6 +23,8 @@ public class DirtTile extends Tile
 
     //edit mode toggle
     private boolean offseted;
+    
+    private GreenfootSound placingDirtSound;
     /**
      * Constructor
      * 
@@ -31,9 +33,6 @@ public class DirtTile extends Tile
      * @param col
      */
     public DirtTile(LandPlot plot, int row, int col, boolean active){
-        /**
-         * NEW super
-         */
         //10 is y offset;
         super(-10);
         Initialize(plot, row, col, active);
@@ -77,6 +76,7 @@ public class DirtTile extends Tile
         //initialize projected to be invisable
         projectedTile = new GreenfootImage("Tiles/Dirt Tile.png");
         projectedTile.setTransparency(TRANSPARENT);
+        placingDirtSound = new GreenfootSound ("PlacingDirt.wav");
   
         activeTile = new GreenfootImage(projectedTile);
         if(active){
@@ -219,7 +219,7 @@ public class DirtTile extends Tile
     }
 
     public void playPlaceSound(){
-        //start the place sound here
+        placingDirtSound.play();
     }
 
     public void playRemoveSound(){
