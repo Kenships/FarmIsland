@@ -46,6 +46,15 @@ public class CurrencyHandler extends SuperSmoothMover
         priceIndex.put(ObjectID.WHEAT_SEED, 1);
         priceIndex.put(ObjectID.CARROT_SEED, 2);
         priceIndex.put(ObjectID.TOMATO_SEED, 20);
+        priceIndex.put(ObjectID.BLUEBERRY_SEED, 20);
+        priceIndex.put(ObjectID.DRAGONFRUIT_SEED, 25);
+        priceIndex.put(ObjectID.DRAGONFRUIT, 12);
+        priceIndex.put(ObjectID.STRAWBERRY_SEED, 30);
+        //
+        priceIndex.put(ObjectID.SILVER_TOMATO_SEED, 30);
+        priceIndex.put(ObjectID.SILVER_TOMATO, 15);
+        priceIndex.put(ObjectID.GOLDEN_TOMATO_SEED, 50);
+        priceIndex.put(ObjectID.GOLDEN_TOMATO, 25);
         priceIndex.put(ObjectID.DIAMOND_TOOL, 1000);
         priceIndex.put(ObjectID.BASIC_TOOL, 10);
         priceIndex.put(ObjectID.FERTILIZER, 5);

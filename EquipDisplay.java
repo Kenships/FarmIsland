@@ -239,6 +239,11 @@ public class EquipDisplay extends SuperSmoothMover
             case WHEAT_SEED:
             case CARROT_SEED:
             case TOMATO_SEED:
+            case SILVER_TOMATO_SEED:
+            case GOLDEN_TOMATO_SEED:
+            case STRAWBERRY_SEED:
+            case BLUEBERRY_SEED:
+            case DRAGONFRUIT_SEED:
                 unEquipSeed();
                 break;
             case DIAMOND_TOOL: 
@@ -258,6 +263,11 @@ public class EquipDisplay extends SuperSmoothMover
             case WHEAT_SEED:
             case CARROT_SEED:
             case TOMATO_SEED:
+            case BLUEBERRY_SEED:
+            case STRAWBERRY_SEED:
+            case DRAGONFRUIT_SEED:
+            case SILVER_TOMATO_SEED: 
+            case GOLDEN_TOMATO_SEED:
                 equipSeed(new Seed(ID));
                 break;
             case DIAMOND_TOOL: 

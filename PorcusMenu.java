@@ -77,6 +77,10 @@ public class PorcusMenu extends SuperSmoothMover
             case TOMATO:
             case PORCUS_WHEAT:
             case BLUEBERRY:
+            case STRAWBERRY:
+            case DRAGONFRUIT:
+            case SILVER_TOMATO: 
+            case GOLDEN_TOMATO: 
                 amount = Inventory.getAmount(ID);
                 amountDisplay.update(String.valueOf(amount));
                 this.ID = ID;
