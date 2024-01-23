@@ -138,6 +138,7 @@ public class GameWorld extends World
         leave = new GameButton("Leave");
         openPorcus = new MenuButton("Porcus H");
         porcus = new PorcusMenu(openPorcus);
+        addObject(porcus, 0, 0);
         
         ArrayList<Button> buttons = new ArrayList<>();
         buttons.add(homeButton);
@@ -151,7 +152,7 @@ public class GameWorld extends World
         
         equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
-        Inventory.initialize(savedFile, inventoryDisplay, equip);
+        Inventory.initialize(savedFile, inventoryDisplay, equip, porcus);
         CollectionHandler.initialize(this);
         Inventory.add(ObjectID.SHOVEL, 1);
         Inventory.add(ObjectID.DIAMOND_TOOL, 1);

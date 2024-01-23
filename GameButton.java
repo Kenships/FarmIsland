@@ -22,6 +22,27 @@ public class GameButton extends Button
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
+    public GameButton(String name, int size){
+        super(name);
+        
+        clickImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
+        mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
+        width = mainImage[0].getWidth();
+        height = mainImage[0].getHeight();
+        
+        double ratio = (double) height/width;
+        clickImage[0].scale(size, (int) (size * ratio + 0.5));
+        
+        hoverImage[0].scale(size + 10, (int) ((size + 10) * ratio + 0.5));
+        mainImage[0].scale(size, (int) (size * ratio + 0.5));
+        setImage(mainImage[0]);
+        
+        
+        
+        width = mainImage[0].getWidth();
+        height = mainImage[0].getHeight();
+    }
     public void act()
     {
         super.act();

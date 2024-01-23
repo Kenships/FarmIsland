@@ -13,15 +13,17 @@ public class Inventory
     private static HashMap <ObjectID, Integer> inventory;
     private static InventoryDisplay display;
     private static EquipDisplay equip;
+    private static PorcusMenu porcus;
     public void act()
     {
         // Add your action code here.
     }
     
     
-    public static void initialize(String saveFile, InventoryDisplay d, EquipDisplay e){
+    public static void initialize(String saveFile, InventoryDisplay d, EquipDisplay e, PorcusMenu p){
         equip = e;
         display = d;
+        porcus = p;
         inventory = new HashMap<>();
         loadGame(saveFile);
     }
@@ -38,6 +40,9 @@ public class Inventory
         inventory.clear();
     }
     
+    public static void feedItem(ObjectID ID){
+        porcus.updateID(ID);
+    }
     public static void equipItem(ObjectID ID){
         equip.equipItem(ID);
     }

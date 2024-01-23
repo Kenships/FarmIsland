@@ -64,6 +64,7 @@ public class GenericItem extends Item
         if(hoveringThis() && Greenfoot.mouseClicked(null) && Cursor.leftClicked()){
             clickSound();
             Inventory.equipItem(ID);
+            Inventory.feedItem(ID);
         }
 
         if(hoveringThis() != mouseOver){

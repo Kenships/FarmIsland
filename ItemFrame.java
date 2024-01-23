@@ -22,9 +22,20 @@ public class ItemFrame extends SuperSmoothMover
         this.width = width;
         this.height = height;
         mainImage = new GreenfootImage(width, height);
+        foreground = ID.getDisplayImage();
         background = new GreenfootImage("Displays/Frames/Frame.png");
         background.scale(width, height);
         updateID(ID);   
+    }
+    
+    public ItemFrame(ObjectID ID, String imageName, int width, int height){
+        this.width = width;
+        this.height = height;
+        mainImage = new GreenfootImage(width, height);
+        foreground = ID.getDisplayImage();
+        background = new GreenfootImage("Displays/Frames/" + imageName + ".png");
+        background.scale(width, height);
+        updateID(ID); 
     }
     
     public ObjectID getID(){
