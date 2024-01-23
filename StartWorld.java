@@ -10,7 +10,11 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.awt.Desktop;
+
+import javax.swing.JFileChooser;
+import java.lang.NullPointerException;
+
+
 /**
  * Changes:
  * StartWorld
@@ -19,11 +23,11 @@ public class StartWorld extends World
 {
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
-
+    
     private GreenfootImage background = new GreenfootImage("BackGrounds/Start BG Back.png");
     private GreenfootImage clouds = new GreenfootImage("BackGrounds/Start BG Clouds.png");
     private GreenfootImage island = new GreenfootImage("BackGrounds/Start BG Island.png");
-
+    
     private GreenfootImage screen = new GreenfootImage(430, 720);
 
     private HighlightButton startButton;
@@ -56,20 +60,27 @@ public class StartWorld extends World
             Greenfoot.setWorld(new GameWorld(null));
         }
         if(load.leftClickedThis()){
-            //Open();
-
-            scan = new Scanner(System.in);
-            System.out.println("Enter Your File Name: ");
-            fileName = scan.nextLine();
-            scan.close();
-            try{
-                fileScanner = new Scanner (new File(fileName));
-                Greenfoot.setWorld(new GameWorld(fileName));
+            JFileChooser fileChooser = new JFileChooser("Saves");
+            fileChooser.setDialogTitle("Select Your File");
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            
+            if(fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+                File selectedFile = fileChooser.getSelectedFile();
+                try{
+                    fileName = selectedFile.getAbsolutePath();
+                    try{
+                        fileScanner = new Scanner (new File(fileName));
+                        Greenfoot.setWorld(new GameWorld(fileName));
+                    }
+                    catch(FileNotFoundException e){
+                        System.out.println("Invalid File");
+                    }
+                    fileScanner.close();
+                }
+                catch(NullPointerException e){
+                    
+                }
             }
-            catch(FileNotFoundException e){
-                System.out.println("Invalid File");
-            }
-            fileScanner.close();
         }
         if(settings.leftClickedThis()){
             Greenfoot.setWorld(new SettingsWorld());

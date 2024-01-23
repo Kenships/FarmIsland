@@ -114,8 +114,8 @@ public class GameWorld extends World
 
         screen = GAME;
         setPaintOrder(SuperTextBox.class, AchievementNotification.class,ForegroundEffect.class, CurrencyHandler.class, Item.class, Button.class, ItemFrame.class, AchievementBanner.class, ShopMenu.class, AchievementMenu.class, PorcusMenu.class, InventoryDisplay.class, Fertilizer.class, Plant.class, DirtTile.class, LandPlot.class);
-
-        landPlot = new LandPlot();
+        
+        landPlot = new LandPlot(savedFile);
         addObject(landPlot, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
         
         // Initializes shop menu
@@ -146,10 +146,11 @@ public class GameWorld extends World
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
         
-        //addObject(porcus, 0, SCREEN_HEIGHT/2);
         equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
+        CurrencyHandler.initialize(savedFile);
+        CollectionHandler.initialize(this);
         Inventory.add(ObjectID.SHOVEL, 1);
         Inventory.add(ObjectID.DIAMOND_TOOL, 1);
 
@@ -157,6 +158,7 @@ public class GameWorld extends World
         achievement = new AchievementMenu();
         achievementManager = new AchievementManager();
 
+        
         
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
         equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
@@ -332,6 +334,8 @@ public class GameWorld extends World
         }
     }
     
+    public LandPlot getLandPlot(){
+        return landPlot;
     public void started()
     {
         switch(screen){

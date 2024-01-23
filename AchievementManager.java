@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 /**
- * Write a description of class AchievementManager here.
+ * Manages achievements in the game. Sets up the achievements and checks when they are completed.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Ryan Du
+ * @version January 2024
  */
 public class AchievementManager
 {
@@ -13,6 +13,9 @@ public class AchievementManager
     public static ObjectID currentPlant;
     public static ArrayList<Achievement> agricultureA, agricultureB;
     
+    /**
+     * Initializes the achievements.
+     */
     public AchievementManager(){
         totalTiles = 0;
         totalPlants = 0;
@@ -20,6 +23,10 @@ public class AchievementManager
         initializeAgricultureB();
     }
     
+    /**
+     * Sets up the achievements of type AgriculutreA. The achievement is
+     * based on the total number of plants made.
+     */
     private void initializeAgricultureA(){
         agricultureA = new ArrayList<>();
         agricultureA.add(new Achievement("Green Begginings", "Plant 1 seed!", AGRICULTURE_A, 0));
@@ -28,12 +35,19 @@ public class AchievementManager
         agricultureA.add(new Achievement("Planting Master", "Plant 1000 seeds!", AGRICULTURE_A, 3));
     }
     
-    
+    /**
+     * Sets up the achievements of type AgricultureB. The achievement is 
+     * based on unlocking a new plant.
+     */
     private void initializeAgricultureB(){
         agricultureB = new ArrayList<>();
         agricultureB.add(new Achievement("Looking Stubby", "Unlock Stubby Wheat!", "AgricultureB",0));
     }
     
+    /**
+     * Increases the total plants by 1. Checks if the total plant 
+     * matches the requirements for completing an achievement.
+     */
     public static void updateTotalPlant(){
         totalPlants ++;
         switch(totalPlants){
@@ -52,7 +66,6 @@ public class AchievementManager
     }
     
     // WORK IN PROGRESS
-    
     /*
     public static void updateLatestPlant(ObjectID id){
         System.out.println("Helooooooooo");
@@ -62,5 +75,4 @@ public class AchievementManager
         }
     }
     */
-    
 }

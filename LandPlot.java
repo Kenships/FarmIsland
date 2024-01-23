@@ -2,6 +2,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.PriorityQueue;
+
+import java.util.Map;
+import java.util.HashMap;
 /**
  * Stores all DirtTiles in play
  * 
@@ -36,12 +39,30 @@ public class LandPlot extends SuperSmoothMover
     private int soundIndex;
     public LandPlot(){
 
+    
+    private boolean existingFile;
+    private String file;
+       
+    public LandPlot(String savedFile){
+        if(savedFile != null){
+            existingFile = true;
+            file = savedFile;
+        }
+        else{
+            existingFile = false;
+        }
         initialize();
     }
 
     public void addedToWorld (World w){
+        if(existingFile){
+            GameInfo.loadTiles(file, w);
+        }
         //fillTiles();
-        startPlot();
+        else{
+            startPlot();
+            //fillTiles();
+        }
     }
     //credit: ChatGPT
     public void act()
@@ -262,16 +283,16 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-
+    
     public void fillTiles(){
         int startX = WIDTH/2;
         int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
         for (int row = 0; row < GRID_ROWS; row++){
             for(int col = 0; col < GRID_COLS; col++){
-
+                
                 int x = startX + col * DirtTile.WIDTH;
                 int y = startY + row * DirtTile.HEIGHT + col * DirtTile.HEIGHT;
-
+                
                 if(plot[row][col] == null){
                     plot[row][col] = new DirtTile(this, row, col, true);
                     getWorld().addObject(plot[row][col], x,y);
@@ -290,6 +311,48 @@ public class LandPlot extends SuperSmoothMover
         if(soundIndex == removingDirtSound.length)
         {
             soundIndex=0;
+    
+    public void fillTiles(ArrayList<DirtTile> tiles){
+        int startX = WIDTH/2;
+        int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
+        for(DirtTile d : tiles){
+            System.out.println("Plnat" + d.getPlant());
+            int row = d.getRow();
+            int col = d.getCol();
+            int x = startX - row * DirtTile.WIDTH/2 + col * DirtTile.WIDTH/2;
+            int y = startY + row * DirtTile.HEIGHT/2 + col * DirtTile.HEIGHT/2;
+        
+            if(plot[row][col] == null){
+                plot[row][col] = new DirtTile(this, row, col, true);
+            }
+            if(d.getPlant()!= null){
+                plot[row][col].setPlant(d.getPlant());
+                getWorld().addObject(plot[row][col], x,y);
+                Plant plant = plot[row][col].getPlant();
+                plant.plant(this, plot[row][col]);
+                getWorld().addObject(plant, plot[row][col].getX(), plot[row][col].getY() + plot[row][col].getTileYOffset()/2);
+            }
+            else{
+                getWorld().addObject(plot[row][col], x,y);
+            }
+            
+            if(!plot[row][col].isActive()){
+                plot[row][col].activate();
+            }
+            
+            /*
+            if(plot[row][col] == null){
+                plot[row][col] = new DirtTile(this, row, col, true);
+                plot[row][col].setPlant(d.getPlant());
+                System.out.println("pi " + plot[row][col].getPlant());
+                System.out.println("PLant: " + d.getPlant());
+                getWorld().addObject(plot[row][col], x,y);
+            }
+            else if(!plot[row][col].isActive()){
+                plot[row][col].activate();
+                System.out.println("Test");
+            }
+            */
         }
     }
 }

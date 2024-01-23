@@ -92,7 +92,7 @@ public class AchievementMenu extends SuperSmoothMover
     }
     
     /**
-     * Sets up the visual elements for the achievements.
+     * Sets up the achievement banners for the specified page.
      * 
      * @param p The page number for which achievements are set.
      */
@@ -111,6 +111,12 @@ public class AchievementMenu extends SuperSmoothMover
         }
     }
     
+    /**
+     * Sets up the banners for the achievements.
+     * 
+     * @param achievements The arraylist of achievements.
+     * @param isLeft True if the achievements are fully completed. False if not.
+     */
     private void setBanners(ArrayList<Achievement> achievements, boolean isLeft){
         achievementGallery.clear();
         currentRow = 0;

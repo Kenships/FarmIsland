@@ -131,12 +131,19 @@ public class DirtTile extends Tile
             Seed seed = (Seed) Cursor.getItem();
             if(!seed.isDisplayed()){
                 plant = seed.plant(myPlot, this);
+                if(plant!= null){
+                    AchievementManager.updateTotalPlant();
+                }
             }
         }
 
         if (hoveringThis() && Greenfoot.isKeyDown("space")){
             myPlot.removeTile(row,col);
         }
+    }
+    
+    public void setPlant(Plant plant){
+        this.plant = plant;
     }
     
     /**
@@ -233,9 +240,7 @@ public class DirtTile extends Tile
         return active;
     }
 
-    /**
-     * NEW: activate method changed
-     */
+
     public void activate(){
         setImage(activeTile);
         projectTiles();
@@ -246,24 +251,14 @@ public class DirtTile extends Tile
     public double getGrowthMultiplier(){
         return growthMultiplier;
     }
-    
-    /**
-     * NEW 
-     */
     public ObjectID getID(){
         return ID;
     }
 
-    /**
-     * NEW 
-     */
     public int getRow(){
         return row;
     }
 
-    /**
-     * NEW
-     */
     public int getCol(){
         return col;
     }

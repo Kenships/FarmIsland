@@ -110,12 +110,12 @@ public class Seed extends Item
             return;
         }
         /*if(Greenfoot.mousePressed(null) && hoveringThis()){
-        System.out.println("pickedup");
-        Cursor.pickUp(this);
+            System.out.println("pickedup");
+            Cursor.pickUp(this);
         }*/
         /*if(Greenfoot.mouseClicked(null) && hoveringThis()){
-
-        Cursor.release();
+            
+            Cursor.release();
         }*/
     }
 

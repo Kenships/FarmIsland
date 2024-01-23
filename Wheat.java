@@ -89,9 +89,12 @@ public class Wheat extends Plant
     }
 
     public void playPlaceSound(){
+        
     }
     public void playRemoveSound(){
+        
     }
+    
     //temporary
     public GreenfootImage getItemImage(){
         //fill
