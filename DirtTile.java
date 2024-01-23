@@ -105,12 +105,8 @@ public class DirtTile extends Tile
             else{
                 projectedTile.setTransparency(TRANSPARENT);
             }
-            //activate tile when clicked
-            //NOTE: can remove Cursor.getActor() == null after editmode is implemented
-            /**
-             * NEW: changed code below
-             */
-            if (Cursor.getItem() == null && activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
+            
+            if (activeTile.getTransparency() >TRANSLUCENT && !active && (clickedThis() || (hoveringThis() && Greenfoot.mouseDragged(null))) && mouse.getButton() == 1) {
 
                 if(Inventory.getAmount(ID) != 0){
                     activate();

@@ -17,7 +17,9 @@ public class EquipDisplay extends SuperSmoothMover
     private Seed seed;
     private Fertilizer fertilizer;
     private GameWorld w;
-
+    
+    private EquipFrame lastSelected;
+    
     private GreenfootSound[] clickSound;
     private int soundIndex;
     public EquipDisplay(GameWorld w)
@@ -41,7 +43,7 @@ public class EquipDisplay extends SuperSmoothMover
     }
 
     public void act(){
-        if(w.getScreen() == GameWorld.GAME){
+        if(w.getScreen() == GameWorld.GAME && !w.getEditMode()){
             checkMouseAction();
             checkSelection();
         }
@@ -50,9 +52,24 @@ public class EquipDisplay extends SuperSmoothMover
         seedFrame.setLocation(getX(), getY());
         fertilizerFrame.setLocation(getX() + SPACING, getY()); 
     }
-
+    
+    public void deselectAll(){
+        seedFrame.unselect();
+        fertilizerFrame.unselect();
+        toolFrame.unselect();
+        checkSelection();
+    }
+    
+    public void selectPrevious(){
+        if(lastSelected != null){
+            lastSelected.select();
+        }
+        
+    }
+    
     public void checkSelection(){
         if(toolFrame.isSelected()){
+            lastSelected = toolFrame;
             seedFrame.unselect();
             fertilizerFrame.unselect();
             if(tool != null && tool.getWorld() == null){
@@ -65,6 +82,7 @@ public class EquipDisplay extends SuperSmoothMover
             }
         }
         if(seedFrame.isSelected()){
+            lastSelected = seedFrame;
             fertilizerFrame.unselect();
             toolFrame.unselect();
             if(seed != null && seed.getWorld() == null){
@@ -77,6 +95,7 @@ public class EquipDisplay extends SuperSmoothMover
             }
         }
         if(fertilizerFrame.isSelected()){
+            lastSelected = fertilizerFrame;
             toolFrame.unselect();
             seedFrame.unselect();
             if(fertilizer != null && fertilizer.getWorld() == null){

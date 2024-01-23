@@ -33,7 +33,13 @@ public class Cursor
     
     public static int getButton(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
-        return mouse.getButton();
+        if(mouse != null){
+            return mouse.getButton();
+        }
+        else{
+            return -1;
+        }
+        
     }
     
     public static boolean leftClicked(){
@@ -49,12 +55,22 @@ public class Cursor
     
     public static int getX(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
-        return mouse.getX();
+        if(mouse != null){
+            return mouse.getX();
+        }
+        else{
+            return 0;
+        }
     }
     
     public static int getY(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
-        return mouse.getY();
+         if(mouse != null){
+            return mouse.getX();
+        }
+        else{
+            return 0;
+        }
     }
     
     public static void pickUp(Item item){

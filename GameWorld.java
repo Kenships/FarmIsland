@@ -51,7 +51,8 @@ public class GameWorld extends World
     private AchievementMenu achievement;
     private Button openAchievement;
     private Button leave;
-
+    private Button toggle;
+    
     private AchievementManager achievementManager;
 
     private Button openInventory;
@@ -96,8 +97,9 @@ public class GameWorld extends World
 
     // I WILL FILL THIS OUT
     public void initialize(String savedFile){
-        editMode = true;
-
+        
+        editMode = false;
+        
         actTimer = new SimpleTimer();
         cloudTimer = new SimpleTimer();
         
@@ -146,14 +148,14 @@ public class GameWorld extends World
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
         
+        
         equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
         Inventory.initialize(savedFile, inventoryDisplay, equip);
-        CurrencyHandler.initialize(savedFile);
         CollectionHandler.initialize(this);
         Inventory.add(ObjectID.SHOVEL, 1);
         Inventory.add(ObjectID.DIAMOND_TOOL, 1);
-
+        
         // Initializes achievement menu
         achievement = new AchievementMenu();
         achievementManager = new AchievementManager();
@@ -164,7 +166,10 @@ public class GameWorld extends World
         equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
         equip.equipTool(tool);
         addObject(equip, SCREEN_WIDTH/2, SCREEN_HEIGHT - 64);
-        addObject(new ToggleButton("Toggle"), equip.getX(), equip.getY() - 64);
+        
+        toggle = new ToggleButton("Toggle");
+        addObject(toggle, equip.getX(), equip.getY() - 64);
+        
         addObject(new CurrencyHandler(), 100, 100);
         //addObject(new Seed(ObjectID.WHEAT_SEED, 1, false), 1200, 650);
         //addObject(new Seed(ObjectID.STUBBY_WHEAT_SEED, 0, false), 1100, 650);
@@ -273,6 +278,15 @@ public class GameWorld extends World
         if(leave.leftClickedThis()){
             GameInfo.saveGame(this);
         }
+        if(toggle.leftClickedThis()){
+            toggleEditMode();
+            if(editMode){
+                equip.deselectAll(); 
+            }
+            else{
+                equip.selectPrevious();
+            }
+        }
         if(openPorcus.leftClickedThis()){
             if(porcus.isOpen()){
                 porcus.close();
@@ -284,10 +298,12 @@ public class GameWorld extends World
     }
 
     public void removeButtons(){
+        removeObject(toggle);
         inventoryDisplay.forceClose();
     }
 
     public void resetButtons(){
+        addObject(toggle, equip.getX(), equip.getY() - 64);
         inventoryDisplay.addButtons();
     }
 
@@ -300,7 +316,7 @@ public class GameWorld extends World
     }
     //changes edit mode from true to false and vice verca
     public static void toggleEditMode(){
-        editMode ^= true;
+        editMode = !editMode;
     }
 
     public boolean isScreen(String screen){
@@ -336,6 +352,7 @@ public class GameWorld extends World
     
     public LandPlot getLandPlot(){
         return landPlot;
+    }    
     public void started()
     {
         switch(screen){
@@ -344,6 +361,7 @@ public class GameWorld extends World
                 break;
             case SHOP:
                 ShopMusic.playLoop();
+                break;
         }
         
     }

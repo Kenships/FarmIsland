@@ -14,9 +14,9 @@ public class GameButton extends Button
         clickImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
         hoverImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");        
         mainImage[0] = new GreenfootImage("Buttons/" + imageName + ".png");
-        clickImage[0].scale(56, 56);
-        hoverImage[0].scale(64, 64);
-        mainImage[0].scale(56,56);
+        clickImage[0].scale(80, 80);
+        hoverImage[0].scale(90, 90);
+        mainImage[0].scale(80, 80);
         setImage(mainImage[0]);
         
         width = mainImage[0].getWidth();

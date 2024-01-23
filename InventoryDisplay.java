@@ -11,10 +11,10 @@ public class InventoryDisplay extends SuperSmoothMover
 {
     public static final int SPEED = 8;
     public static final int BUTTON_SPACING = 16;
-    public static final int BUTTON_OFFSET = 32; 
+    public static final int BUTTON_OFFSET = 40; 
     public static final int ITEM_SPACING = 82;
     public static final int LINE_SPACING = 100;
-    public static final int MARGIN = 128;
+    public static final int MARGIN = 164;
     public static final int PAGE_SIZE = 15;
 
     public ArrayList<ArrayList<GenericItem>> pages;
@@ -37,7 +37,7 @@ public class InventoryDisplay extends SuperSmoothMover
         setLocation(GameWorld.SCREEN_WIDTH + background.getWidth()/2, GameWorld.SCREEN_HEIGHT/2);
         int index = 0;
         for(Button b : buttons){
-            w.addObject(b, getX() - background.getWidth()/2 - BUTTON_OFFSET, MARGIN + index * 64 + BUTTON_SPACING);
+            w.addObject(b, getX() - background.getWidth()/2 - BUTTON_OFFSET, MARGIN + index * (64 + BUTTON_SPACING));
             index++;
         }
 

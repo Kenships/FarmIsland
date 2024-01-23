@@ -36,10 +36,7 @@ public class LandPlot extends SuperSmoothMover
 
     private GreenfootSound[] removingDirtSound;
 
-    private int soundIndex;
-    public LandPlot(){
-
-    
+    private int soundIndex;   
     private boolean existingFile;
     private String file;
        
@@ -311,7 +308,8 @@ public class LandPlot extends SuperSmoothMover
         if(soundIndex == removingDirtSound.length)
         {
             soundIndex=0;
-    
+        }
+    }    
     public void fillTiles(ArrayList<DirtTile> tiles){
         int startX = WIDTH/2;
         int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
