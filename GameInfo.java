@@ -58,6 +58,7 @@ public class GameInfo
                 FileWriter out = new FileWriter (filePath);
                 PrintWriter output = new PrintWriter (out);
                 output.println(CurrencyHandler.getBallance());
+                output.println(AchievementManager.totalPlants);
                 output.println("Tiles Start");
                 dirtTiles.addAll(world.getObjects(DirtTile.class));
                 for(DirtTile d : dirtTiles){
@@ -181,5 +182,17 @@ public class GameInfo
             System.out.println("Invalid File");
         }
         world.getLandPlot().fillTiles(dirtInfo);
+    }
+    
+    public static void loadAchievements(String savedFile){
+        try{
+            Scanner fileScanner = new Scanner (new File(savedFile));
+            fileScanner.nextLine();
+            AchievementManager.loadAgricultureA(Integer.valueOf(fileScanner.nextLine()));
+            fileScanner.close();
+        }
+        catch (FileNotFoundException e){
+            System.out.println("Invalid File");
+        }
     }
 }

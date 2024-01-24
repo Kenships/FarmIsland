@@ -1,0 +1,71 @@
+9506
+4
+Tiles Start
+14
+14
+null
+13
+16
+null
+14
+15
+null
+15
+14
+null
+14
+16
+null
+15
+15
+null
+16
+14
+null
+14
+17
+null
+15
+16
+TOMATO
+2
+13974
+false
+16
+15
+null
+15
+17
+null
+16
+16
+TOMATO
+2
+14006
+false
+16
+17
+TOMATO
+2
+9069
+false
+Tiles End
+Plants Inventory Start
+SHOVEL
+1
+TOMATO
+18
+TOMATO_SEED
+7
+CARROT
+2
+DIAMOND_TOOL
+1
+CARROT_SEED
+11
+WHEAT_SEED
+1
+Plants Inventory End
+Achievements Start
+4
+Achievements End

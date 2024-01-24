@@ -13,11 +13,12 @@ public class AchievementMenu extends SuperSmoothMover
 {
     public static final int ROW_MAX = 3;
     public static final int SPACING = AchievementBanner.WIDTH + 32;
-    public static final int TOP_MARGIN = 180;
+    public static final int TOP_MARGIN = 260;
     public static final int LINE_SPACING = AchievementBanner.HEIGHT + 32;
-    public static final int LEFT_MARGIN = 140;
-    public static final int LEFT_MARGIN_RIGHTSIDE = 750;
+    public static final int LEFT_MARGIN = 230;
 
+    public static final int FEATURE_IMAGE_X = 984;
+    public static final int FEATURE_IMAGE_Y = 400;
     private GreenfootImage background;
     private Button returnButton;
     private Button left;
@@ -27,6 +28,8 @@ public class AchievementMenu extends SuperSmoothMover
 
     private GameWorld myWorld;
     private static ArrayList<AchievementBanner> achievementGallery;
+    private SuperTextBox descriptionDisplay;
+    private AchievementBanner featureImage;
 
     /**
      * Called when the AchievementMenu is added to the world.
@@ -35,6 +38,7 @@ public class AchievementMenu extends SuperSmoothMover
      */
     public void addedToWorld(World world){
         myWorld = (GameWorld) world;
+        myWorld.setScreen(myWorld.ACHIEVEMENT);
         page = 1;
         initialize();
         setScreen(page);
@@ -44,12 +48,16 @@ public class AchievementMenu extends SuperSmoothMover
      * Initializes the buttons and achievement gallery.
      */
     public void initialize(){
-        returnButton = new MenuButton("Achievement Exit");
+        returnButton = new MenuButton("Achievement");
         left = new MenuButton("Small Arrow");
         left.setRotation(270);
         right = new MenuButton("Small Arrow");
         right.setRotation(90);
         achievementGallery = new ArrayList<>();
+        background = new GreenfootImage("BackGrounds/AchievementMenu.png");
+        setImage(background);
+        Font font = new Font("Tekton Pro", true, false,  20);
+        descriptionDisplay = new SuperTextBox(" ", new Color(0,0,0,0), Color.BLACK, font, true, 257, 0, null);
     }
     
     /**
@@ -68,26 +76,20 @@ public class AchievementMenu extends SuperSmoothMover
      */
     public void setScreen(int pageNum){
         clearAchievementMenu();
+        myWorld.addObject(descriptionDisplay, 984, 535);
+        descriptionDisplay.update(" ");
         switch(pageNum){
             case 1:
-                myWorld.addObject(returnButton, 46,46);
+                myWorld.addObject(returnButton, 64,656);
                 myWorld.addObject(right, 1200, 650);
                 setAchievements(1);
                 break;
             case 2:
-                myWorld.addObject(returnButton, 46,46);
+                myWorld.addObject(returnButton, 64,656);
                 myWorld.addObject(left, 1120, 650);
-                myWorld.addObject(right, 1200, 650);
                 setAchievements(2);
                 break;
-            case 3:
-                myWorld.addObject(returnButton, 46,46);
-                myWorld.addObject(left, 1120, 650);
-                setAchievements(3);
-                break;
         }
-        background = new GreenfootImage("BackGrounds/Achievement Background " + page + ".png");
-        setImage(background);
     }
     
     /**
@@ -100,12 +102,10 @@ public class AchievementMenu extends SuperSmoothMover
     public void setAchievements(int pageNum){
         switch(pageNum){
             case 1:
-                setBanners(AchievementManager.agricultureA, true);
-                setBanners(AchievementManager.agricultureB, false);
+                setBanners(AchievementManager.agricultureA);
                 break;
             case 2:
-                break;
-            case 3:
+                setBanners(AchievementManager.agricultureB);
                 break;
         }
     }
@@ -116,7 +116,7 @@ public class AchievementMenu extends SuperSmoothMover
      * @param achievements The arraylist of achievements.
      * @param isLeft True if the achievements are fully completed. False if not.
      */
-    private void setBanners(ArrayList<Achievement> achievements, boolean isLeft){
+    private void setBanners(ArrayList<Achievement> achievements){
         achievementGallery.clear();
         currentRow = 0;
         currentCol = 0;
@@ -126,8 +126,7 @@ public class AchievementMenu extends SuperSmoothMover
                 currentRow ++;
                 currentCol = 0;
             }
-            int margin = isLeft? LEFT_MARGIN: LEFT_MARGIN_RIGHTSIDE;
-            getWorld().addObject(achievementGallery.get(i), margin + (SPACING * currentCol), TOP_MARGIN + (LINE_SPACING * currentRow));
+            getWorld().addObject(achievementGallery.get(i), LEFT_MARGIN + (SPACING * currentCol), TOP_MARGIN + (LINE_SPACING * currentRow));
             currentCol++;
         }
     }
@@ -158,8 +157,12 @@ public class AchievementMenu extends SuperSmoothMover
         components.add(left);
         components.add(right);
         components.addAll(myWorld.getObjects(AchievementBanner.class));
+        components.add(descriptionDisplay);
         for(Actor component : components){
             myWorld.removeObject(component);
+        }
+        if(featureImage!=null){
+            myWorld.removeObject(featureImage);
         }
     }
     
@@ -179,6 +182,13 @@ public class AchievementMenu extends SuperSmoothMover
         if(Greenfoot.mouseClicked(right)){
             page ++;
             setScreen(page);
+        }
+        for(AchievementBanner banner : achievementGallery){
+            if(Greenfoot.mouseClicked(banner)){
+                descriptionDisplay.update(banner.getAchievement().getDescription());
+                featureImage = new AchievementBanner(banner.getAchievement(), banner.getAchievement().getCompleted());
+                myWorld.addObject(featureImage,FEATURE_IMAGE_X, FEATURE_IMAGE_Y);
+            }
         }
     }
 }

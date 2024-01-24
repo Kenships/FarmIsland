@@ -30,13 +30,7 @@ public class AchievementBanner extends SuperSmoothMover
         }
     }
     
-    public void act(){
-        if(Greenfoot.mouseClicked(this)){
-            displayDescription();
-        }
-    }
-    
-    public void displayDescription(){
-        System.out.println(achievement.getDescription());
+    public Achievement getAchievement(){
+        return achievement;
     }
 }

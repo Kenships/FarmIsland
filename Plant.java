@@ -101,6 +101,7 @@ public abstract class Plant extends Tile
         if(hoveringThis() && Cursor.leftClicked()){
             if(mature){
                 CollectionHandler.collect(this);
+                AchievementManager.updateLatestPlant(this.getID());
             }
             else{
                 CollectionHandler.shovel(this);

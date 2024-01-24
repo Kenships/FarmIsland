@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class AchievementManager
 {
     public static final String AGRICULTURE_A = "AgricultureA";
+    public static final String AGRICULTURE_B = "AgricultureB";
     public static int totalPlants;
     public static int totalTiles;
-    public static ObjectID currentPlant;
+    public static ObjectID collectedPlant;
     public static ArrayList<Achievement> agricultureA, agricultureB;
+    
     
     /**
      * Initializes the achievements.
@@ -41,7 +43,9 @@ public class AchievementManager
      */
     private void initializeAgricultureB(){
         agricultureB = new ArrayList<>();
-        agricultureB.add(new Achievement("Looking Stubby", "Unlock Stubby Wheat!", "AgricultureB",0));
+        agricultureB.add(new Achievement("Carrot Planter", "Collect Carrot!", AGRICULTURE_B,0));
+        agricultureB.add(new Achievement("Tomato Planter", "Collect Tomato!", AGRICULTURE_B,1));
+        agricultureB.add(new Achievement("Porcus Planter", "Collect Porcus Wheat!", AGRICULTURE_B,2));
     }
     
     /**
@@ -65,14 +69,39 @@ public class AchievementManager
         }
     }
     
-    // WORK IN PROGRESS
-    /*
-    public static void updateLatestPlant(ObjectID id){
-        System.out.println("Helooooooooo");
-        if(id.getSeedID().equals(ObjectID.STUBBY_WHEAT_SEED) && NEXT_PLANT.equals(ObjectID.STUBBY_WHEAT)){
-            agricultureB.get(0).setCompleted();
-            System.out.println("Completed 1");
+    public static void loadAgricultureA(int num){
+        if(num >= 1000){
+            for(int i = 0; i < 4; i++){
+                agricultureA.get(i).setCompleted();
+            }
+        }
+        else if(num >= 100){
+            for(int i = 0; i < 3; i++){
+                agricultureA.get(i).setCompleted();
+            }
+        }
+        else if(num >= 10){
+            for(int i = 0; i < 2; i++){
+                agricultureA.get(i).setCompleted();
+            }
+        }
+        else if(num >= 1){
+            agricultureA.get(0).setCompleted();
         }
     }
-    */
+    
+    public static void updateLatestPlant(ObjectID id){
+        collectedPlant = id;
+        switch(collectedPlant){
+            case CARROT:
+                agricultureB.get(0).setCompleted();
+                break;
+            case TOMATO:
+                agricultureB.get(1).setCompleted();
+                break;
+            case PORCUS_WHEAT:
+                agricultureB.get(2).setCompleted();
+                break;
+        }
+    }
 }

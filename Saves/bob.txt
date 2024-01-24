@@ -1,0 +1,19 @@
+0
+1000
+Tiles Start
+15
+15
+WHEAT
+0
+170
+false
+Tiles End
+Plants Inventory Start
+DIAMOND_TOOL
+1
+SHOVEL
+1
+Plants Inventory End
+Achievements Start
+1
+Achievements End

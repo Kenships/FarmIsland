@@ -127,6 +127,7 @@ public class GameWorld extends World
         
         temp.put(ObjectID.WHEAT_SEED, -1);
         temp.put(ObjectID.PORCUS_WHEAT_SEED, -1);
+        temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
         temp.put(ObjectID.TOMATO_SEED, -1);
         temp.put(ObjectID.SILVER_TOMATO_SEED, -1);
@@ -183,6 +184,9 @@ public class GameWorld extends World
 
         fillClouds();
         GamePlayMusic.playLoop();
+        if(savedFile!= null){
+            GameInfo.loadAchievements(savedFile);
+        }
     }
     public void fillClouds(){
         for(int i = 0; i < 10; i++){
