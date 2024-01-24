@@ -179,6 +179,7 @@ public class PorcusMenu extends SuperSmoothMover
             if(statusAmount1 == m1.getAmount()){
                 complete.add(m1);
                 if(milestones.get(0) != null){
+                    statusAmount1 = 0;
                     m1 = milestones.remove(0);
                 }
             }
@@ -201,6 +202,7 @@ public class PorcusMenu extends SuperSmoothMover
             if(statusAmount2 == m2.getAmount()){
                 complete.add(m2);
                 if(milestones.get(0) != null){
+                    statusAmount2 = 0;
                     m2 = milestones.remove(0);
                 }
             }
