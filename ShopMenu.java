@@ -276,7 +276,7 @@ public class ShopMenu extends SuperSmoothMover
     }
 
     public void slide(){
-        double end = SPACING * ROW_MAX;
+        double end = SPACING * 3;
         if(distanceTraveled >= end){
             double delta = distanceTraveled - end;
             for(ShopItem item : itemGallery){

@@ -307,11 +307,13 @@ public class GameWorld extends World
     public void removeButtons(){
         removeObject(toggle);
         inventoryDisplay.forceClose();
+        porcus.forceClose();
     }
 
     public void resetButtons(){
         addObject(toggle, equip.getX(), equip.getY() - 64);
         inventoryDisplay.addButtons();
+        porcus.reset();
     }
 
     public static boolean getEditMode(){
@@ -344,7 +346,7 @@ public class GameWorld extends World
                 ShopMusic.stop();
                 break;
             case SHOP:
-                removeButtons();
+                removeButtons();     
                 equip.hideDisplay();
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 GamePlayMusic.stop();
@@ -352,6 +354,7 @@ public class GameWorld extends World
                 break;
             case ACHIEVEMENT:
                 removeButtons();
+                equip.hideDisplay();
                 addObject(achievement, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 break;
         }

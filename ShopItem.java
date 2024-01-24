@@ -40,7 +40,7 @@ public class ShopItem extends ItemFrame
 
     public void FadeMargin(){
         int topBound = ShopMenu.TOP_MARGIN;
-        int bottomBound = GameWorld.SCREEN_HEIGHT - topBound;
+        int bottomBound = GameWorld.SCREEN_HEIGHT - 150;
         
         if(getY() < topBound || getY() > bottomBound){
             int delta = Math.min(Math.abs(topBound - getY()), Math.abs(bottomBound - getY()));
