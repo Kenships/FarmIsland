@@ -129,15 +129,9 @@ public class GameWorld extends World
         temp.put(ObjectID.FERTILIZER, -1);
         
         temp.put(ObjectID.WHEAT_SEED, -1);
-        temp.put(ObjectID.PORCUS_WHEAT_SEED, -1);
-        temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
         temp.put(ObjectID.TOMATO_SEED, -1);
-        temp.put(ObjectID.SILVER_TOMATO_SEED, -1);
-        temp.put(ObjectID.GOLDEN_TOMATO_SEED, -1);
-        temp.put(ObjectID.BLUEBERRY_SEED, -1);
-        temp.put(ObjectID.DRAGONFRUIT_SEED, -1);
-        temp.put(ObjectID.STRAWBERRY_SEED, -1);
+
         shop = new ShopMenu(temp);
 
         // Initializes buttons
@@ -147,7 +141,7 @@ public class GameWorld extends World
         openInventory = new GameButton("Inventory");
         leave = new GameButton("Leave");
         openPorcus = new MenuButton("Porcus H");
-        porcus = new PorcusMenu(openPorcus);
+        porcus = new PorcusMenu(openPorcus, shop);
         addObject(porcus, 0, 0);
         
         ArrayList<Button> buttons = new ArrayList<>();
@@ -160,8 +154,8 @@ public class GameWorld extends World
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
         
         Font font = new Font("Tekton Pro", true, false,  20);
-        buildOn = new SuperTextBox("BUILD MODE ON", new Color(0,0,0,40), Color.BLACK, font, true, 200, 0, null);
-        buildOff = new SuperTextBox("BUILD MODE OFF", new Color(0,0,0,40), Color.BLACK, font, true, 200, 0, null);
+        buildOn = new SuperTextBox("BUILD MODE ON", new Color(0,0,0,0), Color.BLACK, font, true, 200, 0, null);
+        buildOff = new SuperTextBox("BUILD MODE OFF", new Color(0,0,0,0), Color.BLACK, font, true, 200, 0, null);
         
         equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
@@ -298,11 +292,13 @@ public class GameWorld extends World
         if(toggle.leftClickedThis()){
             setEditMode(toggle.getToggle());
             if(editMode){
-                addObject(new ForegroundEffect(Effect.FLOAT, buildOn.getImage(), 20, 0.5), toggle.getX(), toggle.getY() + 50);
+                buildOn.getImage().setTransparency(255);
+                addObject(new ForegroundEffect(Effect.FADE, buildOn.getImage(), 20, 0.5), toggle.getX(), toggle.getY() - 32);
                 equip.deselectAll(); 
             }
             else{
-                addObject(new ForegroundEffect(Effect.FLOAT, buildOff.getImage(), 20, 0.5), toggle.getX(), toggle.getY() + 50);
+                buildOff.getImage().setTransparency(255);
+                addObject(new ForegroundEffect(Effect.FADE, buildOff.getImage(), 20, 0.5), toggle.getX(), toggle.getY() -32);
                 equip.selectPrevious();
             }
         }

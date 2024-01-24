@@ -129,7 +129,11 @@ public class ShopMenu extends SuperSmoothMover
         }
         sortItemGallery();
     }
-
+    
+    public void addItem(ObjectID ID){
+        itemGallery.add(new ShopItem(ID, true));
+    }
+    
     public void sortItemGallery(){
         //to be filled
     }

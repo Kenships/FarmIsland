@@ -40,7 +40,12 @@ public class PorcusMenu extends SuperSmoothMover
     private ItemFrame milestone2;
     private SuperTextBox status2;
     private int statusAmount2;
-    public PorcusMenu(Button porcus){
+    
+    private boolean[] stageCompletion;
+    private ShopMenu shop;
+    public PorcusMenu(Button porcus, ShopMenu shop){
+        this.shop = shop;
+        
         milestones = new ArrayList<>();
         complete = new ArrayList<>();
         InitializeMilestones();
@@ -53,7 +58,9 @@ public class PorcusMenu extends SuperSmoothMover
         }
 
         setPigStage(0);
-
+        
+        stageCompletion = new boolean[3];
+        
         Font font = new Font("Tekton Pro", true, false,  20);
         m1 = milestones.remove(0);
         m2 = milestones.remove(0);
@@ -139,13 +146,22 @@ public class PorcusMenu extends SuperSmoothMover
         if(complete.size() < 10){
             setPigStage(0);
         }
-        else if(complete.size()  < 20){
+        else if(complete.size()  < 20 && !stageCompletion[0]){
+            stageCompletion[0] = true;
+            shop.addItem(ObjectID.BLUEBERRY_SEED);
+            shop.addItem(ObjectID.STRAWBERRY_SEED);
             setPigStage(1);
         }
-        else if(complete.size() < 30){
+        else if(complete.size() < 30&& !stageCompletion[1]){
+            stageCompletion[1] = true;
+            shop.addItem(ObjectID.GOLDEN_TOMATO_SEED);
+            shop.addItem(ObjectID.SILVER_TOMATO_SEED);
             setPigStage(2);
         }
-        else if(complete.size() < 40){
+        else if(complete.size() < 40&& !stageCompletion[2]){
+            stageCompletion[2] = true;
+            shop.addItem(ObjectID.PORCUS_WHEAT_SEED);
+            shop.addItem(ObjectID.DRAGONFRUIT_SEED);
             setPigStage(3);
         }
     }
