@@ -91,7 +91,22 @@ public class Seed extends Item
                 break;  
             case TOMATO_SEED:
                 plant = new Tomato();
-                break;     
+                break;   
+            case GOLDEN_TOMATO_SEED:
+                plant = new GoldenTomato();
+                break; 
+            case SILVER_TOMATO_SEED:
+                plant = new SilverTomato();
+                break;  
+            case DRAGONFRUIT_SEED:
+                plant = new Dragonfruit();
+                break;
+            case STRAWBERRY_SEED:
+                plant = new Strawberry();
+                break;
+            case BLUEBERRY_SEED:
+                plant = new Blueberry();
+                break;   
         }
         return plant;
     }

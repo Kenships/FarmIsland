@@ -46,7 +46,7 @@ public class Strawberry extends Plant
         growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
-                growthAnimations[stage][frame] = new GreenfootImage("Plants/Carrot/Stage " + stage + "/"+ frame + ".png");
+                growthAnimations[stage][frame] = new GreenfootImage("Plants/Strawberry/Stage " + stage + "/"+ frame + ".png");
             }
 
         }

@@ -45,7 +45,7 @@ public class SilverTomato extends Plant
         growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
-                growthAnimations[stage][frame] = new GreenfootImage("Plants/Tomato/Stage " + stage + "/"+ frame + ".png");
+                growthAnimations[stage][frame] = new GreenfootImage("Plants/SilverTomato/Stage " + stage + "/"+ frame + ".png");
             }
 
         }
