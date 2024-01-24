@@ -43,30 +43,40 @@ public class CollectionHandler extends SuperSmoothMover
             Inventory.add(plant.getID(), netYield);
             CurrencyHandler.deposit(netYield * plant.getSellPrice()); 
             harvestSound();
-            if(!(plant instanceof Tomato || plant instanceof PorcusWheat) || tool.getID() == ObjectID.SHOVEL){
-                w.removeObject(plant);
-                plant.getTile().unPlant();
+            if(shovel(plant)){
+                return;
             }
-            else{
-                if(plant instanceof Tomato){
+            switch(plant.getID()){
+                case TOMATO:
+                case BLUEBERRY:
+                case SILVER_TOMATO:
+                case GOLDEN_TOMATO:
+                case DRAGONFRUIT:
+                case STRAWBERRY:
                     plant.setGrowthStage(plant.getGrowthStage() - 1);
-                }
-                if(plant instanceof PorcusWheat){
+                    break;
+                case PORCUS_WHEAT:
                     plant.setGrowthStage(0);
-                }
+                    break;
+                default:
+                    w.removeObject(plant);
+                    plant.getTile().unPlant();
             }
+    
         }
     }
 
-    public static void shovel(Plant plant){
+    public static boolean shovel(Plant plant){
         if(Cursor.getItem() != null && Cursor.getItem() instanceof Tool){
             Tool tool = (Tool) Cursor.getItem();            
             if(tool.getID() == ObjectID.SHOVEL){
                 Inventory.add(plant.getID().getSeedID(), 1);
                 w.removeObject(plant);
                 plant.getTile().unPlant();
+                return true;
             }
         }
+        return false;
     }
 
     public static void harvestSound(){

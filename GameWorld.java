@@ -123,11 +123,17 @@ public class GameWorld extends World
         // Initializes shop menu
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
+        temp.put(ObjectID.FERTILIZER, -1);
+        
         temp.put(ObjectID.WHEAT_SEED, -1);
         temp.put(ObjectID.PORCUS_WHEAT_SEED, -1);
-        temp.put(ObjectID.FERTILIZER, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
         temp.put(ObjectID.TOMATO_SEED, -1);
+        temp.put(ObjectID.SILVER_TOMATO_SEED, -1);
+        temp.put(ObjectID.GOLDEN_TOMATO_SEED, -1);
+        temp.put(ObjectID.BLUEBERRY_SEED, -1);
+        temp.put(ObjectID.DRAGONFRUIT_SEED, -1);
+        temp.put(ObjectID.STRAWBERRY_SEED, -1);
         shop = new ShopMenu(temp);
 
         // Initializes buttons
