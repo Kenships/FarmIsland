@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Rain.
  * 
- * @author (your name) 
- * @version IN PROGRESS
+ * @author: ZhaoQi 
+ * @version: January 2024
  */
 public class Rain extends Weather
 {

@@ -8,8 +8,8 @@ import java.util.HashMap;
 /**
  * Stores all DirtTiles in play
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu, Carson Cooc
+ * @version: January 2024
  */
 public class LandPlot extends SuperSmoothMover
 {

@@ -1,10 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class CollectionHandler here.
+ * The CollectionHandler class manages the collection and harvesting of plants in the game.
+ * It handles the interaction between tools, plants, and the game world, providing functionality
+ * for collecting and harvesting resources.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * This class is responsible for processing collection actions, checking tool efficiency, updating the inventory, handling currency, and playing harvesting sounds.
+ * @author: Zhaoqi Xu 
+ * @version January 2023
  */
 public class CollectionHandler extends SuperSmoothMover
 {

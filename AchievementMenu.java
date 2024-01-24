@@ -6,8 +6,8 @@ import java.util.ArrayList;
  * Players can navigate through different pages of achievements and return to the
  * game by clicking the button.
  * 
- * @author Ryan Du
- * @version January 2024
+ * @author: Ryan Du
+ * @version: January 2024
  */
 public class AchievementMenu extends SuperSmoothMover
 {
@@ -113,7 +113,6 @@ public class AchievementMenu extends SuperSmoothMover
      * Sets up the banners for the achievements.
      * 
      * @param achievements The arraylist of achievements.
-     * @param isLeft True if the achievements are fully completed. False if not.
      */
     private void setBanners(ArrayList<Achievement> achievements){
         achievementGallery.clear();

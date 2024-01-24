@@ -1,9 +1,10 @@
 import greenfoot.*;
 /**
- * Write a description of class ObjectID here.
+ * ObjectID enum represents the unique identifiers for various in-game objects.
+ * It provides methods to obtain related images for display purposes. 
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu
+ * @version: January 2024
  */
 public enum ObjectID  
 {
@@ -11,6 +12,11 @@ public enum ObjectID
     DRAGONFRUIT, DRAGONFRUIT_SEED, STRAWBERRY, STRAWBERRY_SEED, GOLDEN_TOMATO, GOLDEN_TOMATO_SEED, SILVER_TOMATO, SILVER_TOMATO_SEED, 
     BASIC_TOOL, DIAMOND_TOOL, SHOVEL, FERTILIZER;
     
+    /**
+     * Gets the corresponding seed ID for crops.
+     * 
+     * @return The seed ID related to the crop, or default WHEAT_SEED if not found.
+     */
     public ObjectID getSeedID(){
         switch(this){
             case WHEAT:
@@ -37,10 +43,20 @@ public enum ObjectID
         return WHEAT_SEED;
     }
     
+    /**
+     * Gets the display image associated with the object.
+     * 
+     * @return The GreenfootImage for displaying the object.
+     */
     public GreenfootImage getDisplayImage(){
         return new GreenfootImage("Displays/Items/" + this.toString() + ".png");
     }
     
+    /**
+     * Gets the tool image associated with the object.
+     * 
+     * @return The GreenfootImage for displaying the tool.
+     */
     public GreenfootImage getToolImage(){
         return new GreenfootImage("Tools/" + this.toString() + ".png");
     }

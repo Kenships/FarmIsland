@@ -1,13 +1,14 @@
 /**
- * Write a description of class GridPath here.
+ * Represents a node in a grid pathfinding system.
+ * Each node has information about its position, cost, parent node, and whether it is closed.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu
+ * @version: January 2024
  */
 
 public class GridPath  
 {
-    // instance variables - replace the erowample below with colour own
+
     private int gCost, hCost, totalCost;
     private int row,col;
     private GridPath parent;

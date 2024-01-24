@@ -1,10 +1,14 @@
 import java.util.HashMap;
 import greenfoot.*;
 /**
- * Write a description of class CostHandler here.
+ * The CurrencyHandler class manages the in-game currency, purchases, and pricing of items.
+ * It handles the player's money balance, the price index for different items, and provides
+ * functionality for making purchases, checking affordability, adjusting prices, and more.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * This class also initializes the currency display in the game world and updates it during the game.
+ * 
+ * @author: Angela Gao, Zhaoqi Xu
+ * @version: January 2024
  */
 public class CurrencyHandler extends SuperSmoothMover 
 {
@@ -20,13 +24,29 @@ public class CurrencyHandler extends SuperSmoothMover
     private static GreenfootImage myImage;
     
     private static int x, y;
+    
+    /**
+     * Constructs a CurrencyHandler instance.
+     */
     public CurrencyHandler(){
-        
+        //Empty Constructor 
     }
+    
+    /**
+     * Called when the CurrencyHandler is added to the world.
+     * Initializes the x and y coordinates for the currency display.
+     *
+     * @param w The world to which the CurrencyHandler is added.
+     */
     public void addedToWorld(World w){
         x = getX();
         y = getY();
     }
+    
+    /**
+     * Called on each frame update.
+     * Updates the currency display in the game world.
+     */
     public void act(){
         myImage.clear();
         myImage.drawImage(background, 0, 0);
@@ -35,6 +55,13 @@ public class CurrencyHandler extends SuperSmoothMover
 
     }
 
+    /**
+     * Initializes the CurrencyHandler with the specified saved file and GameWorld.
+     * Loads the initial money balance, price index, and sets up the currency display.
+     *
+     * @param savedFile The saved file to load information from.
+     * @param w         The GameWorld instance associated with the CurrencyHandler.
+     */
     public static void initialize(String savedFile, GameWorld w){
         myWorld = w;
         background = new GreenfootImage("BackGrounds/Money.png");
@@ -71,6 +98,13 @@ public class CurrencyHandler extends SuperSmoothMover
         }
     }
 
+    /**
+     * Handles the purchase of items with the specified ID and amount.
+     * Deducts the cost from the money balance and adjusts the price index.
+     *
+     * @param ID     The ObjectID of the item to be purchased.
+     * @param amount The quantity of the item to be purchased.
+     */
     public static void purchase(ObjectID ID, int amount){
         if(isAffordable(ID, amount)){
             int total = 0;
@@ -89,10 +123,23 @@ public class CurrencyHandler extends SuperSmoothMover
         }
     }
 
+    /**
+     * Checks if the player can afford to purchase an item with the specified ID.
+     *
+     * @param ID The ObjectID of the item to be checked.
+     * @return True if the player can afford the item, false otherwise.
+     */
     public static boolean isAffordable(ObjectID ID){
         return isAffordable(ID, 1);
     }
 
+    /**
+     * Checks if the player can afford to purchase a specific quantity of an item with the specified ID.
+     *
+     * @param ID     The ObjectID of the item to be checked.
+     * @param amount The quantity of the item to be checked.
+     * @return True if the player can afford the specified quantity of the item, false otherwise.
+     */
     public static boolean isAffordable(ObjectID ID, int amount){
         int total = 0;
         if(ID == ObjectID.DIRT_TILE){
@@ -106,14 +153,32 @@ public class CurrencyHandler extends SuperSmoothMover
         return money >= total;
     }
 
+    /**
+     * Adjusts the price of an item based on certain conditions.
+     *
+     * @param ID The ObjectID of the item for which the price is adjusted.
+     */
     public static void adjustPrice(ObjectID ID){
 
     }
 
+    /**
+     * Gets the price of an item with the specified ID.
+     *
+     * @param ID The ObjectID of the item.
+     * @return The price of the item.
+     */
     public static int getPrice(ObjectID ID){
         return getPrice(ID, 1);
     }
 
+    /**
+     * Gets the total price for a specific quantity of an item with the specified ID.
+     *
+     * @param ID     The ObjectID of the item.
+     * @param amount The quantity of the item.
+     * @return The total price for the specified quantity of the item.
+     */
     public static int getPrice(ObjectID ID, int amount){
 
         if(priceIndex.containsKey(ID)){
@@ -134,10 +199,21 @@ public class CurrencyHandler extends SuperSmoothMover
         }
     }
 
+    /**
+     * Gets the current money balance.
+     *
+     * @return The current money balance.
+     */
     public static int getBallance(){
         return money;
     }
 
+    /**
+     * Deposits a specified amount of money to the player's balance.
+     * Updates the currency display with a floating effect.
+     *
+     * @param amount The amount of money to deposit.
+     */
     public static void deposit(int amount){
         GreenfootImage effect = new GreenfootImage(myImage.getWidth(), 20);
         effect.setColor(new Color(123,168,124));
@@ -147,10 +223,18 @@ public class CurrencyHandler extends SuperSmoothMover
         money += amount;
     }
 
+    /**
+     * Withdraws a specified amount of money from the player's balance.
+     *
+     * @param amount The amount of money to withdraw.
+     */
     public static void withdraw (int amount){
         money -= amount;
     }
 
+    /**
+     * Resets the player's money balance to zero.
+     */
     private static void resetBalance(){
         money = 0;
     }

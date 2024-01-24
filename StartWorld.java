@@ -16,18 +16,18 @@ import java.lang.NullPointerException;
 
 
 /**
- * Changes:
- * StartWorld
+ * @author: Zhaoqi Xu, Ryan Du, Carson Cooc
+ * @version: January 2024
  */
 public class StartWorld extends World
 {
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
-    
+
     private GreenfootImage background = new GreenfootImage("BackGrounds/Start BG Back.png");
     private GreenfootImage clouds = new GreenfootImage("BackGrounds/Start BG Clouds.png");
     private GreenfootImage island = new GreenfootImage("BackGrounds/Start BG Island.png");
-    
+
     private GreenfootImage screen = new GreenfootImage(430, 720);
 
     private HighlightButton startButton;
@@ -41,6 +41,9 @@ public class StartWorld extends World
     private static ArrayList<String> saveFile;
 
     private GreenfootSound TitleScreenMusic;
+    /**
+     * Constructor for this class 
+     */
     public StartWorld()
     {   
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false);
@@ -53,6 +56,14 @@ public class StartWorld extends World
         initialize();
     }
 
+    /**
+     * Responds to button clicks in the TitleScreen by executing corresponding actions.
+     * - Clicking the "Start" button stops the title screen music and transitions to the GameWorld.
+     * - Clicking the "Load" button prompts the user to enter a file name via the console,
+     *   attempts to load the specified file, and transitions to the GameWorld if successful.
+     * - Clicking the "Settings" button transitions to the SettingsWorld and stops the title screen music.
+     * - Clicking the "Quit" button terminates the Greenfoot application.
+     */
     public void act(){
         //button actions here
         if(startButton.leftClickedThis()){
@@ -91,6 +102,12 @@ public class StartWorld extends World
         }
     }
 
+    /**
+     * Initializes the TitleScreen world by setting up background music, paint order,
+     * and creating buttons for starting, loading, adjusting settings, and quitting the game.
+     * The buttons are configured with transparency and text, and added to the world.
+     * Additional effects, such as a rocking island and pulsating clouds, are also added for visual appeal.
+     */
     public void initialize(){
         TitleScreenMusic = new GreenfootSound ("TItleScreenMusic.mp3");
         TitleScreenMusic.setVolume(50);
@@ -121,13 +138,19 @@ public class StartWorld extends World
         addObject(new Effect(Effect.PULSE, clouds), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     }
 
-    public void started()
-    {
+    /**
+     * Callback method called when the TitleScreen scenario has started.
+     * Initiates the playback of background music for the TitleScreen.
+     */
+    public void started() {
         TitleScreenMusic.playLoop();
     }
-
-    public void stopped()
-    {
+    
+    /**
+     * Callback method called when the TitleScreen scenario has stopped.
+     * Pauses the background music for the TitleScreen.
+     */
+    public void stopped() {
         TitleScreenMusic.pause();
     }
 }

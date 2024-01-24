@@ -3,35 +3,46 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Class for tools that the user can use.
  * 
- * @author (your name) 
+ * @author: Zhaoqi Xu
  * @version December 2023
  */
-public class Tool extends Item
-{
+
+public class Tool extends Item {
     private int durability;
     private int efficiency;
     private boolean unbreakable;
     private GreenfootImage toolImage;
     private int rarity;
-    public Tool(ObjectID ID){
+
+    /**
+     * Constructor for the Tool class.
+     * 
+     * @param ID The ObjectID of the tool.
+     */
+public class Tool extends Item {
+    private int durability;
+    private int efficiency;
+    private boolean unbreakable;
+    private GreenfootImage toolImage;
+    private int rarity;
+
+    /**
+     * Constructor for the Tool class.
+     * 
+     * @param ID The ObjectID of the tool.
+     */
+    public Tool(ObjectID ID) {
         this.ID = ID;
         toolImage = ID.getToolImage();
-        double ratio = (double) toolImage.getHeight()/toolImage.getWidth();
-        toolImage.scale(50,(int)(50 * ratio + 0.5));
-        switch(ID){
-            case BASIC_TOOL:
-                efficiency = 1;
-                unbreakable = true;
-                break;
-            case DIAMOND_TOOL:
-                efficiency = 10;
-                unbreakable = true;
-                break;
-            case SHOVEL:
-                efficiency = 1;
-                unbreakable = true;
-                break;
-        }
+        double ratio = (double) toolImage.getHeight() / toolImage.getWidth();
+        toolImage.scale(50, (int) (50 * ratio + 0.5));
+
+        // Set efficiency based on tool type
+        setEfficiencyBasedOnType(ID);
+
+        // Set unbreakable status based on tool type
+        setUnbreakableStatusBasedOnType(ID);
+
         setImage(toolImage);
     }
     
@@ -40,45 +51,65 @@ public class Tool extends Item
     }
     
     /**
-     * Gets the efficency of the tool.
+     * Gets the efficiency of the tool.
      * 
-     * @return int - The efficency of the tool.
+     * @return int - The efficiency of the tool.
      */
-    public int getEffiency()
-    {
+    public int getEfficiency() {
         return efficiency;
     }
-    
+
     /**
      * Takes away from the durability of the tool.
      */
-    public void takeDurability()
-    {
-        if(unbreakable){
+    public void takeDurability() {
+        if (unbreakable) {
             return;
         }
-        durability --;
-    }
-    
-    /**
-     * Effect that the tool has.
-     */
-    public void activateEffect(){
-        //place effects here
-        switch(ID){
-            
+        durability--;
+        // Add check to ensure durability doesn't go below zero
+        if (durability < 0) {
+            durability = 0;
         }
     }
-    
+
     /**
-     * Act - do whatever the Tools wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Activates the effect associated with the tool.
      */
-    public void act()
-    {
-        if(getWorld() == null){
+    public void activateEffect() {
+        // Place effects here
+        switch (ID) {
+
+        }
+    }
+
+    /**
+     * Act method for the Tool class.
+     * This method is called whenever the 'Act' or 'Run' button gets pressed in the environment.
+     */
+    public void act() {
+        if (getWorld() == null) {
             return;
         }
         reposition();
+    }
+
+    private void setEfficiencyBasedOnType(ObjectID ID) {
+        switch (ID) {
+            case BASIC_TOOL:
+                efficiency = 1;
+                break;
+            case DIAMOND_TOOL:
+                efficiency = 10;
+                break;
+            case SHOVEL:
+                efficiency = 1;
+                break;
+        }
+    }
+
+    private void setUnbreakableStatusBasedOnType(ObjectID ID) {
+        // Set unbreakable status based on tool type
+        unbreakable = (ID == ObjectID.BASIC_TOOL || ID == ObjectID.DIAMOND_TOOL || ID == ObjectID.SHOVEL);
     }
 }

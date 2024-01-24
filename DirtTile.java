@@ -3,8 +3,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class DirtTile here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author : Zhaoqi Xu, Carson Cooc
+ * @version: January 2024
  */
 
 public class DirtTile extends Tile

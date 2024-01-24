@@ -1,10 +1,11 @@
 import greenfoot.*;
 
 /**
- * Achievements for the game.
+ * Represents an achievement with a name, description, and completion status.
  * 
- * @author Ryan Du
- * @version Janurary 2024
+ * 
+ * @author: Ryan Du
+ * @version: January 2024
  */
 public class Achievement
 {
@@ -14,14 +15,14 @@ public class Achievement
     private boolean completed;
     private String completeImageIcon, incompleteImageIcon;
     private String notificationIcon;
-    
+
     /**
-     * Initializes the achievement and sets up the image icons.
+     * Represents an achievement with a name, description, and completion status.
      * 
-     * @param name Achievement name.
-     * @param description Achievement description.
-     * @param type Achievement type.
-     * @param num Index of the achievement.
+     * @param name           The name of the achievement.
+     * @param description    The description of the achievement.
+     * @param type           The type of achievement.
+     * @param num            The number associated with the achievement.
      */
     public Achievement(String name, String description, String type, int num)
     {

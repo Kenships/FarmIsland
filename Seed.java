@@ -1,13 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Seed here.
+ * A class to represent a seed item in the game. It is a subclass of Item. 
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu, Carson Cooc 
+ * @version: January 2024
  */
-public class Seed extends Item
-{
+public class Seed extends Item {
     public static int totalPlantCount;
     private boolean disapearWhenEmpty;
 
@@ -19,32 +18,51 @@ public class Seed extends Item
 
     private GreenfootSound[] plantingSound;
     private int soundIndex;
-    public Seed(ObjectID ID, int amount, boolean disapear){
+
+    /**
+     * Constructor for the Seed class.
+     * 
+     * @param ID The ObjectID of the seed.
+     * @param amount The initial amount of seeds.
+     * @param disapear Whether the seed should disappear when empty.
+     */
+    public Seed(ObjectID ID, int amount, boolean disapear) {
         disapearWhenEmpty = disapear;
         this.ID = ID;
         Inventory.add(ID, amount);
 
         seedImage = ID.getDisplayImage();
-        double ratio = (double) seedImage.getHeight()/seedImage.getWidth();
+        double ratio = (double) seedImage.getHeight() / seedImage.getWidth();
 
-        seedImage.scale(32,(int)(32 * ratio + 0.5));
+        seedImage.scale(32, (int) (32 * ratio + 0.5));
 
         display = false;
         setImage(seedImage);
 
         plantingSound = new GreenfootSound[20];
-        for (int i = 0; i < plantingSound.length; i++){
-            plantingSound[i] = new GreenfootSound ("PlantingSeed.wav");
+        for (int i = 0; i < plantingSound.length; i++) {
+            plantingSound[i] = new GreenfootSound("PlantingSeed.wav");
             plantingSound[i].setVolume(80);
         }
         soundIndex = 0;
     }
 
-    public Seed(ObjectID ID, int amount){
+    /**
+     * Constructor for the Seed class without specifying the amount.
+     * 
+     * @param ID The ObjectID of the seed.
+     * @param amount The initial amount of seeds.
+     */
+    public Seed(ObjectID ID, int amount) {
         this(ID, amount, true);
     }
 
-    public Seed(ObjectID ID){
+    /**
+     * Constructor for the Seed class without specifying the amount and disappearance behavior.
+     * 
+     * @param ID The ObjectID of the seed.
+     */
+    public Seed(ObjectID ID) {
         this.ID = ID;
         seedImage = ID.getDisplayImage();
         double ratio = (double) seedImage.getHeight()/seedImage.getWidth();
@@ -59,27 +77,35 @@ public class Seed extends Item
         soundIndex = 0;
     }
 
-    public void addedToWorld(World w){
+    /**
+     * Called when the seed is added to the world.
+     */
+    public void addedToWorld(World w) {
         super.addedToWorld(w);
-
     }
 
-    public void act()
-    {
-        if(getWorld() == null){
+    /**
+     * Act method for the Seed class.
+     * Checks for mouse actions and performs animation.
+     */
+    public void act() {
+        if (getWorld() == null) {
             return;
         }
         actCounter++;
         reposition();
         checkMouseAction();
         animate();
-
     }
 
-    public Plant newPlant(){
-        //add new plants here
+    /**
+     * Creates a new plant based on the seed type.
+     * 
+     * @return The new plant.
+     */
+    public Plant newPlant() {
         Plant plant = null;
-        switch(ID){
+        switch (ID) {
             case WHEAT_SEED:
                 plant = new Wheat();
                 break;
@@ -88,7 +114,7 @@ public class Seed extends Item
                 break;
             case CARROT_SEED:
                 plant = new Carrot();
-                break;  
+                break;
             case TOMATO_SEED:
                 plant = new Tomato();
                 break;   
@@ -112,89 +138,96 @@ public class Seed extends Item
     }
 
     /**
-     * NOTE:
-     * animations may not be accurate to what is wanted change if nessesary
+     * Animates the seed (to be implemented).
      */
-    public void animate(){
-        //fill later
-    }
-
-    public void checkMouseAction(){
-        GameWorld myWorld = (GameWorld) getWorld();
-        if(!myWorld.isScreen(GameWorld.GAME)){
-            return;
-        }
-        /*if(Greenfoot.mousePressed(null) && hoveringThis()){
-            System.out.println("pickedup");
-            Cursor.pickUp(this);
-        }*/
-        /*if(Greenfoot.mouseClicked(null) && hoveringThis()){
-            
-            Cursor.release();
-        }*/
+    public void animate() {
+        // Fill in later
     }
 
     /**
-     * Plants and returns plant
-     * 
-     * FIX: messy if statements could simplify
+     * Checks for mouse actions related to the seed.
      */
-    public Plant plant(LandPlot plot, DirtTile tile){
-        //if amount is less than zero there is "infinity" stock
-        if(getWorld() == null){
+    public void checkMouseAction() {
+        GameWorld myWorld = (GameWorld) getWorld();
+        if (!myWorld.isScreen(GameWorld.GAME)) {
+            return;
+        }
+        // Fill in later
+    }
+
+    /**
+     * Plants the seed and returns the planted plant.
+     * 
+     * @param plot The land plot where the seed is planted.
+     * @param tile The dirt tile where the seed is planted.
+     * @return The planted plant.
+     */
+    public Plant plant(LandPlot plot, DirtTile tile) {
+        if (getWorld() == null) {
             return null;
         }
 
         Plant plant = newPlant();
 
-        if(Inventory.getAmount(ID) > 0 || Inventory.getAmount(ID) < 0){
-
-            //remove one count of seed in inventory
-            getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset()/2);
+        if (Inventory.getAmount(ID) > 0 || Inventory.getAmount(ID) < 0) {
+            getWorld().addObject(plant, tile.getX(), tile.getY() + tile.getTileYOffset() / 2);
             plant.plant(plot, tile);
             plantingSound();
             Inventory.remove(ID);
-            if(Inventory.getAmount(ID) == 0 && disapearWhenEmpty){
-
+            if (Inventory.getAmount(ID) == 0 && disapearWhenEmpty) {
                 getWorld().removeObject(this);
-
             }
-        }
-        else{
-
+        } else {
             return null;
-
         }
         return plant;
     }
 
-    public boolean hoveringThis(){
+    /**
+     * Checks if the mouse is hovering over the seed.
+     * 
+     * @return True if the mouse is hovering over the seed, false otherwise.
+     */
+    public boolean hoveringThis() {
         MouseInfo mouse = Cursor.getMouseInfo();
-        if(mouse == null){
+        if (mouse == null) {
             return false;
         }
 
-        int leftBound = getX() - getImage().getWidth()/2;
-        int rightBound = getX() + getImage().getWidth()/2;
-        int topBound = getY() - getImage().getHeight()/2;
-        int bottomBound = getY() + getImage().getHeight()/2;
+        int leftBound = getX() - getImage().getWidth() / 2;
+        int rightBound = getX() + getImage().getWidth() / 2;
+        int topBound = getY() - getImage().getHeight() / 2;
+        int bottomBound = getY() + getImage().getHeight() / 2;
 
         return mouse.getX() < rightBound && mouse.getX() > leftBound && mouse.getY() < bottomBound && mouse.getY() > topBound;
     }
 
-    public void setDisplay(boolean toggle){
+    /**
+     * Sets the display state of the seed.
+     * 
+     * @param toggle True to display, false to hide.
+     */
+    public void setDisplay(boolean toggle) {
         display = toggle;
     }
 
-    public boolean isDisplayed(){
+    /**
+     * Checks if the seed is displayed.
+     * 
+     * @return True if the seed is displayed, false otherwise.
+     */
+    public boolean isDisplayed() {
         return display;
     }
-        public void plantingSound(){
+
+    /**
+     * Plays the planting sound for the seed.
+     */
+    public void plantingSound() {
         plantingSound[soundIndex].play();
         soundIndex++;
-        if(soundIndex == plantingSound.length)
-        {
-            soundIndex=0;
-        }       
+        if (soundIndex == plantingSound.length) {
+            soundIndex = 0;
+        }
     }
 }

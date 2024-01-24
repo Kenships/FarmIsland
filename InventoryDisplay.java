@@ -4,8 +4,8 @@ import java.util.ArrayList;
 /**
  * Acesses the universal inventory
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu 
+ * @version: January 2024
  */
 public class InventoryDisplay extends SuperSmoothMover
 {
@@ -26,18 +26,29 @@ public class InventoryDisplay extends SuperSmoothMover
     private Button nextPage;
     private Button prevPage;
     private SimpleTimer actTimer;
+    
+    /**
+     * Constructs an InventoryDisplay with the specified buttons.
+     *
+     * @param buttons The buttons to be displayed in the inventory.
+     */
     public InventoryDisplay(ArrayList<Button> buttons){
         this.buttons = buttons;
         initialize();
 
     }
 
+    /**
+     * Adds the InventoryDisplay to the world and initializes button positions.
+     *
+     * @param w The world to add the InventoryDisplay to.
+     */
     public void addedToWorld(World w){
 
         setLocation(GameWorld.SCREEN_WIDTH + background.getWidth()/2, GameWorld.SCREEN_HEIGHT/2);
         int index = 0;
         for(Button b : buttons){
-            w.addObject(b, getX() - background.getWidth()/2 - BUTTON_OFFSET, MARGIN + index * (64 + BUTTON_SPACING));
+            w.addObject(b, getX() - background.getWidth()/2 - BUTTON_OFFSET, MARGIN + index * 64 + BUTTON_SPACING);
             index++;
         }
 
@@ -47,6 +58,9 @@ public class InventoryDisplay extends SuperSmoothMover
 
     }
 
+    /**
+     * Handles actions in each act cycle, such as opening or closing the inventory.
+     */
     public void act()
     {
         if(actTimer.millisElapsed() >= 4){
@@ -61,6 +75,9 @@ public class InventoryDisplay extends SuperSmoothMover
 
     }
 
+    /**
+     * Initializes the InventoryDisplay, creating pages and setting up buttons.
+     */
     public void initialize(){
         pages = new ArrayList<>();
         
@@ -77,13 +94,29 @@ public class InventoryDisplay extends SuperSmoothMover
         setImage(background);
     }
 
+    /**
+     * Checks if the inventory is open.
+     *
+     * @return True if the inventory is open, false otherwise.
+     */
     public boolean isOpen(){
         return open;
     }
     
+    /**
+     * Checks if the inventory is currently in motion.
+     *
+     * @return True if the inventory is moving, false otherwise.
+     */
     public boolean isMoving(){
         return direction != 0;
     }
+    
+    /**
+     * Removes an item with the specified ObjectID from the inventory.
+     *
+     * @param ID The ObjectID of the item to be removed.
+     */
     public void removeItem(ObjectID ID){
         ArrayList<GenericItem> items = pages.get(page);
         for(Item i : items){
@@ -97,6 +130,11 @@ public class InventoryDisplay extends SuperSmoothMover
         reloadItems();
     }
 
+    /**
+     * Adds an item with the specified ObjectID to the inventory.
+     *
+     * @param ID The ObjectID of the item to be added.
+     */
     public void addItem(ObjectID ID){
         if(pages.isEmpty()){
             page = 0;
@@ -114,7 +152,10 @@ public class InventoryDisplay extends SuperSmoothMover
         }
         reloadItems();
     }
-
+    
+    /**
+     * Reloads items in the inventory based on the current page.
+     */
     public void reloadItems(){
         int startX = getX() - 74;
         int startY = getY() - 182;
@@ -134,6 +175,9 @@ public class InventoryDisplay extends SuperSmoothMover
         }
     }
 
+    /**
+     * Forces the inventory to close, removing buttons and updating item positions.
+     */
     public void forceClose(){
         setLocation(GameWorld.SCREEN_WIDTH + background.getWidth()/2, getY());
         for(Button b : buttons){
@@ -145,15 +189,20 @@ public class InventoryDisplay extends SuperSmoothMover
         open = false;
     }
 
+    /**
+     * Adds buttons to the world at specified positions.
+     */
     public void addButtons(){
         int index = 0;
         for(Button b : buttons){
             getWorld().addObject(b, getX() - background.getWidth()/2 - BUTTON_OFFSET, MARGIN + index * 64 + BUTTON_SPACING);
             index++;
         }
-
     }
 
+    /**
+     * Forces the inventory to open, adjusting button positions.
+     */
     public void forceOpen(){
         setLocation(GameWorld.SCREEN_WIDTH - background.getWidth()/2, getY());
         for(Button b : buttons){
@@ -162,6 +211,9 @@ public class InventoryDisplay extends SuperSmoothMover
         open = true;
     }
 
+    /**
+     * Opens the inventory with smooth animation.
+     */
     public void open(){
         open = true;
         direction = 1;
@@ -188,6 +240,9 @@ public class InventoryDisplay extends SuperSmoothMover
         }
     }
 
+    /**
+     * Closes the inventory with smooth animation.
+     */
     public void close(){
         open = false;
         direction = -1;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 /**
  * Write a description of class GameWorld here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu, Ashkan Siassi, Carson Cooc 
+ * @version: January 2024
  */
 /**
  * CHANGES:
@@ -74,7 +74,7 @@ public class GameWorld extends World
     
     /**
      * Constructor for objects of class GameWorld.
-     * 
+     * @param savedFile The file path or name of the saved data to initialize the world. If null or empty, the world will be initialized with default settings.
      */
     public GameWorld(String savedFile)
     {    
@@ -83,6 +83,11 @@ public class GameWorld extends World
         initialize(savedFile);
     }
 
+    /**
+     * Performs the main game logic for the GameWorld.
+     * Checks for user input, mouse actions, and key actions when the game screen is set to GAME.
+     * Additionally, triggers periodic actions such as updating home islands and spawning clouds based on timers.
+     */
     public void act(){
         if(screen.equals(GAME)){
             checkMouseAction();
@@ -93,12 +98,15 @@ public class GameWorld extends World
                 spawnClouds();
             }
         }
-
-        
-
     }
 
-    // I WILL FILL THIS OUT
+    /**
+     * Initializes the GameWorld with various components, settings, and objects based on the provided saved file.
+     * This method sets up the game environment, including the background, music, buttons, inventory, shop menu,
+     * land plot, clouds, and other game elements.
+     *
+     * @param savedFile The file path or name of the saved data to initialize the game world. If null or empty, default settings will be used for initialization.
+     */
     public void initialize(String savedFile){
         
         editMode = false;
@@ -169,7 +177,6 @@ public class GameWorld extends World
         achievementManager = new AchievementManager();
 
         
-        
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
         equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));
         equip.equipTool(tool);
@@ -188,6 +195,10 @@ public class GameWorld extends World
             GameInfo.loadAchievements(savedFile);
         }
     }
+    
+    /**
+     * Fills the background with cloud objects, this method adjusts the sliding speeds and images that are shown
+     */
     public void fillClouds(){
         for(int i = 0; i < 10; i++){
             int cloudNum = Greenfoot.getRandomNumber(6) + 1;
@@ -200,8 +211,15 @@ public class GameWorld extends World
             addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() - startX, 1.0/(Greenfoot.getRandomNumber(4) + 1.0)), startX, startY);
         }
     }
+    
+    /**
+     * Spawns cloud objects at regular intervals, controlled by the cloudTimer.
+     * Clouds are randomly generated with a variety of cloud images, starting positions, and sliding speeds.
+     * The method ensures that the newly spawned clouds do not overlap with the previous set of clouds,
+     * providing a visually appealing and diverse cloud arrangement.
+     * Clouds are spawned off-screen and slide towards the visible game area.
+     */
     public void spawnClouds(){
-
         if(cloudTimer.millisElapsed() > 4000){
             cloudTimer.mark();
             int cloudNum = Greenfoot.getRandomNumber(6) + 1;
@@ -212,9 +230,15 @@ public class GameWorld extends World
             GreenfootImage cloud = new GreenfootImage("BackGrounds/Cloud " + cloudNum + ".png");
             addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() * 2, 1.0/(Greenfoot.getRandomNumber(4) + 1.0)), -cloud.getWidth(), startY);
         }
-
     }
 
+    /**
+     * Moves the home islands towards the center of the screen.
+     * Calculates the distance between the center of the screen and the central tile of the land plot.
+     * Gradually moves all dirt tiles towards the center in a synchronized manner to create a cohesive effect.
+     * The movement occurs over a specified number of acts to home (ACTS_TO_HOME).
+     * The dirt tiles rotate to align with the movement direction for a visually consistent animation.
+     */
     public void homeIslands(){
         DirtTile centreTile = landPlot.getTile(LandPlot.STARTING_ROW, LandPlot.STARTING_COL);
         int centreX = SCREEN_WIDTH/2;
@@ -252,8 +276,13 @@ public class GameWorld extends World
         }
     }
     
+    /**
+     * Checks for key actions and responds accordingly.
+     * - Pressing the 'b' key switches the screen to the SHOP mode.
+     * - Pressing the 'i' or 'e' key toggles the visibility of the inventory display.
+     *   The inventory display can only be toggled if it is not currently in a moving state.
+     */
     public void checkKeyAction(){
-        
         if(Greenfoot.isKeyDown("b")){
             setScreen(SHOP);
         }
@@ -265,9 +294,20 @@ public class GameWorld extends World
                 inventoryDisplay.open();
             }
         }
-        
     }
     
+    /**
+     * Checks for mouse actions on specific buttons and responds accordingly.
+     * - Clicking the "Shop" button switches the screen to the SHOP mode.
+     * - Clicking the "Achievement" button switches the screen to the ACHIEVEMENT mode.
+     * - Clicking the "Home" button initiates movement of home islands towards the center of the screen.
+     * - Clicking the "Inventory" button toggles the visibility of the inventory display.
+     * - Clicking the "Leave" button saves the game.
+     * - Clicking the "Porcus H" button toggles the visibility of the Porcus menu.
+     * 
+     * The actions are performed based on the left mouse click event and may depend on the current state of
+     * associated elements, such as the home islands' movement state and the visibility of menus.
+     */
     public void checkMouseAction(){
         if(openShop.leftClickedThis()){
             setScreen(SHOP);
@@ -312,41 +352,83 @@ public class GameWorld extends World
         }
     }
 
-    public void removeButtons(){
+    /**
+     * Removes buttons from the inventory display forcibly, ensuring its closure.
+     */
+    public void removeButtons() {
         removeObject(toggle);
         inventoryDisplay.forceClose();
         porcus.forceClose();
     }
-
-    public void resetButtons(){
+    
+    /**
+     * Resets buttons in the inventory display by adding them back.
+     */
+    public void resetButtons() {
         addObject(toggle, equip.getX(), equip.getY() - 64);
         inventoryDisplay.addButtons();
         porcus.reset();
     }
 
-    public static boolean getEditMode(){
+    /**
+     * Retrieves the current edit mode status.
+     *
+     * @return True if the edit mode is enabled, false otherwise.
+     */
+    public static boolean getEditMode() {
         return editMode;
     }
-    //sets edit mode
-    public static void setEditMode(boolean mode){
+
+    /**
+     * Sets the edit mode status.
+     *
+     * @param mode The new edit mode status to be set.
+     */
+    public static void setEditMode(boolean mode) {
         editMode = mode;
     }
-    //changes edit mode from true to false and vice verca
-    public static void toggleEditMode(){
+
+    /**
+     * Toggles the edit mode status between true and false.
+     */
+    public static void toggleEditMode() {
         editMode = !editMode;
     }
-
-    public boolean isScreen(String screen){
+    
+    /**
+     * Checks if the current screen matches the specified screen name.
+     *
+     * @param screen The screen name to compare with the current screen.
+     * @return True if the current screen matches the specified screen name, false otherwise.
+     */
+    public boolean isScreen(String screen) {
         return this.screen.equals(screen);
     }
 
-    public String getScreen(){
+    /**
+     * Retrieves the name of the current screen.
+     *
+     * @return The name of the current screen.
+     */
+    public String getScreen() {
         return screen;
     }
 
-    public void setScreen(String screen){
+
+    /**
+     * Sets the current screen and performs associated actions based on the screen type.
+     * - For GAME screen: Resets buttons, shows equipment display, plays game background music,
+     *   and stops shop background music.
+     * - For SHOP screen: Removes buttons, hides equipment display, adds the shop menu to the world,
+     *   stops game background music, and plays shop background music.
+     * - For ACHIEVEMENT screen: Removes buttons and adds the achievement menu to the world.
+     *
+     * @param screen The screen type to set (GAME, SHOP, ACHIEVEMENT).
+     */
+    public void setScreen(String screen) {
         this.screen = screen;
-        switch(screen){
+    
+        switch (screen) {
             case GAME:
                 resetButtons();
                 equip.showDisplay();
@@ -367,13 +449,15 @@ public class GameWorld extends World
                 break;
         }
     }
-    
     public LandPlot getLandPlot(){
         return landPlot;
     }    
-    public void started()
-    {
-        switch(screen){
+    /**
+     * Callback method called when the scenario has started.
+     * Adjusts music playback based on the current screen type.
+     */
+    public void started() {
+        switch (screen) {
             case GAME:
                 GamePlayMusic.playLoop();
                 break;
@@ -381,11 +465,13 @@ public class GameWorld extends World
                 ShopMusic.playLoop();
                 break;
         }
-        
     }
     
-    public void stopped()
-    {
+    /**
+     * Callback method called when the scenario has stopped.
+     * Pauses game background music and shop background music.
+     */
+    public void stopped() {
         GamePlayMusic.pause();
         ShopMusic.pause();
     }

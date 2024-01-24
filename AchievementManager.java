@@ -2,8 +2,8 @@ import java.util.ArrayList;
 /**
  * Manages achievements in the game. Sets up the achievements and checks when they are completed.
  * 
- * @author Ryan Du
- * @version January 2024
+ * @author: Ryan Du
+ * @version: January 2024
  */
 public class AchievementManager
 {

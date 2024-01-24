@@ -17,8 +17,8 @@ import javax.swing.*;
 /**
  * Manages the saving and loading aspects for the game.
  * 
- * @author Ryan Du
- * @version January 2024
+ * @author: Ryan Du
+ * @version: January 2024
  */
 public class GameInfo
 {

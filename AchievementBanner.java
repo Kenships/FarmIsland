@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class AchievementBanner here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Ryan Du
+ * @version: January 2024
  */
 public class AchievementBanner extends SuperSmoothMover
 {
@@ -14,6 +14,12 @@ public class AchievementBanner extends SuperSmoothMover
     private GreenfootImage image;
     private Achievement achievement;
     
+    /**
+     * Constructs an AchievementBanner with a specified achievement and completion status.
+     *
+     * @param achievement The Achievement object associated with the banner.
+     * @param completed   A boolean indicating whether the achievement is completed.
+     */
     public AchievementBanner(Achievement achievement, boolean completed){
         this.achievement = achievement;
         this.completed = completed;
@@ -21,6 +27,9 @@ public class AchievementBanner extends SuperSmoothMover
         setImage(image);
     }
     
+    /**
+     * Initializes the AchievementBanner by loading the appropriate image based on completion status.
+     */
     public void initialize(){
         if(completed == false){
             image = new GreenfootImage("Displays/AchievementIcons/" + achievement.getIncompleteIcon() + ".png");

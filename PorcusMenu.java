@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Write a description of class PorcusMenu here.
  * 
- * @author (your name) 
+ * @author: Angela Gao, Zhaoqi Xu 
  * @version (a version number or a date)
  */
 public class PorcusMenu extends SuperSmoothMover
@@ -43,6 +43,12 @@ public class PorcusMenu extends SuperSmoothMover
     
     private boolean[] stageCompletion;
     private ShopMenu shop;
+
+    /**
+     * Initializes a PorcusMenu with a given Button.
+     * 
+     * @param porcus The Button associated with the PorcusMenu.
+     */
     public PorcusMenu(Button porcus, ShopMenu shop){
         this.shop = shop;
         
@@ -87,6 +93,11 @@ public class PorcusMenu extends SuperSmoothMover
         setImage(background);
     }
 
+    /**
+     * Adds the PorcusMenu and its associated Button to the world.
+     * 
+     * @param w The world to which the PorcusMenu is added.
+     */
     public void addedToWorld(World w){
         setLocation(- background.getWidth()/2, GameWorld.SCREEN_HEIGHT - background.getHeight()/2 - 32);
         w.addObject(porcus, getX() + background.getWidth()/2 + BUTTON_OFFSET, GameWorld.SCREEN_HEIGHT - BUTTON_OFFSET);
@@ -126,7 +137,9 @@ public class PorcusMenu extends SuperSmoothMover
                 break;
         }
     }
-
+    /**
+     * Performs the act of the PorcusMenu.
+     */
     public void act()
     {
         checkMileStones();
@@ -348,7 +361,9 @@ public class PorcusMenu extends SuperSmoothMover
         status1.setLocation(milestone1.getX() + 50, milestone1.getY());
         status2.setLocation(milestone2.getX() + 50, milestone2.getY());
     }
-
+    /**
+     * Opens the PorcusMenu.
+     */
     public void open(){
         open = true;
         direction = 1;
@@ -364,6 +379,9 @@ public class PorcusMenu extends SuperSmoothMover
         }
     }
 
+    /**
+     * Closes the PorcusMenu.
+     */
     public void close(){
         open = false;
         direction = -1;
@@ -380,6 +398,11 @@ public class PorcusMenu extends SuperSmoothMover
         }
     }
 
+    /**
+     * Checks if the PorcusMenu is open.
+     * 
+     * @return true if the PorcusMenu is open, false otherwise.
+     */
     public boolean isOpen(){
         return open;
     }

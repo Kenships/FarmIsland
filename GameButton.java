@@ -3,11 +3,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class GameButton here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author: Zhaoqi Xu  
+ * @version: January 2024
  */
 public class GameButton extends Button
 {
+    /**
+     * Constructs a GameButton with the specified name.
+     * @param name The name of the button images.
+     */
+
     private int size;
     public GameButton(String name){
         super(name);
@@ -19,7 +24,6 @@ public class GameButton extends Button
         hoverImage[0].scale(90, 90);
         mainImage[0].scale(80, 80);
         setImage(mainImage[0]);
-        
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
@@ -44,10 +48,19 @@ public class GameButton extends Button
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
+    /**
+     * Overrides the act method from the superclass.
+     * Calls the superclass act method to handle button interactions.
+     */
     public void act()
     {
         super.act();
     }
+    
+    /**
+     * Checks if the mouse is currently hovering over the button.
+     * @return True if the mouse is hovering over the button, false otherwise.
+     */
     public boolean hoveringThis(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse != null && getWorld() != null){
@@ -59,12 +72,24 @@ public class GameButton extends Button
         }
         return false;
     }
+    
+    /**
+     * Sets the button image to the main image, representing the release state.
+     */
     public void release(){
         setImage(mainImage[0]);
     }
+    
+    /**
+     * Sets the button image to the click image, representing the click state.
+     */
     public void click(){
         setImage(clickImage[0]);
     }
+    
+    /**
+     * Sets the button image to the hover image, represnting the hover state 
+     */
     public void hover(){
         setImage(hoverImage[0]);
     }
