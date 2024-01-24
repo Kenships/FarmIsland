@@ -18,8 +18,8 @@ public class Carrot extends Plant
         super(Y_OFFSET);
         ID = ObjectID.CARROT;
         initialize();
-        yield = 2;
-        sellPrice = 3;
+        yield = 3;
+        sellPrice = 2;
     }
 
     public Carrot(int yeild){
@@ -57,7 +57,7 @@ public class Carrot extends Plant
     public void grow(){
         maturity += growthRate + myTile.getGrowthMultiplier();
         //1 min to grow fully
-        if(maturity % 1200 == 0 && growthStage < GROWTH_STAGES - 1){
+        if(maturity % 600 == 0 && growthStage < GROWTH_STAGES - 1){
             growthStage ++;
             //fade before setting
             fadeOval(growthAnimations[growthStage][0]);

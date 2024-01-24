@@ -18,8 +18,8 @@ public class GoldenTomato extends Plant
         super(Y_OFFSET);
         ID = ObjectID.GOLDEN_TOMATO;                
         initialize();
-        yield = 2;
-        sellPrice = 200;
+        yield = 3;
+        sellPrice = 35;
     }
 
     public GoldenTomato(int yeild){

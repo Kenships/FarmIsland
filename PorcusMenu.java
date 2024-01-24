@@ -140,16 +140,18 @@ public class PorcusMenu extends SuperSmoothMover
         milestones.add(new Milestone(ObjectID.WHEAT, 15));
         milestones.add(new Milestone(ObjectID.WHEAT, 15));
         milestones.add(new Milestone(ObjectID.WHEAT, 20));
-        milestones.add(new Milestone(ObjectID.WHEAT, 20));
         milestones.add(new Milestone(ObjectID.TOMATO, 10));
         milestones.add(new Milestone(ObjectID.WHEAT, 50));
         milestones.add(new Milestone(ObjectID.TOMATO, 50));
         milestones.add(new Milestone(ObjectID.CARROT, 50));
-        milestones.add(new Milestone(ObjectID.STRAWBERRY, 100));
         milestones.add(new Milestone(ObjectID.BLUEBERRY, 100));
+        milestones.add(new Milestone(ObjectID.STRAWBERRY, 100));
         milestones.add(new Milestone(ObjectID.WHEAT, 100));
         milestones.add(new Milestone(ObjectID.TOMATO, 100));
-
+        milestones.add(new Milestone(ObjectID.SILVER_TOMATO, 30));
+        milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 30));
+        milestones.add(new Milestone(ObjectID.DRAGONFRUIT, 30));
+        milestones.add(new Milestone(ObjectID.PORCUS_WHEAT, 10));
     }
     public void reset(){
         getWorld().addObject(porcus, getX() + background.getWidth()/2 + BUTTON_OFFSET, GameWorld.SCREEN_HEIGHT - BUTTON_OFFSET);

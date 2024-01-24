@@ -19,7 +19,7 @@ public class Strawberry extends Plant
         ID = ObjectID.STRAWBERRY;
         initialize();
         yield = 3;
-        sellPrice = 30;
+        sellPrice = 20;
     }
 
     public Strawberry(int yeild){

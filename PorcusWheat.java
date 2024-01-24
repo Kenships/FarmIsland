@@ -16,7 +16,7 @@ public class PorcusWheat extends Plant implements ItemConvertible
         ID = ObjectID.PORCUS_WHEAT;
         initialize();
         yield = 5;
-        sellPrice = 100;
+        sellPrice = 200;
     }
 
     public PorcusWheat(int yield){

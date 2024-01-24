@@ -18,8 +18,8 @@ public class SilverTomato extends Plant
         super(Y_OFFSET);
         ID = ObjectID.SILVER_TOMATO;                
         initialize();
-        yield = 2;
-        sellPrice = 75;
+        yield = 3;
+        sellPrice = 25;
     }
 
     public SilverTomato(int yeild){

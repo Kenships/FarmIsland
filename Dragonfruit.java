@@ -18,7 +18,7 @@ public class Dragonfruit extends Plant
         super(Y_OFFSET);
         ID = ObjectID.DRAGONFRUIT;
         initialize();
-        yield = 2;
+        yield = 3;
         sellPrice = 50;
     }
 
