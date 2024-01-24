@@ -51,7 +51,7 @@ public class GameWorld extends World
     private AchievementMenu achievement;
     private Button openAchievement;
     private Button leave;
-    private Button toggle;
+    private ToggleButton toggle;
     
     private AchievementManager achievementManager;
 
@@ -59,6 +59,9 @@ public class GameWorld extends World
     private InventoryDisplay inventoryDisplay;
     private Button openPorcus;
     private PorcusMenu porcus;
+    
+    private SuperTextBox buildOn;
+    private SuperTextBox buildOff;
     
     private SimpleTimer actTimer;
     private SimpleTimer cloudTimer;
@@ -156,6 +159,9 @@ public class GameWorld extends World
         inventoryDisplay = new InventoryDisplay(buttons);
         addObject(inventoryDisplay, SCREEN_WIDTH, SCREEN_HEIGHT/2);
         
+        Font font = new Font("Tekton Pro", true, false,  20);
+        buildOn = new SuperTextBox("BUILD MODE ON", new Color(0,0,0,40), Color.BLACK, font, true, 200, 0, null);
+        buildOff = new SuperTextBox("BUILD MODE OFF", new Color(0,0,0,40), Color.BLACK, font, true, 200, 0, null);
         
         equip = new EquipDisplay(this);
         // Set up the inventory from the previous save
@@ -290,11 +296,13 @@ public class GameWorld extends World
             GameInfo.saveGame(this);
         }
         if(toggle.leftClickedThis()){
-            toggleEditMode();
+            setEditMode(toggle.getToggle());
             if(editMode){
+                addObject(new ForegroundEffect(Effect.FLOAT, buildOn.getImage(), 20, 0.5), toggle.getX(), toggle.getY() + 50);
                 equip.deselectAll(); 
             }
             else{
+                addObject(new ForegroundEffect(Effect.FLOAT, buildOff.getImage(), 20, 0.5), toggle.getX(), toggle.getY() + 50);
                 equip.selectPrevious();
             }
         }

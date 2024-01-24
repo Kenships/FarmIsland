@@ -31,10 +31,6 @@ public class Tool extends Item
                 efficiency = 1;
                 unbreakable = true;
                 break;
-            case BIG_TOOL:
-                efficiency = 1;
-                unbreakable = true;
-                break;
         }
         setImage(toolImage);
     }

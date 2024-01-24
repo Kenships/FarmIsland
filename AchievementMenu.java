@@ -38,7 +38,6 @@ public class AchievementMenu extends SuperSmoothMover
      */
     public void addedToWorld(World world){
         myWorld = (GameWorld) world;
-        myWorld.setScreen(myWorld.ACHIEVEMENT);
         page = 1;
         initialize();
         setScreen(page);

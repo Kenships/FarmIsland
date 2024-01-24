@@ -48,6 +48,9 @@ public class ToggleButton extends Button
         super.act();
     }
     
+    public boolean getToggle(){
+        return toggle;
+    }
     
     public void release(){
 

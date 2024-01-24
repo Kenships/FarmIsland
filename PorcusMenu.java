@@ -122,6 +122,7 @@ public class PorcusMenu extends SuperSmoothMover
 
     public void act()
     {
+        checkMileStones();
         checkMouseAction();
         if(actTimer.millisElapsed() >= 4){
             actTimer.mark();
@@ -134,35 +135,78 @@ public class PorcusMenu extends SuperSmoothMover
         }
     }
 
+    public void checkMileStones(){
+        if(complete.size() < 10){
+            setPigStage(0);
+        }
+        else if(complete.size()  < 20){
+            setPigStage(1);
+        }
+        else if(complete.size() < 30){
+            setPigStage(2);
+        }
+        else if(complete.size() < 40){
+            setPigStage(3);
+        }
+    }
+
     public void InitializeMilestones(){
         milestones.add(new Milestone(ObjectID.WHEAT, 10));
         milestones.add(new Milestone(ObjectID.CARROT, 10));
         milestones.add(new Milestone(ObjectID.WHEAT, 15));
-        milestones.add(new Milestone(ObjectID.WHEAT, 15));
-        milestones.add(new Milestone(ObjectID.WHEAT, 20));
+        milestones.add(new Milestone(ObjectID.CARROT, 15));
+        milestones.add(new Milestone(ObjectID.WHEAT, 25));
         milestones.add(new Milestone(ObjectID.TOMATO, 10));
+        milestones.add(new Milestone(ObjectID.WHEAT, 30));
+        milestones.add(new Milestone(ObjectID.TOMATO, 30));
+        milestones.add(new Milestone(ObjectID.CARROT, 30));
         milestones.add(new Milestone(ObjectID.WHEAT, 50));
+
         milestones.add(new Milestone(ObjectID.TOMATO, 50));
         milestones.add(new Milestone(ObjectID.CARROT, 50));
-        milestones.add(new Milestone(ObjectID.BLUEBERRY, 100));
-        milestones.add(new Milestone(ObjectID.STRAWBERRY, 100));
-        milestones.add(new Milestone(ObjectID.WHEAT, 100));
-        milestones.add(new Milestone(ObjectID.TOMATO, 100));
+        milestones.add(new Milestone(ObjectID.BLUEBERRY, 20));
+        milestones.add(new Milestone(ObjectID.STRAWBERRY, 20));
+        milestones.add(new Milestone(ObjectID.WHEAT, 75));
+        milestones.add(new Milestone(ObjectID.TOMATO, 75));
+        milestones.add(new Milestone(ObjectID.STRAWBERRY, 30));
+        milestones.add(new Milestone(ObjectID.BLUEBERRY, 50));
+        milestones.add(new Milestone(ObjectID.CARROT, 100));
+        milestones.add(new Milestone(ObjectID.STRAWBERRY, 50));
+
         milestones.add(new Milestone(ObjectID.SILVER_TOMATO, 30));
         milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 30));
-        milestones.add(new Milestone(ObjectID.DRAGONFRUIT, 30));
+        milestones.add(new Milestone(ObjectID.WHEAT, 100));
+        milestones.add(new Milestone(ObjectID.SILVER_TOMATO, 50));
+        milestones.add(new Milestone(ObjectID.SILVER_TOMATO, 100));
+        milestones.add(new Milestone(ObjectID.SILVER_TOMATO, 200));
+        milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 50));
+        milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 100));
+        milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 200));
+        milestones.add(new Milestone(ObjectID.GOLDEN_TOMATO, 300));
+
         milestones.add(new Milestone(ObjectID.PORCUS_WHEAT, 10));
+        milestones.add(new Milestone(ObjectID.DRAGONFRUIT, 100));
+        milestones.add(new Milestone(ObjectID.BLUEBERRY, 500));
+        milestones.add(new Milestone(ObjectID.TOMATO, 5000));
+        milestones.add(new Milestone(ObjectID.WHEAT, 10000));
+        milestones.add(new Milestone(ObjectID.PORCUS_WHEAT, 100));
+        milestones.add(new Milestone(ObjectID.DRAGONFRUIT, 888));
+        milestones.add(new Milestone(ObjectID.STRAWBERRY, 10000));
+        milestones.add(new Milestone(ObjectID.CARROT, 100000));
+        milestones.add(new Milestone(ObjectID.PORCUS_WHEAT, 10000));
     }
+
     public void reset(){
         getWorld().addObject(porcus, getX() + background.getWidth()/2 + BUTTON_OFFSET, GameWorld.SCREEN_HEIGHT - BUTTON_OFFSET);
         reposition();
     }
+
     public void forceClose(){
         setLocation(- background.getWidth()/2, GameWorld.SCREEN_HEIGHT - background.getHeight()/2 - 32);
         reposition();
         getWorld().removeObject(porcus);
     }
-    
+
     public void feed(ObjectID ID, int amount){
 
         if(ID == m1.getID()){
@@ -170,12 +214,14 @@ public class PorcusMenu extends SuperSmoothMover
                 int delta = statusAmount1 + amount - m1.getAmount();
                 if(Inventory.remove(ID, amount - delta)){
                     statusAmount1 += amount - delta;
+                    this.amount -= amount - delta;
                 }
 
             }
             else{
                 if(Inventory.remove(ID, amount)){
                     statusAmount1 += amount;
+                    this.amount -= amount;
                 }
             }
             if(statusAmount1 == m1.getAmount()){
@@ -185,6 +231,7 @@ public class PorcusMenu extends SuperSmoothMover
                     m1 = milestones.remove(0);
                 }
             }
+            amountDisplay.update(String.valueOf(this.amount));
             updateMilestones();
 
         }
@@ -193,12 +240,14 @@ public class PorcusMenu extends SuperSmoothMover
                 int delta = statusAmount2 + amount - m2.getAmount();
                 if(Inventory.remove(ID, amount - delta)){
                     statusAmount2 += amount - delta;
+                    this.amount -= amount - delta;
                 }
 
             }
             else{
                 if(Inventory.remove(ID, amount)){
                     statusAmount2 += amount;
+                    this.amount -= amount;
                 }
             }
             if(statusAmount2 == m2.getAmount()){
@@ -208,6 +257,7 @@ public class PorcusMenu extends SuperSmoothMover
                     m2 = milestones.remove(0);
                 }
             }
+            amountDisplay.update(String.valueOf(this.amount));
             updateMilestones();
         }
     }
@@ -231,6 +281,8 @@ public class PorcusMenu extends SuperSmoothMover
             if(Inventory.remove(ID, amount)){
                 int sellPrice = CurrencyHandler.getPrice(ID, amount);
                 CurrencyHandler.deposit(sellPrice);
+                amount = 0;
+                amountDisplay.update(String.valueOf(amount));
             }
 
         }
