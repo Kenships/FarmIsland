@@ -69,6 +69,11 @@ public class GameWorld extends World
     //for keypress only
     private boolean inventoryMoving;
     
+    public static int gameVolumeMax = 100; 
+
+    public static int brightnessValue = 0;
+    private GreenfootImage originalBackground;
+    
     /**
      * Constructor for objects of class GameWorld.
      * 
@@ -77,7 +82,11 @@ public class GameWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(SCREEN_WIDTH, SCREEN_HEIGHT, 1, false); 
+        
         initialize(savedFile);
+        originalBackground = new GreenfootImage(getBackground());
+
+        
     }
 
     public void act(){
@@ -90,6 +99,7 @@ public class GameWorld extends World
                 spawnClouds();
             }
         }
+        adjustBackgroundBrightness();
 
         
 
@@ -104,14 +114,15 @@ public class GameWorld extends World
         cloudTimer = new SimpleTimer();
         
         GamePlayMusic = new GreenfootSound ("GamePlayMusic.mp3");
-        GamePlayMusic.setVolume(50);
+        GamePlayMusic.setVolume(gameVolumeMax);
         ShopMusic = new GreenfootSound ("ShopMusic.mp3");
-        ShopMusic.setVolume(50);
+        ShopMusic.setVolume(gameVolumeMax);
         
         CurrencyHandler.initialize(savedFile, this);
         CollectionHandler.initialize(this);
         
         setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
+
         //initializes starting screen
 
         screen = GAME;
@@ -350,7 +361,7 @@ public class GameWorld extends World
                 ShopMusic.stop();
                 break;
             case SHOP:
-                removeButtons();     
+                removeButtons();
                 equip.hideDisplay();
                 addObject(shop, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
                 GamePlayMusic.stop();
@@ -380,9 +391,34 @@ public class GameWorld extends World
         
     }
     
+    
+    private void adjustBackgroundBrightness() {
+        GreenfootImage backgrounds = new GreenfootImage(originalBackground);
+    
+        // Create a semi-transparent overlay image with adjusted darkness
+        GreenfootImage overlay = new GreenfootImage(backgrounds.getWidth(), backgrounds.getHeight());
+        overlay.setColor(new Color(0, 0, 0, 255 - brightnessValue));
+        overlay.fill();
+    
+        // Draw the overlay on top of the original image
+        backgrounds.drawImage(overlay, 0, 0);
+    
+        setBackground(backgrounds);
+    }
+    
     public void stopped()
     {
         GamePlayMusic.pause();
         ShopMusic.pause();
+    }
+    
+    public static void setBrightnessMax(int newMax)
+    {
+        brightnessValue = newMax;
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
     }
 }

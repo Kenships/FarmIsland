@@ -21,15 +21,17 @@ public class GenericItem extends Item
     private GreenfootSound[] clickSound;
     private int soundIndex;
     private boolean mouseOver;
+    public static int gameVolumeMax = 100; 
+
     public GenericItem(ObjectID ID){
         this.ID = ID;
 
         hoverSound = new GreenfootSound ("HoverSoundmp3.mp3");
-        hoverSound.setVolume(50);
+        hoverSound.setVolume(gameVolumeMax);
         clickSound = new GreenfootSound[6];
         for(int i = 0; i < clickSound.length; i++){
             clickSound[i] = new GreenfootSound("Clickmp3.mp3");
-            clickSound[i].setVolume(90);
+            clickSound[i].setVolume(gameVolumeMax);
         }
 
         sFont = new Font("Tekton Pro", true, false,  16);
@@ -110,5 +112,14 @@ public class GenericItem extends Item
         if (soundIndex == clickSound.length){
             soundIndex = 0;
         }
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

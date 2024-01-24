@@ -40,6 +40,8 @@ public class LandPlot extends SuperSmoothMover
     private boolean existingFile;
     private String file;
        
+    public static int gameVolumeMax = 100; 
+
     public LandPlot(String savedFile){
         if(savedFile != null){
             existingFile = true;
@@ -74,7 +76,7 @@ public class LandPlot extends SuperSmoothMover
         removingDirtSound = new GreenfootSound[10];
         for (int i = 0; i < removingDirtSound.length; i++){
             removingDirtSound[i] = new GreenfootSound ("RemoveDirt.wav");
-            removingDirtSound[i].setVolume(70);
+            removingDirtSound[i].setVolume(gameVolumeMax);
         }
         soundIndex = 0;
 
@@ -352,5 +354,14 @@ public class LandPlot extends SuperSmoothMover
             }
             */
         }
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

@@ -22,6 +22,7 @@ public class EquipDisplay extends SuperSmoothMover
     
     private GreenfootSound[] clickSound;
     private int soundIndex;
+    public static int gameVolumeMax = 100; 
     public EquipDisplay(GameWorld w)
     {
 
@@ -33,7 +34,7 @@ public class EquipDisplay extends SuperSmoothMover
         clickSound = new GreenfootSound[6];
         for(int i = 0; i < clickSound.length; i++){
             clickSound[i] = new GreenfootSound("Clickmp3.mp3");
-            clickSound[i].setVolume(90);
+            clickSound[i].setVolume(gameVolumeMax);
         }
     }
 
@@ -288,5 +289,14 @@ public class EquipDisplay extends SuperSmoothMover
         if (soundIndex == clickSound.length){
             soundIndex = 0;
         }
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

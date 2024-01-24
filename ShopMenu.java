@@ -46,6 +46,9 @@ public class ShopMenu extends SuperSmoothMover
 
     private SimpleTimer actTimer;
     private SimpleTimer objectTimer;
+    
+    public static int brightnessValue = 0;
+    private GreenfootImage originalBackground;
     public ShopMenu(ArrayList<ObjectID> galleryIDs){
         initialize(galleryIDs);
     }
@@ -74,7 +77,7 @@ public class ShopMenu extends SuperSmoothMover
             }
 
         }
-
+        adjustBackgroundBrightness();
     }
 
     public void initialize(ArrayList<ObjectID> galleryIDs){
@@ -84,6 +87,7 @@ public class ShopMenu extends SuperSmoothMover
         background = new GreenfootImage("Shop.png");
 
         setImage(background);
+
 
         returnButton = new MenuButton("Shop");
         menuUp = new MenuButton("Arrow");
@@ -102,6 +106,7 @@ public class ShopMenu extends SuperSmoothMover
         background = new GreenfootImage("Backgrounds/Shop.png");
         background.drawImage(new GreenfootImage("Backgrounds/Shop Mascot.png"), 0, 0);
         setImage(background);
+        originalBackground = new GreenfootImage(getImage());
 
         returnButton = new MenuButton("Shop");
         menuUp = new MenuButton("Shop Up");
@@ -301,5 +306,25 @@ public class ShopMenu extends SuperSmoothMover
         }
         distanceTraveled += ITEM_SPEED;
 
+        
+        
+    }
+    
+    public static void setBrightnessMax(int newMax)
+    {
+        brightnessValue = newMax;
+    }
+    private void adjustBackgroundBrightness() {
+        GreenfootImage backgrounds = new GreenfootImage(originalBackground);
+    
+        // Create a semi-transparent overlay image with adjusted darkness
+        GreenfootImage overlay = new GreenfootImage(backgrounds.getWidth(), backgrounds.getHeight());
+        overlay.setColor(new Color(0, 0, 0, 255 - brightnessValue));
+        overlay.fill();
+    
+        // Draw the overlay on top of the original image
+        backgrounds.drawImage(overlay, 0, 0);
+    
+        setImage(backgrounds);
     }
 }

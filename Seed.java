@@ -19,6 +19,8 @@ public class Seed extends Item
 
     private GreenfootSound[] plantingSound;
     private int soundIndex;
+    public static int gameVolumeMax = 100; 
+
     public Seed(ObjectID ID, int amount, boolean disapear){
         disapearWhenEmpty = disapear;
         this.ID = ID;
@@ -35,7 +37,7 @@ public class Seed extends Item
         plantingSound = new GreenfootSound[20];
         for (int i = 0; i < plantingSound.length; i++){
             plantingSound[i] = new GreenfootSound ("PlantingSeed.wav");
-            plantingSound[i].setVolume(80);
+            plantingSound[i].setVolume(gameVolumeMax);
         }
         soundIndex = 0;
     }
@@ -196,5 +198,14 @@ public class Seed extends Item
         {
             soundIndex=0;
         }       
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

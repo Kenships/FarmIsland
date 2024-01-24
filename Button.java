@@ -20,6 +20,8 @@ public abstract class Button extends SuperSmoothMover
     private GreenfootSound[] clickSound;
 
     private int soundIndex;
+    
+    public static int gameVolumeMax = 100; 
     public Button(String imageName){
         this.imageName = imageName;
         mainImage = new GreenfootImage[1];
@@ -27,15 +29,15 @@ public abstract class Button extends SuperSmoothMover
         clickImage = new GreenfootImage[1];
 
         hoverSound = new GreenfootSound ("HoverSoundmp3.mp3");
-        hoverSound.setVolume(50);
+        hoverSound.setVolume(gameVolumeMax);
 
         releaseSound = new GreenfootSound[6];
         clickSound = new GreenfootSound[6];
         for(int i = 0; i < releaseSound.length; i++){
             releaseSound[i] = new GreenfootSound("Releasemp3.mp3");
-            releaseSound[i].setVolume(50);
+            releaseSound[i].setVolume(gameVolumeMax);
             clickSound[i] = new GreenfootSound("Clickmp3.mp3");
-            clickSound[i].setVolume(90);
+            clickSound[i].setVolume(gameVolumeMax);
         }
     
         soundIndex = 0;
@@ -127,5 +129,15 @@ public abstract class Button extends SuperSmoothMover
         hoverImage[0].drawImage(box.getImage(), x, y);
         clickImage[0].drawImage(box.getImage(), x, y);
         setImage(mainImage[0]);
+    }
+    
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

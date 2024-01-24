@@ -11,13 +11,15 @@ public class CollectionHandler extends SuperSmoothMover
     private static GameWorld w;
     private static GreenfootSound[] harvestingSound;
     private static int soundIndex;
+    public static int gameVolumeMax = 100; 
 
+    
     public static void initialize(GameWorld world){
         w = world;
         harvestingSound = new GreenfootSound[20];
         for (int i = 0; i < harvestingSound.length; i++){
             harvestingSound[i] = new GreenfootSound ("HarvestingSound.wav");
-            harvestingSound[i].setVolume(80);
+            harvestingSound[i].setVolume(gameVolumeMax);
         }
     }
 
@@ -62,7 +64,6 @@ public class CollectionHandler extends SuperSmoothMover
                     w.removeObject(plant);
                     plant.getTile().unPlant();
             }
-    
         }
     }
 
@@ -86,5 +87,14 @@ public class CollectionHandler extends SuperSmoothMover
         {
             soundIndex=0;
         }   
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }

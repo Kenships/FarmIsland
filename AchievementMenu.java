@@ -31,6 +31,9 @@ public class AchievementMenu extends SuperSmoothMover
     private SuperTextBox descriptionDisplay;
     private AchievementBanner featureImage;
 
+
+    public static int brightnessValue = 0;
+    private GreenfootImage originalBackground;
     /**
      * Called when the AchievementMenu is added to the world.
      * 
@@ -38,7 +41,6 @@ public class AchievementMenu extends SuperSmoothMover
      */
     public void addedToWorld(World world){
         myWorld = (GameWorld) world;
-        myWorld.setScreen(myWorld.ACHIEVEMENT);
         page = 1;
         initialize();
         setScreen(page);
@@ -67,6 +69,7 @@ public class AchievementMenu extends SuperSmoothMover
         if(myWorld.isScreen(myWorld.ACHIEVEMENT)){
             checkMouseAction();
         }
+        adjustBackgroundBrightness();
     }
     
     /**
@@ -190,5 +193,24 @@ public class AchievementMenu extends SuperSmoothMover
                 myWorld.addObject(featureImage,FEATURE_IMAGE_X, FEATURE_IMAGE_Y);
             }
         }
+    }
+    
+    public static void setBrightnessMax(int newMax)
+    {
+        brightnessValue = newMax;
+    }
+    
+    private void adjustBackgroundBrightness() {
+        GreenfootImage backgrounds = new GreenfootImage(originalBackground);
+    
+        // Create a semi-transparent overlay image with adjusted darkness
+        GreenfootImage overlay = new GreenfootImage(backgrounds.getWidth(), backgrounds.getHeight());
+        overlay.setColor(new Color(0, 0, 0, 255 - brightnessValue));
+        overlay.fill();
+    
+        // Draw the overlay on top of the original image
+        backgrounds.drawImage(overlay, 0, 0);
+    
+        setImage(backgrounds);
     }
 }

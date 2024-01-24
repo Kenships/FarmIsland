@@ -23,7 +23,8 @@ public class DirtTile extends Tile
 
     //edit mode toggle
     private boolean offseted;
-    
+    public static int gameVolumeMax = 100; 
+
     private GreenfootSound placingDirtSound;
     /**
      * Constructor
@@ -77,7 +78,7 @@ public class DirtTile extends Tile
         projectedTile = new GreenfootImage("Tiles/Dirt Tile.png");
         projectedTile.setTransparency(TRANSPARENT);
         placingDirtSound = new GreenfootSound ("PlacingDirt.wav");
-  
+        placingDirtSound.setVolume(gameVolumeMax);
         activeTile = new GreenfootImage(projectedTile);
         if(active){
             setImage(activeTile);
@@ -257,5 +258,14 @@ public class DirtTile extends Tile
 
     public int getCol(){
         return col;
+    }
+    
+    public static void setVolumeMax(int newMax)
+    {
+        gameVolumeMax = newMax;
+    }
+    public static int getVolumeMax()
+    {
+        return gameVolumeMax;
     }
 }
