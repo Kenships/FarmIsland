@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Blueberry here.
+ * Write a description of class CopyOfCarrot here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -16,7 +16,7 @@ public class Blueberry extends Plant
      */
     public Blueberry(){
         super(Y_OFFSET);
-        ID = ObjectID.BLUEBERRY;
+        ID = ObjectID.BLUEBERRY;                
         initialize();
         yield = 3;
         sellPrice = 30;
@@ -27,7 +27,6 @@ public class Blueberry extends Plant
         ID = ObjectID.BLUEBERRY;
         initialize();
         this.yield = yield;
-        sellPrice = 30;
     }
     public void act()
     {
@@ -46,7 +45,7 @@ public class Blueberry extends Plant
         growthAnimations = new GreenfootImage[GROWTH_STAGES][3];
         for(int stage = 0; stage < GROWTH_STAGES; stage++){
             for(int frame = 0; frame < growthAnimations[stage].length; frame++){
-                growthAnimations[stage][frame] = new GreenfootImage("Plants/Carrot/Stage " + stage + "/"+ frame + ".png");
+                growthAnimations[stage][frame] = new GreenfootImage("Plants/Blueberry/Stage " + stage + "/"+ frame + ".png");
             }
 
         }
@@ -55,15 +54,19 @@ public class Blueberry extends Plant
     }
     
     public void grow(){
-        maturity += growthRate + myTile.getGrowthMultiplier();
-        //1 min to grow fully
-        if(maturity % 1200 == 0 && growthStage < GROWTH_STAGES - 1){
+        maturity += growthRate;
+        if(maturity % 3600 == 0 && growthStage < GROWTH_STAGES - 2){
             growthStage ++;
             //fade before setting
             fadeOval(growthAnimations[growthStage][0]);
             setImage(growthAnimations[growthStage][0]);
         }
-        
+        else if(maturity % 7200 == 0 && growthStage < GROWTH_STAGES - 1){
+            growthStage ++;
+            //fade before setting
+            fadeOval(growthAnimations[growthStage][0]);
+            setImage(growthAnimations[growthStage][0]);
+        }
         //when the growthStage is at max the crop is mature
         if(growthStage == GROWTH_STAGES - 1){
             mature = true;

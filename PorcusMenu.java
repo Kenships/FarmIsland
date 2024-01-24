@@ -31,29 +31,29 @@ public class PorcusMenu extends SuperSmoothMover
         this.porcus = porcus;
         ID = ObjectID.NONE;
         pigStages = new GreenfootImage[4];
-        
+
         for(int i = 0; i < pigStages.length; i++){
             pigStages[i] = new GreenfootImage("Backgrounds/PIG " + i + ".png");
         }
-        
+
         setPigStage(0);
-        
+
         actTimer = new SimpleTimer();
         frame = new ItemFrame(ID, "Shop Frame", 90, 90);
         plus = new GameButton("Plus", 50);
         minus = new GameButton("Minus", 50);
         Font font = new Font("Tekton Pro", true, false,  20);
         objectTimer = new SimpleTimer();
-        feed = new GameButton("Buy", 64);
-        sell = new GameButton("Buy", 64);
-        feed.drawText("Buy");
-        sell.drawText("sell");
-        
+        feed = new GameButton("Buy", 90);
+        sell = new GameButton("Buy", 90);
+        feed.drawText("FEED", 0, -10);
+        sell.drawText("SELL", 0, -10);
+
         amountDisplay = new SuperTextBox(" ", new Color(0,0,0,0), Color.BLACK, font, true, 180, 0, null);
         amount = 0;
         setImage(background);
     }
-    
+
     public void addedToWorld(World w){
         setLocation(- background.getWidth()/2, GameWorld.SCREEN_HEIGHT - background.getHeight()/2 - 32);
         w.addObject(porcus, getX() + background.getWidth()/2 + BUTTON_OFFSET, GameWorld.SCREEN_HEIGHT - BUTTON_OFFSET);
@@ -61,15 +61,16 @@ public class PorcusMenu extends SuperSmoothMover
         w.addObject(plus, frame.getX() + 90, frame.getY());
         w.addObject(minus, frame.getX() - 90, frame.getY());
         w.addObject(amountDisplay, frame.getX(), frame.getY() - 56);
-        w.addObject(feed, frame.getX() + 90, frame.getY() + 90);
-        w.addObject(sell, frame.getX() - 90, frame.getY() + 90);
+        w.addObject(feed, frame.getX() + 48, frame.getY() + 84);
+        w.addObject(sell, frame.getX() - 48, frame.getY() + 84);
+
     }
-    
+
     public void setPigStage(int stage){
         background = new GreenfootImage("Backgrounds/Porcus.png");
         background.drawImage(pigStages[stage], 120 - pigStages[stage].getWidth()/2, 160 - pigStages[stage].getHeight()/2);
     }
-    
+
     public void updateID(ObjectID ID){
         switch(ID){
             case WHEAT:
@@ -77,10 +78,6 @@ public class PorcusMenu extends SuperSmoothMover
             case TOMATO:
             case PORCUS_WHEAT:
             case BLUEBERRY:
-            case STRAWBERRY:
-            case DRAGONFRUIT:
-            case SILVER_TOMATO: 
-            case GOLDEN_TOMATO: 
                 amount = Inventory.getAmount(ID);
                 amountDisplay.update(String.valueOf(amount));
                 this.ID = ID;
@@ -112,6 +109,14 @@ public class PorcusMenu extends SuperSmoothMover
         if(Greenfoot.mouseClicked(null)){
             dragging = false;
         }
+        if(sell.leftClickedThis()){
+            if(Inventory.remove(ID, amount)){
+                int sellPrice = CurrencyHandler.getPrice(ID, amount);
+                CurrencyHandler.deposit(sellPrice);
+            }
+
+        }
+
         if(plus.leftClickedThis()){
             amount++;
             if(amount > Inventory.getAmount(ID)){
@@ -148,8 +153,8 @@ public class PorcusMenu extends SuperSmoothMover
         plus.setLocation(frame.getX() + 90, frame.getY());
         minus.setLocation(frame.getX() - 90, frame.getY());
         amountDisplay.setLocation(frame.getX(), frame.getY() - 56);
-        feed.setLocation( frame.getX() + 90, frame.getY() + 90);
-        sell.setLocation(frame.getX() - 90, frame.getY() + 90);
+        feed.setLocation(frame.getX() + 48, frame.getY() + 84);
+        sell.setLocation(frame.getX() - 48, frame.getY() + 84);
     }
 
     public void open(){
