@@ -14,7 +14,7 @@ public class ShopItem extends ItemFrame {
     private boolean unlimited;
     private SuperTextBox costDisplay;
     private Font font;
-    public ShopItem(ObjectID ID, int stock){
+
 
     /**
      * Constructs a ShopItem with a specified ObjectID and stock.

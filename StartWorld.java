@@ -16,6 +16,45 @@ import java.lang.NullPointerException;
 
 
 /**
+ * Game discription:
+ * This is a farm game in which you plant and harvest to unlock new plants to grow your plot and make bank!
+ * 
+ * Goal:
+ * - expand your island as much as you can
+ * - feed the pig to the fattest form (stage 4)
+ * - unlock and plant Porcus Wheat!!!
+ * 
+ * UI help/How to play:
+ * - right click drag to move islands
+ * - left click equip slot to use item
+ * - hoe used to harvest plants
+ * - shovel used to remove plants (not harvest)
+ * - equip seed and left click island to plant it
+ * - the pig upgrade requirments are on the top of the pig menu
+ * - go to the shop to purchase seeds
+ * - click on inventory item to equip it or feed the pig
+ * 
+ * Buttons:
+ * - press the home button in case you lose your islands
+ * - space bar to remove islands
+ * - toggle button to switch betwee building modes
+ * - open left pig menu to feed the pig and unlock new plants
+ * - save button to save progress
+ * - achievement button to view achievments
+ * - inventory button to slide open inventory
+ * 
+ * features:
+ * - pig has 4 stages that it can grow to
+ * - islands can move to expand in a 32 x 32 area
+ * - interactive shop, inventory, and equip
+ * - numerous unlockable plants
+ * - So much more!!! (play the game please)
+ * 
+ * Known Bugs/redudant visuals:
+ * - fertilizer not working so the third inventory slot will not be filled
+ * - inventory arrows do not do anything
+ * - shop allows you to scroll to infinity and numbers do not fade properly
+ * 
  * @author: Zhaoqi Xu, Ryan Du, Carson Cooc
  * @version: January 2024
  */
@@ -51,6 +90,7 @@ public class StartWorld extends World
         //screen.fillPolygon(new int[] {0,0,430,390}, new int[] {0,720,720,0}, 4);
 
         //background.drawImage(screen, 0, 0);
+        background.drawImage(new GreenfootImage("Backgrounds/Title.png"), 120, 0);
         setBackground(background);
 
         initialize();
@@ -130,11 +170,11 @@ public class StartWorld extends World
         
         
         
-        addObject(startButton,SCREEN_WIDTH/2,150);
-        addObject(load,SCREEN_WIDTH/2,290);
-        addObject(settings,SCREEN_WIDTH/2,430);
+        addObject(startButton,SCREEN_WIDTH/2,290);
+        addObject(load,SCREEN_WIDTH/2,430);
+        //addObject(settings,SCREEN_WIDTH/2,430);
         addObject(quit,SCREEN_WIDTH/2,570);
-        addObject(new Effect(Effect.ROCK, island), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        addObject(new Effect(Effect.ROCK, island), SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50);
         addObject(new Effect(Effect.PULSE, clouds), SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     }
 

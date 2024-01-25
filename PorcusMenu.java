@@ -112,13 +112,19 @@ public class PorcusMenu extends SuperSmoothMover
         w.addObject(status1, milestone1.getX() + 64, milestone1.getY());
         w.addObject(status2, milestone2.getX() + 64, milestone2.getY());
     }
-
+    /**
+     * Sets the stage of the growing pig
+     * 
+     * @param stage the stage of the pig
+     */
     public void setPigStage(int stage){
         background = new GreenfootImage("Backgrounds/Porcus.png");
         background.drawImage(pigStages[stage], 120 - pigStages[stage].getWidth()/2, 160 - pigStages[stage].getHeight()/2);
         setImage(background);
     }
-
+    /**
+     * updates
+     */
     public void updateID(ObjectID ID){
         switch(ID){
             case WHEAT:

@@ -151,7 +151,9 @@ public class ShopMenu extends SuperSmoothMover
             }
             else{
                 myWorld.addObject(item, x,y);
+                
                 SuperTextBox costDisplay = item.getCostDisplay();
+                
                 itemCosts.add(costDisplay);
                 myWorld.addObject(costDisplay, x - 5, y + 70);
             }
@@ -190,7 +192,7 @@ public class ShopMenu extends SuperSmoothMover
         components.add(plus);
         components.add(minus);
         components.addAll(myWorld.getObjects(ShopItem.class));
-        components.addAll(myWorld.getObjects(SuperTextBox.class));
+        components.addAll(itemCosts);
         for(Actor component : components){
             myWorld.removeObject(component);
         }

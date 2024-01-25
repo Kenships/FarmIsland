@@ -3,27 +3,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.HashMap;
 import java.util.ArrayList;
 /**
- * Write a description of class GameWorld here.
+ * <a href="https://www.textstudio.com/">Font generator</a>
+ * 
+ * The world that all game objects reside
  * 
  * @author: Zhaoqi Xu, Ashkan Siassi, Carson Cooc 
  * @version: January 2024
  */
-/**
- * CHANGES:
- * - GameWorld
- * - new Util class
- * - LandPlot
- * - DirtTile
- * - Plant
- * - Tile
- * - Seed
- * - new class Grid Comparator
- * - new class GridPath
- * - Stubby Wheat
- * - Wheat
- * - new class Effect
- * 
- */
+
 public class GameWorld extends World
 {
     //720p resolution 16:9 aspect ratio
@@ -122,7 +109,9 @@ public class GameWorld extends World
         CurrencyHandler.initialize(savedFile, this);
         CollectionHandler.initialize(this);
         
-        setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
+        GreenfootImage bg = new GreenfootImage("BackGrounds/Game BG.png");
+        
+        setBackground(bg);
         //initializes starting screen
 
         screen = GAME;
@@ -134,7 +123,7 @@ public class GameWorld extends World
         // Initializes shop menu
         HashMap<ObjectID, Integer> temp = new HashMap<>();
         temp.put(ObjectID.DIRT_TILE, -1);
-        temp.put(ObjectID.FERTILIZER, -1);
+        //temp.put(ObjectID.FERTILIZER, -1);
         
         temp.put(ObjectID.WHEAT_SEED, -1);
         temp.put(ObjectID.CARROT_SEED, -1);
