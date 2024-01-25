@@ -32,9 +32,9 @@ public class CollectionHandler extends SuperSmoothMover
     public static void collect(Plant plant){
         if(Cursor.getItem() != null && Cursor.getItem() instanceof Tool){
             Tool tool = (Tool) Cursor.getItem();
-            int multiplier = 1 + tool.getEffiency()/10;
+            int multiplier = 1 + tool.getEfficiency()/10;
             int netYield = plant.getYield();
-            if(Greenfoot.getRandomNumber(100) < tool.getEffiency()){
+            if(Greenfoot.getRandomNumber(100) < tool.getEfficiency()){
                 netYield *= multiplier;
             }
 

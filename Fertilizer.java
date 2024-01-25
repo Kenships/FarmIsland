@@ -24,7 +24,7 @@ public class Fertilizer extends Item
      */
     public Fertilizer(ObjectID ID, int amount, boolean disappear) {
         fertilizerSize = 5;
-        disapearWhenEmpty = disapear;
+        disapearWhenEmpty = disappear;
 
         // Add fertilizer to inventory
         Inventory.add(ID, amount);

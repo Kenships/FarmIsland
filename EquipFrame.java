@@ -56,7 +56,6 @@ public class EquipFrame extends ItemFrame {
         return selected;
     }
     
-    public void select(){
 
     /**
      * Selects the frame, indicating that the equipped item is selected.
