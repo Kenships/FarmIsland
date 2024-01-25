@@ -175,7 +175,10 @@ public class GameWorld extends World
         // Initializes achievement menu
         achievement = new AchievementMenu();
         achievementManager = new AchievementManager();
-
+        if(savedFile != null){
+            GameInfo.loadAchievements(savedFile);
+        }
+        
         
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
         equip.equipSeed(new Seed(ObjectID.WHEAT_SEED, 1, false));

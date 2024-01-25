@@ -28,6 +28,7 @@ public class ShopMenu extends SuperSmoothMover
     private int direction;
 
     private ArrayList<ShopItem> itemGallery;
+    private ArrayList<SuperTextBox> itemCosts;
     private FeaturedFrame featuredItem;
     private GreenfootImage background;
     private Button returnButton;
@@ -90,6 +91,7 @@ public class ShopMenu extends SuperSmoothMover
         menuDown = new MenuButton("Arrow");
         menuDown.setRotation(180);
         itemGallery = new ArrayList<>();
+        itemCosts = new ArrayList<>();
 
         for(ObjectID ID : galleryIDs){
             itemGallery.add(new ShopItem(ID, 1));
@@ -117,6 +119,7 @@ public class ShopMenu extends SuperSmoothMover
         amountDisplay = new SuperTextBox(" ", new Color(0,0,0,40), Color.BLACK, font, true, featuredItem.getImage().getWidth(), 0, null);
 
         itemGallery = new ArrayList<>();
+        itemCosts = new ArrayList<>();
 
         for(ObjectID ID : galleryIDs.keySet()){
             if(galleryIDs.get(ID) == -1){
@@ -148,6 +151,9 @@ public class ShopMenu extends SuperSmoothMover
             }
             else{
                 myWorld.addObject(item, x,y);
+                SuperTextBox costDisplay = item.getCostDisplay();
+                itemCosts.add(costDisplay);
+                myWorld.addObject(costDisplay, x - 5, y + 70);
             }
             index++;
         }
@@ -184,6 +190,7 @@ public class ShopMenu extends SuperSmoothMover
         components.add(plus);
         components.add(minus);
         components.addAll(myWorld.getObjects(ShopItem.class));
+        components.addAll(myWorld.getObjects(SuperTextBox.class));
         for(Actor component : components){
             myWorld.removeObject(component);
         }
@@ -241,6 +248,9 @@ public class ShopMenu extends SuperSmoothMover
                 if(CurrencyHandler.isAffordable(item.getID(), purchaseAmount)){
                     if(item.removeOne()){
                         CurrencyHandler.purchase(item.getID(), purchaseAmount);
+                        if(item.getID().equals(ObjectID.DIRT_TILE)){
+                            item.updateCostDisplay();
+                        }
                     }
                     featuredItem.updatePrice(purchaseAmount);
                 }
@@ -291,6 +301,13 @@ public class ShopMenu extends SuperSmoothMover
 
                 item.setLocation(item.getX(), item.getPreciseY() - delta * direction);
             }
+            for(SuperTextBox display : itemCosts){
+                //redundancy
+                if(display.getWorld() == null){
+                    break;
+                }
+                display.setLocation(display.getX(), display.getPreciseY() -delta * direction);
+            }
             distanceTraveled = 0;
             direction = 0;
             return;
@@ -302,6 +319,13 @@ public class ShopMenu extends SuperSmoothMover
             }
 
             item.setLocation(item.getX(), item.getPreciseY() + ITEM_SPEED * direction);
+        }
+        for(SuperTextBox display : itemCosts){
+            //redundancy
+            if(display.getWorld() == null){
+                break;
+            }
+            display.setLocation(display.getX(), display.getPreciseY() + ITEM_SPEED * direction);
         }
         distanceTraveled += ITEM_SPEED;
 

@@ -15,7 +15,7 @@ public class Achievement
     private boolean completed;
     private String completeImageIcon, incompleteImageIcon;
     private String notificationIcon;
-
+    
     /**
      * Represents an achievement with a name, description, and completion status.
      * 
@@ -80,6 +80,9 @@ public class Achievement
      */
     public void setCompleted(){
         completed = true;
+    }
+    public void setCompleted(boolean completed){
+        this.completed = completed;
     }
     /**
      * Sets the image of the achievement to the image of the specified String.

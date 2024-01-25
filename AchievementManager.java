@@ -45,7 +45,10 @@ public class AchievementManager
         agricultureB = new ArrayList<>();
         agricultureB.add(new Achievement("Carrot Planter", "Collect Carrot!", AGRICULTURE_B,0));
         agricultureB.add(new Achievement("Tomato Planter", "Collect Tomato!", AGRICULTURE_B,1));
-        agricultureB.add(new Achievement("Porcus Planter", "Collect Porcus Wheat!", AGRICULTURE_B,2));
+        agricultureB.add(new Achievement("Strawberry Planter", "Collect Strawberry!", AGRICULTURE_B,2));
+        agricultureB.add(new Achievement("Golden Tomato Planter", "Collect Golden Tomato!", AGRICULTURE_B,3));
+        agricultureB.add(new Achievement("Dragon Fruit Planter", "Collect Dragon Fruit!", AGRICULTURE_B,4));
+        agricultureB.add(new Achievement("Porcus Planter", "Collect Porcus Wheat!", AGRICULTURE_B,5));
     }
     
     /**
@@ -99,8 +102,17 @@ public class AchievementManager
             case TOMATO:
                 agricultureB.get(1).setCompleted();
                 break;
-            case PORCUS_WHEAT:
+            case STRAWBERRY:
                 agricultureB.get(2).setCompleted();
+                break;
+            case GOLDEN_TOMATO:
+                agricultureB.get(3).setCompleted();
+                break;
+            case DRAGONFRUIT:
+                agricultureB.get(4).setCompleted();
+                break;
+            case PORCUS_WHEAT:
+                agricultureB.get(5).setCompleted();
                 break;
         }
     }

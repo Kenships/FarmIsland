@@ -127,7 +127,7 @@ public class AchievementMenu extends SuperSmoothMover
             getWorld().addObject(achievementGallery.get(i), LEFT_MARGIN + (SPACING * currentCol), TOP_MARGIN + (LINE_SPACING * currentRow));
             currentCol++;
         }
-    }
+    }   
     
     /**
      * Gets the index of latest incomplete achievement in the given list.

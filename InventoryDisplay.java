@@ -119,8 +119,9 @@ public class InventoryDisplay extends SuperSmoothMover
      */
     public void removeItem(ObjectID ID){
         ArrayList<GenericItem> items = pages.get(page);
-        for(Item i : items){
+        for(GenericItem i : items){
             if(ID.equals(i.getID())){
+                i.removeAmountDisplay();
                 items.remove(i);
                 getWorld().removeObject(i);
                 break;

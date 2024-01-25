@@ -58,7 +58,13 @@ public class GameInfo
                 FileWriter out = new FileWriter (filePath);
                 PrintWriter output = new PrintWriter (out);
                 output.println(CurrencyHandler.getBallance());
+                output.println(AchievementManager.totalTiles);
+                output.println("Achievements Start");
                 output.println(AchievementManager.totalPlants);
+                for(int i = 0; i < AchievementManager.agricultureB.size(); i++){
+                    output.println(AchievementManager.agricultureB.get(i).getCompleted());
+                }
+                output.println("Achievements End");
                 output.println("Tiles Start");
                 dirtTiles.addAll(world.getObjects(DirtTile.class));
                 for(DirtTile d : dirtTiles){
@@ -87,6 +93,8 @@ public class GameInfo
                 output.println("Achievements Start");
                 output.println(AchievementManager.totalPlants);
                 output.println("Achievements End");
+                output.println("Porcus Start");
+                output.println("Porcus End");
                 output.close();
             }
             catch (IOException e){
@@ -104,6 +112,7 @@ public class GameInfo
         try{
             Scanner fileScanner = new Scanner (new File(savedFile));
             CurrencyHandler.deposit(Integer.valueOf(fileScanner.nextLine()));
+            AchievementManager.totalTiles = Integer.valueOf(fileScanner.nextLine());
             fileScanner.close();
         }
         catch (FileNotFoundException e){
@@ -187,8 +196,24 @@ public class GameInfo
     public static void loadAchievements(String savedFile){
         try{
             Scanner fileScanner = new Scanner (new File(savedFile));
-            fileScanner.nextLine();
+            while(fileScanner.hasNext()){
+                if("Achievements Start".equals(fileScanner.nextLine())){
+                    break;
+                }
+            }
             AchievementManager.loadAgricultureA(Integer.valueOf(fileScanner.nextLine()));
+            int counter = 0;
+            while(fileScanner.hasNext()){
+                String line = fileScanner.nextLine();
+                if("Achievements End".equals(line)){
+                    break;
+                }
+                boolean completionStatus = Boolean.valueOf(line);
+                if(completionStatus){
+                    AchievementManager.agricultureB.get(counter).setCompleted();
+                }
+                counter ++;
+            }
             fileScanner.close();
         }
         catch (FileNotFoundException e){

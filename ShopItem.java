@@ -12,6 +12,9 @@ public class ShopItem extends ItemFrame {
     public static final int FRAME_HEIGHT = 128;
     private int stock;
     private boolean unlimited;
+    private SuperTextBox costDisplay;
+    private Font font;
+    public ShopItem(ObjectID ID, int stock){
 
     /**
      * Constructs a ShopItem with a specified ObjectID and stock.
@@ -27,6 +30,8 @@ public class ShopItem extends ItemFrame {
         glow.scale(background.getWidth(), background.getHeight());
         background.drawImage(glow, 0, 0);
         drawFrame();
+        font = new Font("Tekton Pro", true, false,  16);
+        costDisplay = new SuperTextBox("$" + String.valueOf(CurrencyHandler.getPrice(ID)), new Color(0,0,0,0), Color.BLACK, font, true, 128, 0, new Color(0,0,0,0));
     }
 
     /**
@@ -44,6 +49,8 @@ public class ShopItem extends ItemFrame {
         glow.scale(background.getWidth(), background.getHeight());
         background.drawImage(glow, 0, 0);
         drawFrame();
+        font = new Font("Tekton Pro", true, false,  16);
+        costDisplay = new SuperTextBox("$" + String.valueOf(CurrencyHandler.getPrice(ID)), new Color(0,0,0,0), Color.BLACK, font, true, 128, 0, new Color(0,0,0,0));
     }
 
     /**
@@ -121,5 +128,12 @@ public class ShopItem extends ItemFrame {
      */
     public void addOne() {
         stock++;
+    }
+    
+    public void updateCostDisplay(){
+        costDisplay.update("$" + String.valueOf(CurrencyHandler.getPrice(ID)));
+    }
+    public SuperTextBox getCostDisplay(){
+        return costDisplay;
     }
 }

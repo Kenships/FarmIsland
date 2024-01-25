@@ -77,6 +77,7 @@ public class GenericItem extends Item {
         if (hoveringThis() && Greenfoot.mouseClicked(null) && Cursor.leftClicked()) {
             clickSound();
             Inventory.equipItem(ID);
+            Inventory.feedItem(ID);
         }
 
         if (hoveringThis() != mouseOver) {
@@ -88,16 +89,20 @@ public class GenericItem extends Item {
         }
         World w = getWorld();
 
-        if (hoveringThis()) {
-            w.addObject(name, getX(), getY() - 40);
-            amount.update(String.valueOf(Inventory.getAmount(ID)));
-            w.addObject(amount, getX() + 28, getY() + 32);
+        if(hoveringThis()){
+
+            w.addObject(name, getX(), getY() -40);
+            //amount.update(String.valueOf(Inventory.getAmount(ID)));
+            //w.addObject(amount, getX() + 28, getY() + 32);
             setImage(hover);
-        } else {
+        }
+        else{
             w.removeObject(amount);
             w.removeObject(name);
             setImage(image);
         }
+        amount.update(String.valueOf(Inventory.getAmount(ID)));
+        w.addObject(amount, getX() + 28, getY() + 32);
     }
 
     /**
@@ -124,8 +129,12 @@ public class GenericItem extends Item {
     public void clickSound() {
         clickSound[soundIndex].play();
         soundIndex++;
-        if (soundIndex == clickSound.length) {
+        if (soundIndex == clickSound.length){
             soundIndex = 0;
         }
+    }
+    
+    public void removeAmountDisplay(){
+        getWorld().removeObject(amount);
     }
 }
