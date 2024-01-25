@@ -12,7 +12,7 @@ public class SilverTomato extends Plant
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
     /**
-     * NEW: ID moved and initialized in constructor
+     * Initializes a Silver Tomato plant with the default yield and sell price.
      */
     public SilverTomato(){
         super(Y_OFFSET);
@@ -22,17 +22,29 @@ public class SilverTomato extends Plant
         sellPrice = 25;
     }
 
+    /**
+     * Initializes a Silver Tomato plant with a specified yield.
+     * 
+     * @param yield The yield of the Tomato plant.
+     */
     public SilverTomato(int yeild){
         super(Y_OFFSET);
         ID = ObjectID.SILVER_TOMATO;
         initialize();
         this.yield = yield;
     }
+    
+    /**
+     * Performs the act of the Silver Tomato plant.
+     */
     public void act()
     {
         super.act();
     }
     
+    /**
+     * Initializes the Silver Tomato plant with growth animations.
+     */
     public void initialize(){
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
@@ -53,6 +65,9 @@ public class SilverTomato extends Plant
         setImage(growthAnimations[growthStage][0]);
     }
     
+    /**
+     * Simulates the growth of the Silver Tomato plant.
+     */
     public void grow(){
         maturity += growthRate;
         if(maturity % 1800 == 0 && growthStage < GROWTH_STAGES - 2){
@@ -74,6 +89,9 @@ public class SilverTomato extends Plant
         
     }
     
+    /**
+     * Advances to the next frame of the Silver Tomato plant's growth animation.
+     */
     public void nextFrame(){
         animationIndex += deltaIndex;
         if(animationIndex >= 0 && animationIndex < growthAnimations[growthStage].length){
@@ -88,18 +106,33 @@ public class SilverTomato extends Plant
         }
     }
     
+    /**
+     * Checks for keypress actions related to the Silver Tomato plant.
+     */
     public void checkKeypressAction(){
-        
+
     }
 
+    /**
+     * Plays the sound when placing the Silver Tomato plant.
+     */
     public void playPlaceSound(){
-        
+
     }
+
+    /**
+     * Plays the sound when removing the Silver Tomato plant.
+     */
     public void playRemoveSound(){
-        
+
     }
     
     //temporary
+    /**
+     * Retrieves the image of the Silver Tomato plant as an item.
+     * 
+     * @return The image of the Silver Tomato plant as an item.
+     */
     public GreenfootImage getItemImage(){
         //fill
         return new GreenfootImage(1,1);

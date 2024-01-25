@@ -12,7 +12,7 @@ public class Strawberry extends Plant
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
     /**
-     * NEW: ID moved and initialized in constructor
+     * Initializes a Strawberry plant with the default yield and sell price.
      */
     public Strawberry(){
         super(Y_OFFSET);
@@ -22,6 +22,11 @@ public class Strawberry extends Plant
         sellPrice = 20;
     }
 
+    /**
+     * Initializes a Strawberry plant with a specified yield.
+     * 
+     * @param yield The yield of the Strawberry plant.
+     */
     public Strawberry(int yeild){
         super(Y_OFFSET);
         ID = ObjectID.STRAWBERRY;
@@ -29,11 +34,18 @@ public class Strawberry extends Plant
         this.yield = yield;
         sellPrice = 30;
     }
+    
+    /**
+     * Performs the act of the Strawberry plant.
+     */
     public void act()
     {
         super.act();
     }
     
+    /**
+     * Initializes the Strawberry plant with growth animations.
+     */
     public void initialize(){
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
@@ -54,6 +66,9 @@ public class Strawberry extends Plant
         setImage(growthAnimations[growthStage][0]);
     }
     
+    /**
+     * Simulates the growth of the Strawberry plant.
+     */
     public void grow(){
         maturity += growthRate + myTile.getGrowthMultiplier();
         //1 min to grow fully
@@ -65,12 +80,15 @@ public class Strawberry extends Plant
         }
         
         //when the growthStage is at max the crop is mature
-        if(growthStage == GROWTH_STAGES - 1){
+        if(growthStage == GROWTH_STAGES - 1){ 
             mature = true;
         }
         
     }
     
+    /**
+     * Advances to the next frame of the Strawberry plant's growth animation.
+     */
     public void nextFrame(){
         animationIndex += deltaIndex;
         if(animationIndex >= 0 && animationIndex < growthAnimations[growthStage].length){
@@ -85,18 +103,34 @@ public class Strawberry extends Plant
         }
     }
     
+    /**
+     * Checks for keypress actions related to the Strawberry plant.
+     */
     public void checkKeypressAction(){
         
     }
 
+    /**
+     * Plays the sound when placing the Strawberry plant.
+     */
     public void playPlaceSound(){
         
     }
+
+    /**
+     * Plays the sound when removing the Strawberry plant.
+     */
     public void playRemoveSound(){
         
     }
+
     
     //temporary
+    /**
+     * Retrieves the image of the Strawberry plant as an item.
+     * 
+     * @return The image of the Strawberry plant as an item.
+     */
     public GreenfootImage getItemImage(){
         //fill
         return new GreenfootImage(1,1);

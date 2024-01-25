@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Carrot here.
+ * Sub Class for Carro
  * 
  * @author: Zhaoqi Xu
  * @version: January 2024
