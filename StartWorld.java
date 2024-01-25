@@ -62,11 +62,11 @@ public class StartWorld extends World
 {
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
-
+    
     private GreenfootImage background = new GreenfootImage("BackGrounds/Start BG Back.png");
     private GreenfootImage clouds = new GreenfootImage("BackGrounds/Start BG Clouds.png");
     private GreenfootImage island = new GreenfootImage("BackGrounds/Start BG Island.png");
-
+    
     private GreenfootImage screen = new GreenfootImage(430, 720);
 
     private HighlightButton startButton;
@@ -121,6 +121,7 @@ public class StartWorld extends World
                     fileName = selectedFile.getAbsolutePath();
                     try{
                         fileScanner = new Scanner (new File(fileName));
+                        TitleScreenMusic.stop();
                         Greenfoot.setWorld(new GameWorld(fileName));
                     }
                     catch(FileNotFoundException e){
