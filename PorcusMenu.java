@@ -48,8 +48,10 @@ public class PorcusMenu extends SuperSmoothMover
      * Initializes a PorcusMenu with a given Button.
      * 
      * @param porcus The Button associated with the PorcusMenu.
+     * @param savedFile the save file to laoad data.
+     * @param shop the shop menu
      */
-    public PorcusMenu(Button porcus, ShopMenu shop){
+    public PorcusMenu(String savedFile, Button porcus, ShopMenu shop){
         this.shop = shop;
         
         milestones = new ArrayList<>();
@@ -91,6 +93,9 @@ public class PorcusMenu extends SuperSmoothMover
         amountDisplay = new SuperTextBox(" ", new Color(0,0,0,0), Color.BLACK, font, true, 180, 0, null);
         amount = 0;
         setImage(background);
+        if(savedFile!= null){
+            GameInfo.loadPorcus(savedFile, this);
+        }
     }
 
     /**
@@ -411,5 +416,30 @@ public class PorcusMenu extends SuperSmoothMover
      */
     public boolean isOpen(){
         return open;
+    }
+    
+    public Milestone getMileStone1(){
+        return m1;
+    }
+    public Milestone getMileStone2(){
+        return m2;
+    }
+    public ArrayList<Milestone> getMileStones(){
+        return milestones;
+    }
+    public ArrayList<Milestone> getComplete(){
+        return complete;
+    }
+    public void setMilestone1(Milestone m){
+        m1 = m;
+    }
+    public void setMilestone2(Milestone m){
+        m2 = m;
+    }
+    public void setMilestones(ArrayList<Milestone> m){
+        milestones = m;
+    }
+    public void setComplete(ArrayList<Milestone> c){
+        complete = c;
     }
 }

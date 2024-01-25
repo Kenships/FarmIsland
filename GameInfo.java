@@ -28,6 +28,8 @@ public class GameInfo
     private static ArrayList<DirtTile> dirtInfo;
     private int savedCurrency;
     private static int dirtCounter;
+    private static ArrayList<Milestone> completeInfo;
+    private static ArrayList<Milestone> milestonesInfo;
     
     /**
      * Saves the contents of the world to a file in the saves folder.
@@ -38,6 +40,7 @@ public class GameInfo
         world = (GameWorld) w;
         dirtTiles = new ArrayList<DirtTile>();
         inventory = Inventory.getInventory();
+        PorcusMenu porc = world.getPorcusMenu();
         
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save Game");
@@ -94,6 +97,22 @@ public class GameInfo
                 output.println(AchievementManager.totalPlants);
                 output.println("Achievements End");
                 output.println("Porcus Start");
+                output.println(porc.getMileStone1().getID());
+                output.println(porc.getMileStone1().getAmount());
+                output.println(porc.getMileStone2().getID());
+                output.println(porc.getMileStone2().getAmount());
+                output.println("Milestones Start");
+                for(Milestone m : porc.getMileStones()){
+                    output.println(m.getID());
+                    output.println(m.getAmount());
+                }
+                output.println("Milestones End");
+                output.println("Completed Start");
+                for(Milestone m : porc.getComplete()){
+                    output.println(m.getID());
+                    output.println(m.getAmount());
+                }
+                output.println("Completed End");
                 output.println("Porcus End");
                 output.close();
             }
@@ -220,4 +239,43 @@ public class GameInfo
             System.out.println("Invalid File");
         }
     }
+    
+    public static void loadPorcus(String savedFile, PorcusMenu p){
+        PorcusMenu porcusMenu = p;
+        milestonesInfo = new ArrayList<>();
+        completeInfo = new ArrayList<>();
+        try{
+            Scanner fileScanner = new Scanner (new File(savedFile));
+            while(fileScanner.hasNext()){
+                if("Porcus Start".equals(fileScanner.nextLine())){
+                    break;
+                }
+            }
+            porcusMenu.setMilestone1(new Milestone(ObjectID.valueOf(fileScanner.nextLine()),Integer.valueOf(fileScanner.nextLine())));
+            porcusMenu.setMilestone2(new Milestone(ObjectID.valueOf(fileScanner.nextLine()),Integer.valueOf(fileScanner.nextLine())));
+            fileScanner.nextLine();
+            while(fileScanner.hasNext()){
+                String line = fileScanner.nextLine();
+                if("Milestones End".equals(line)){
+                    break;
+                }
+                milestonesInfo.add(new Milestone(ObjectID.valueOf(line), Integer.valueOf(fileScanner.nextLine())));
+            }
+            fileScanner.nextLine();
+            while(fileScanner.hasNext()){
+                String line = fileScanner.nextLine();
+                if("Completed End".equals(line)){
+                    break;
+                }
+                completeInfo.add(new Milestone(ObjectID.valueOf(line), Integer.valueOf(fileScanner.nextLine())));
+            }
+            fileScanner.close();
+            porcusMenu.setMilestones(milestonesInfo);
+            porcusMenu.setComplete(completeInfo);
+        }
+        catch(FileNotFoundException e){
+            System.out.println("Invalid File");
+        }
+    }
+    
 }
