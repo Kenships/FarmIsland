@@ -165,19 +165,19 @@ public class PorcusMenu extends SuperSmoothMover
         if(complete.size() < 10){
             setPigStage(0);
         }
-        else if(complete.size()  < 20 && !stageCompletion[0]){
+        else if(complete.size()  >= 10 && complete.size()  < 20 && !stageCompletion[0]){
             stageCompletion[0] = true;
             shop.addItem(ObjectID.BLUEBERRY_SEED);
             shop.addItem(ObjectID.STRAWBERRY_SEED);
             setPigStage(1);
         }
-        else if(complete.size() < 30&& !stageCompletion[1]){
+        else if(complete.size()  >= 20 && complete.size() < 30 && !stageCompletion[1]){
             stageCompletion[1] = true;
             shop.addItem(ObjectID.GOLDEN_TOMATO_SEED);
             shop.addItem(ObjectID.SILVER_TOMATO_SEED);
             setPigStage(2);
         }
-        else if(complete.size() < 40&& !stageCompletion[2]){
+        else if(complete.size()  >= 30 && complete.size() < 40 && !stageCompletion[2]){
             stageCompletion[2] = true;
             shop.addItem(ObjectID.PORCUS_WHEAT_SEED);
             shop.addItem(ObjectID.DRAGONFRUIT_SEED);

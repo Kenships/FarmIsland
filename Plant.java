@@ -26,11 +26,16 @@ public abstract class Plant extends Tile
     protected DirtTile myTile;
     protected HashMap<Integer, Integer> yOffsets;
     protected SimpleTimer actTimer;
-
+    
+    /**
+     * Simple constructor
+     */
     public Plant(){
         this(0); 
     }
-
+    /**
+     * 
+     */
     public Plant(int offset){
         super(offset);
         myTile = null;
