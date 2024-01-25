@@ -16,11 +16,12 @@ import java.lang.NullPointerException;
 
 
 /**
- * Game discription:
- * This is a farm game in which you plant and harvest to unlock new plants to grow your plot and make bank!
+ * Game description:
+ * The game is a farming game where we start off with a single block. Through farming we are able to expand our land and unlock various types of plants
+ * by feeing porcus the pig. Have fun :)
  * 
  * Goal:
- * - expand your island as much as you can
+ * - expand your island
  * - feed the pig to the fattest form (stage 4)
  * - unlock and plant Porcus Wheat!!!
  * 
@@ -29,10 +30,14 @@ import java.lang.NullPointerException;
  * - left click equip slot to use item
  * - hoe used to harvest plants
  * - shovel used to remove plants (not harvest)
- * - equip seed and left click island to plant it
+ * - equip seed and left click island to plant it (you can hold and drag)
  * - the pig upgrade requirments are on the top of the pig menu
  * - go to the shop to purchase seeds
  * - click on inventory item to equip it or feed the pig
+ * 
+ * Saving:
+ * - Save your progress by clicking the save button, and type in the file name.
+ * - To load your game just click on a previous save file.
  * 
  * Buttons:
  * - press the home button in case you lose your islands

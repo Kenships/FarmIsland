@@ -95,6 +95,7 @@ public class PorcusMenu extends SuperSmoothMover
         setImage(background);
         if(savedFile!= null){
             GameInfo.loadPorcus(savedFile, this);
+            updateMilestones();
         }
     }
 
