@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Dragonfruit here.
+ * Sub Class for Dragonfruit
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -12,7 +12,7 @@ public class Dragonfruit extends Plant
     public static final int DEFAULT_GROWTHRATE = 1;
     public static final int GROWTH_STAGES = 4;
     /**
-     * NEW: ID moved and initialized in constructor
+     * Initializes a Dragonfruit plant with the default yield and sell price.
      */
     public Dragonfruit(){
         super(Y_OFFSET);
@@ -22,6 +22,11 @@ public class Dragonfruit extends Plant
         sellPrice = 50;
     }
 
+    /**
+     * Initializes a Dragonfruit plant with a specified yield.
+     * 
+     * @param yield The yield of the Dragonfruit plant.
+     */
     public Dragonfruit(int yeild){
         super(Y_OFFSET);
         ID = ObjectID.DRAGONFRUIT;
@@ -29,11 +34,18 @@ public class Dragonfruit extends Plant
         this.yield = yield;
         sellPrice = 50;
     }
+    
+    /**
+     * Performs the act of the Carrot plant.
+     */
     public void act()
     {
         super.act();
     }
     
+    /**
+     * Initializes the Dragonfruit plant with growth animations.
+     */
     public void initialize(){
         //add yOffsets
         //setYOffset(_growthStage_, _pixels_)
@@ -54,6 +66,9 @@ public class Dragonfruit extends Plant
         setImage(growthAnimations[growthStage][0]);
     }
     
+    /**
+     * Simulates the growth of the Dragonfruit plant.
+     */
     public void grow(){
         maturity += growthRate + myTile.getGrowthMultiplier();
         //1 min to grow fully
@@ -71,6 +86,9 @@ public class Dragonfruit extends Plant
         
     }
     
+    /**
+     * Advances to the next frame of the Dragonfruit plant's growth animation.
+     */
     public void nextFrame(){
         animationIndex += deltaIndex;
         if(animationIndex >= 0 && animationIndex < growthAnimations[growthStage].length){
@@ -85,18 +103,33 @@ public class Dragonfruit extends Plant
         }
     }
     
+    /**
+     * Checks for keypress actions related to the Dragonfruit plant.
+     */
     public void checkKeypressAction(){
         
     }
 
+    /**
+     * Plays the sound when placing the Dragonfruit plant.
+     */
     public void playPlaceSound(){
         
     }
+
+    /**
+     * Plays the sound when removing the Dragonfruit plant.
+     */
     public void playRemoveSound(){
         
     }
-    
+
     //temporary
+    /**
+     * Retrieves the image of the Dragonfruit plant as an item.
+     * 
+     * @return The image of the Dragonfruit plant as an item.
+     */
     public GreenfootImage getItemImage(){
         //fill
         return new GreenfootImage(1,1);
