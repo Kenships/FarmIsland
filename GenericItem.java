@@ -133,7 +133,9 @@ public class GenericItem extends Item {
             soundIndex = 0;
         }
     }
-    
+    /**
+     * removes the amount text from world
+     */
     public void removeAmountDisplay(){
         getWorld().removeObject(amount);
     }

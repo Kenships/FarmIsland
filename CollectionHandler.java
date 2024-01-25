@@ -14,7 +14,11 @@ public class CollectionHandler extends SuperSmoothMover
     private static GameWorld w;
     private static GreenfootSound[] harvestingSound;
     private static int soundIndex;
-
+    /**
+     * Initializes the collection handler
+     * 
+     * @param world the world to initialize from
+     */
     public static void initialize(GameWorld world){
         w = world;
         harvestingSound = new GreenfootSound[20];
@@ -23,12 +27,21 @@ public class CollectionHandler extends SuperSmoothMover
             harvestingSound[i].setVolume(80);
         }
     }
-
+    
+    /**
+     * Act - do whatever the Toggle wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
     public void act()
     {
         // Add your action code here.
     }
-
+    
+    /**
+     * collects and processes the plant
+     * 
+     * @param plant the plant to process
+     */
     public static void collect(Plant plant){
         if(Cursor.getItem() != null && Cursor.getItem() instanceof Tool){
             Tool tool = (Tool) Cursor.getItem();
@@ -68,7 +81,11 @@ public class CollectionHandler extends SuperSmoothMover
     
         }
     }
-
+    /**
+     * removes the plant and gives a seed
+     * @param plant the plant to be removed
+     * @return boolean has the plant been removed
+     */
     public static boolean shovel(Plant plant){
         if(Cursor.getItem() != null && Cursor.getItem() instanceof Tool){
             Tool tool = (Tool) Cursor.getItem();            
@@ -81,7 +98,9 @@ public class CollectionHandler extends SuperSmoothMover
         }
         return false;
     }
-
+    /**
+     * plays the harvesting sound
+     */
     public static void harvestSound(){
         harvestingSound[soundIndex].play();
         soundIndex++;

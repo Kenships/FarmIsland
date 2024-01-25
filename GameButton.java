@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class GameButton here.
+ * Button that zooms in when hovering
  * 
  * @author: Zhaoqi Xu  
  * @version: January 2024
@@ -27,6 +27,10 @@ public class GameButton extends Button
         width = mainImage[0].getWidth();
         height = mainImage[0].getHeight();
     }
+    /**
+     * Same as above
+     * @param size size of button width
+     */
     public GameButton(String name, int size){
         super(name);
         this.size = size;

@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Button here.
+ * abstract class for all type of buttons
  * 
  * @author: Zhaoqi Xu, Carson Cooc 
  * @version: 

@@ -39,6 +39,10 @@ public abstract class Tile extends SuperSmoothMover
     protected int col;
     protected LandPlot myPlot;
     
+    /**
+     * basic constructor with offset
+     * @param offset the offset of the tile
+     */
     public Tile(int offset){
         tileYOffset = offset;
     }
@@ -90,7 +94,6 @@ public abstract class Tile extends SuperSmoothMover
     /**
      * adjust the transparancy of tiles based on thier distance from the center
      * 
-     * NOTE: this will be changed to a rectangle; currently it fades based on a circle
      */
     public void fadeRect(GreenfootImage image){
         if(this.getWorld() == null){
@@ -132,13 +135,18 @@ public abstract class Tile extends SuperSmoothMover
      * handles all keyboard input
      */
     public abstract void checkKeypressAction();
-
+    /**
+     * plays a sound when tile is placed
+     */
     public abstract void playPlaceSound();
-
+    /**
+     * plays a sound when tile is removed
+     */
     public abstract void playRemoveSound();
 
     /**
      * Checks if the mouse is hovering exactly on the issometic square
+     * @return boolean if the mouse is hovering
      */
     public boolean hoveringThis(){
         MouseInfo mouse = Cursor.getMouseInfo();
@@ -166,9 +174,17 @@ public abstract class Tile extends SuperSmoothMover
         }
         return false;
     }
+    /**
+     * gets the tiles y offset
+     * @return int the y offset
+     */
     public int getTileYOffset(){
         return tileYOffset;
     }
+    /**
+     * sets the tiles y offset
+     * @param offset the offset of the tile
+     */
     public void setTileYOffset(int offset){
         tileYOffset = offset;
     }

@@ -129,10 +129,16 @@ public class ShopItem extends ItemFrame {
     public void addOne() {
         stock++;
     }
-    
+    /**
+     * updates the cost display
+     */
     public void updateCostDisplay(){
         costDisplay.update("$" + String.valueOf(CurrencyHandler.getPrice(ID)));
     }
+    /**
+     * gets the cost display
+     * @return SuperTextBox the cost display
+     */
     public SuperTextBox getCostDisplay(){
         return costDisplay;
     }

@@ -81,7 +81,11 @@ public class Tool extends Item {
         }
         reposition();
     }
-
+    /**
+     * sets the efficiency based on ID
+     * 
+     * @param ID the ID of the object
+     */
     private void setEfficiencyBasedOnType(ObjectID ID) {
         switch (ID) {
             case BASIC_TOOL:
@@ -95,7 +99,11 @@ public class Tool extends Item {
                 break;
         }
     }
-
+    
+    /**
+     * sets the tool to unbreakable
+     * @param ID the ID of the tool
+     */
     private void setUnbreakableStatusBasedOnType(ObjectID ID) {
         // Set unbreakable status based on tool type
         unbreakable = (ID == ObjectID.BASIC_TOOL || ID == ObjectID.DIAMOND_TOOL || ID == ObjectID.SHOVEL);

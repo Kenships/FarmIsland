@@ -66,21 +66,27 @@ public class EquipDisplay extends SuperSmoothMover
         seedFrame.setLocation(getX(), getY());
         fertilizerFrame.setLocation(getX() + SPACING, getY()); 
     }
-    
+    /**
+     * deselects all of the equip frames
+     */
     public void deselectAll(){
         seedFrame.unselect();
         fertilizerFrame.unselect();
         toolFrame.unselect();
         checkSelection();
     }
-    
+    /**
+     * selects the previously used item
+     */
     public void selectPrevious(){
         if(lastSelected != null){
             lastSelected.select();
         }
         
     }
-    
+    /**
+     * updates the screen based on item selection
+     */
     public void checkSelection(){
         if(toolFrame.isSelected()){
             lastSelected = toolFrame;
@@ -122,7 +128,9 @@ public class EquipDisplay extends SuperSmoothMover
             }
         }
     }
-
+    /**
+     * checks for mouse actions and perform tasks accordingly
+     */
     public void checkMouseAction(){
         if(toolFrame.hoveringThis() && Greenfoot.mousePressed(null) && Cursor.leftClicked()){
             clickSound();
@@ -164,7 +172,12 @@ public class EquipDisplay extends SuperSmoothMover
 
         }
     }
-
+    /**
+     * checks if user clicks on the same frame
+     * 
+     * @param frame the frame that is clicked
+     * @return boolean has the user clicked the same frame
+     */
     public boolean clickedItself(EquipFrame frame){
         if(frame.isSelected()){
             return true;

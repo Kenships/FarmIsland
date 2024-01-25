@@ -165,7 +165,9 @@ public class PorcusMenu extends SuperSmoothMover
             }
         }
     }
-
+    /**
+     * checks for milestone compleations
+     */
     public void checkMileStones(){
         if(complete.size() < 10){
             setPigStage(0);
@@ -189,7 +191,9 @@ public class PorcusMenu extends SuperSmoothMover
             setPigStage(3);
         }
     }
-
+    /**
+     * initializes all of the milestones
+     */
     public void InitializeMilestones(){
         milestones.add(new Milestone(ObjectID.WHEAT, 10));
         milestones.add(new Milestone(ObjectID.CARROT, 10));
@@ -235,18 +239,26 @@ public class PorcusMenu extends SuperSmoothMover
         milestones.add(new Milestone(ObjectID.CARROT, 100000));
         milestones.add(new Milestone(ObjectID.PORCUS_WHEAT, 10000));
     }
-
+    /**
+     * resets the porcus screen
+     */
     public void reset(){
         getWorld().addObject(porcus, getX() + background.getWidth()/2 + BUTTON_OFFSET, GameWorld.SCREEN_HEIGHT - BUTTON_OFFSET);
         reposition();
     }
-
+    /**
+     * forces the screen to close
+     */
     public void forceClose(){
         setLocation(- background.getWidth()/2, GameWorld.SCREEN_HEIGHT - background.getHeight()/2 - 32);
         reposition();
         getWorld().removeObject(porcus);
     }
-
+    /**
+     * adds the fed items towards milestone
+     * @param ID the ID of the item
+     * @param amount the amount of the item
+     */
     public void feed(ObjectID ID, int amount){
 
         if(ID == m1.getID()){
@@ -301,14 +313,18 @@ public class PorcusMenu extends SuperSmoothMover
             updateMilestones();
         }
     }
-
+    /**
+     * updates the milestone display
+     */
     public void updateMilestones(){
         milestone1.updateID(m1.getID());
         milestone2.updateID(m2.getID());
         status1.update(statusAmount1 + "/" + m1.getAmount());
         status2.update(statusAmount2 + "/" + m2.getAmount());
-    }
-
+    }   
+    /**
+     * checks for mouse input and does tasks accordingly
+     */
     public void checkMouseAction(){
         if(Greenfoot.mousePressed(null)){
             objectTimer.mark();
@@ -358,7 +374,9 @@ public class PorcusMenu extends SuperSmoothMover
             amountDisplay.update(String.valueOf(amount));
         }
     }
-
+    /**
+     * repositions all of the items within the menu when moving
+     */
     public void reposition(){
         porcus.setLocation(getX() + background.getWidth()/2 + BUTTON_OFFSET, porcus.getY());
         frame.setLocation(getX()-45, getY() + 68);
@@ -417,28 +435,59 @@ public class PorcusMenu extends SuperSmoothMover
     public boolean isOpen(){
         return open;
     }
-    
+    /**
+     * gets the milestone 1
+     * @return Milestone
+     */
     public Milestone getMileStone1(){
         return m1;
     }
+    /**
+     * gets the milestone 2
+     * @return Milestone
+     */
     public Milestone getMileStone2(){
         return m2;
     }
+    /**
+     * gets all the incomplete milestones
+     * @return ArrayList<Milestone> the list of milestones
+     */
     public ArrayList<Milestone> getMileStones(){
         return milestones;
     }
+    /**
+     * gets all the complete milestones
+     * @return ArrayList<Milestone>
+     */
     public ArrayList<Milestone> getComplete(){
         return complete;
     }
+    /**
+     * sets the milestone 1
+     * @param m 
+     */
     public void setMilestone1(Milestone m){
         m1 = m;
     }
+    /**
+     * sets the milestone 2
+     * @param m
+     */
     public void setMilestone2(Milestone m){
         m2 = m;
     }
+    /**
+     * sets the incomplete milestones
+     * @param m
+     */
     public void setMilestones(ArrayList<Milestone> m){
         milestones = m;
     }
+    /**
+     * sets the complete milestones
+     * @param m
+     */
     public void setComplete(ArrayList<Milestone> c){
         complete = c;
     }

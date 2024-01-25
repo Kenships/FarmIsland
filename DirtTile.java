@@ -37,7 +37,7 @@ public class DirtTile extends Tile
         super(-10);
         Initialize(plot, row, col, active);
     }
-
+    
     public void addedToWorld(World w){
         if(active){
             projectTiles();
@@ -86,7 +86,9 @@ public class DirtTile extends Tile
             setImage(projectedTile);
         }     
     }
-
+    /**
+     * sets plant to null
+     */
     public void unPlant(){
         plant = null;
     }
@@ -137,7 +139,10 @@ public class DirtTile extends Tile
             myPlot.removeTile(row,col);
         }
     }
-    
+    /**
+     * sets the plant
+     * @param plant the plant to set
+     */
     public void setPlant(Plant plant){
         this.plant = plant;
     }
@@ -168,7 +173,9 @@ public class DirtTile extends Tile
             }
         }
     }
-
+    /**
+     * stops all projections
+     */
     public void stopProjection(){
         for(int[] direction : directions){
             //dcol = dx, drow = dy
@@ -187,13 +194,17 @@ public class DirtTile extends Tile
         }
     }
 
-    //checks if the mouse is hovering and there has been a click
+    /**
+     * checks if the mouse is hovering and there has been a click
+     * @return boolena if user has clicked this tile
+     */
     public boolean clickedThis(){
         return hoveringThis() && Greenfoot.mouseClicked(null);
     }
 
-    //does some animation when a tile is clicked this is temporary
-    //mouse info does nothinng in this code block right now
+    /**
+     * offsets where you can click
+     */
     public void clickOffset(){
         if(activeTile.getTransparency() >TRANSLUCENT && clickedThis() && active && !offseted){
             setLocation(getX(), getY() + SELECT_OFFSET);
@@ -205,26 +216,30 @@ public class DirtTile extends Tile
         }
     }
 
-    //see if it is possible for the player to place the tile does not have to be related to price.
-    //this method name is temporary
+    /**
+     * gets if a dirtile is affordable
+     * @return boolean 
+     */
     public boolean getAffordable(){
-        /**
-         * TEMPORARY!!!
-         */
         return CurrencyHandler.isAffordable(ID);
     }
 
     /**
-     * NEW: getter method
+     * gets the plant of the dirt tile
+     * @return Plant the plant of the dirt tile
      */
     public Plant getPlant(){
         return plant;
     }
-
+    /**
+     * play place sound
+     */
     public void playPlaceSound(){
         placingDirtSound.play();
     }
-
+    /**
+     * play remove sound
+     */
     public void playRemoveSound(){
         //start the remove sound here
     }
@@ -236,25 +251,40 @@ public class DirtTile extends Tile
         return active;
     }
 
-
+    /**
+     * activates the tile
+     */
     public void activate(){
         setImage(activeTile);
         projectTiles();
         myPlot.zSort();
         active = true;
     }
-    
+    /**
+     * gets the growth multiplier of the tile
+     * @return double the growth multiplier
+     */
     public double getGrowthMultiplier(){
         return growthMultiplier;
     }
+    /**
+     * gets the ID of the tile
+     * @return ObjectID the tile
+     */
     public ObjectID getID(){
         return ID;
     }
-
+    /**
+     * gets the row of the tile
+     * @return int the row
+     */
     public int getRow(){
         return row;
     }
-
+    /**
+     * gets the col of the tile
+     * @return int the col
+     */
     public int getCol(){
         return col;
     }

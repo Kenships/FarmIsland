@@ -1,15 +1,20 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Toggle here.
+ * Button that will toggle on and off
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Zhaoqi Xu
+ * @version January 2023
  */
 public class ToggleButton extends Button
 {
     private boolean toggle;
     private GreenfootImage ball;
+    /**
+     * basic constructor
+     * 
+     * @param name name of image
+     */
     public ToggleButton (String name){
         super(name);
         clickImage[0] = new GreenfootImage("Buttons/" + imageName + " On.png");        
@@ -28,6 +33,11 @@ public class ToggleButton extends Button
         clickImage[0].drawImage(ball, width - 5 - ball.getWidth(), 3);
         setImage(mainImage[0]);
     }
+    /**
+     * checks if the cursor is hovering the button
+     * 
+     * @return boolean
+     */
      public boolean hoveringThis(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse != null && getWorld() != null){
@@ -48,6 +58,11 @@ public class ToggleButton extends Button
         super.act();
     }
     
+    /**
+     * gets the state of the button
+     * 
+     * @return boolean the state of the button
+     */
     public boolean getToggle(){
         return toggle;
     }
@@ -55,6 +70,9 @@ public class ToggleButton extends Button
     public void release(){
 
     }
+    /**
+     * sets the image acording to toggle
+     */
     public void click(){
         toggle = !toggle;
         if(toggle){

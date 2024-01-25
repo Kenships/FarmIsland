@@ -39,7 +39,12 @@ public class LandPlot extends SuperSmoothMover
     private int soundIndex;   
     private boolean existingFile;
     private String file;
-       
+    
+    /**
+     * basic constructor
+     * 
+     * @param saveFile the save file to load
+     */
     public LandPlot(String savedFile){
         if(savedFile != null){
             existingFile = true;
@@ -50,7 +55,7 @@ public class LandPlot extends SuperSmoothMover
         }
         initialize();
     }
-
+    
     public void addedToWorld (World w){
         if(existingFile){
             GameInfo.loadTiles(file, w);
@@ -66,7 +71,9 @@ public class LandPlot extends SuperSmoothMover
     {
         moveAndDrag(); 
     }
-
+    /**
+     * initalization method
+     */
     public void initialize(){
         //sets a temporary image for the "moveable screen"
         myImage = new GreenfootImage(GameWorld.SCREEN_WIDTH - 2 * MARGIN, GameWorld.SCREEN_HEIGHT - 2 * MARGIN);
@@ -85,7 +92,9 @@ public class LandPlot extends SuperSmoothMover
         //initialize the plot
         plot = new DirtTile[GRID_ROWS][GRID_COLS];
     }
-
+    /**
+     * moves the dirt tiles according to mouse movements
+     */
     //credit: ChatGPT for the idea to store mouse info
     //used to check when mouse is dragging and calculates the movement per act and applies it to each tile
     public void moveAndDrag(){
@@ -113,7 +122,10 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-    //check if mouse is hovering over the active plot
+    /**
+     * checks if the mouse is hovering the plot
+     */
+
     public boolean hoveringThis(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
         if(mouse != null){
@@ -126,15 +138,22 @@ public class LandPlot extends SuperSmoothMover
         }
         return false;
     }
+    /**
+     * starts the plot with one tile in the center
+     */
 
-    //begins the plot at the center
     public void startPlot(){
         //adds the central plot to the world
         plot[STARTING_ROW][STARTING_COL] = new DirtTile(this, STARTING_ROW, STARTING_COL, true);
         getWorld().addObject(plot[STARTING_ROW][STARTING_COL], getX(), getY());
     }
+    /**
+     * creates a tile at a specified location
+     * 
+     * @param row the row of the tile
+     * @param col the colunm of the tile
+     */
 
-    //creates a new tile at row/col that is "projected"
     public DirtTile createTile(int row, int col){
         if(row >= 0 && col >= 0 && row < plot.length && col < plot.length && plot[row][col] == null){
             plot[row][col] = new DirtTile(this, row, col, false);
@@ -142,15 +161,24 @@ public class LandPlot extends SuperSmoothMover
         }
         return null;
     }
-    //gets tile at row/col
+    /**
+     * gets the dirt tile at a spoecified location
+     * 
+     * @param row the row of the tile
+     * @param col the column of the tile
+     * @return DirtTile the tile at location
+     */
     public DirtTile getTile(int row, int col){
         return plot[row][col];
     }
-    //removes only from the matrix
+    /**
+     * removes tile from the plot
+     * 
+     * @param row the row of tile
+     * @param col the column of the tile
+     */
     public void removeFromPlot(int row, int col){
-        /**
-         * NEW: remove from plot
-         */
+
         if(row < 0 || col < 0 || row >= plot.length || col >= plot[row].length){
             return;
         }
@@ -174,7 +202,12 @@ public class LandPlot extends SuperSmoothMover
 
     }
 
-    //removes an in the matrix and world if it exists and is active
+    /**
+     * removes all connecting tiles to a tile
+     * 
+     * @param row the row of the tile
+     * @param col the column of the tile
+     */
     public void removeTile(int row, int col){
         DirtTile remove = plot[row][col];
 
@@ -194,7 +227,10 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-
+    /**
+     * sorts the tiles and plants on screen based on position of the screen
+     * 
+     */
     public void zSort(){
         ArrayList<Actor> actors = new ArrayList<>();
         for(int row = 0; row < plot.length; row++){
@@ -210,7 +246,11 @@ public class LandPlot extends SuperSmoothMover
         }
         Util.zSort(actors, getWorld());
     }
-
+    /**
+     * 
+     * initializes the grid for pathfinding
+     * @return GridPath[][] the matrix for pathfinding
+     */
     public GridPath[][] initMatrix(DirtTile destination){
         GridPath[][] matrix = new GridPath[plot.length][plot[0].length];
         for(int row = 0; row < matrix.length; row++){
@@ -226,7 +266,12 @@ public class LandPlot extends SuperSmoothMover
         }
         return matrix;
     }
-
+    /**
+     * tries to find a path to the center tile
+     * @param startLocation the location of the first dirt tile
+     * @param endLocation the location of the end tile
+     * @return boolean if a path has been found
+     */
     public boolean getPath(DirtTile startLocation, DirtTile endLocation){
         if (startLocation == null) return false;
         GridPath[][] matrix = initMatrix(endLocation);
@@ -264,7 +309,11 @@ public class LandPlot extends SuperSmoothMover
         }
         return pathFound;
     }
-
+    /**
+     * removes the tiles in a recursive way
+     * @param x the x location of the tile
+     * @param y the y location of the tile
+     */
     private void removeTiles(int x, int y){
         for (int i = 0; i < 4; i ++){
             int xUpdated = x + DIRECTIONS[i][0];
@@ -280,7 +329,9 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-    
+    /**
+     * fills the screen with tiles
+     */
     public void fillTiles(){
         int startX = WIDTH/2;
         int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;
@@ -300,7 +351,9 @@ public class LandPlot extends SuperSmoothMover
             }
         }
     }
-
+    /**
+     * plays the remove sound of the tiles
+     */
     public void removeTileSound()
     {
         removingDirtSound[soundIndex].play();
@@ -310,6 +363,10 @@ public class LandPlot extends SuperSmoothMover
             soundIndex=0;
         }
     }    
+    /**
+     * files the tiles based on an arrayList
+     * @param tiles the arraylist of tiles
+     */
     public void fillTiles(ArrayList<DirtTile> tiles){
         int startX = WIDTH/2;
         int startY = HEIGHT/2 - (STARTING_COL + 1) * DirtTile.HEIGHT;

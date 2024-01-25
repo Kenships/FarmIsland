@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class HighlightButton here.
+ * button that will highlight when hovering
  * 
  * @author: ZhaoQi Xu 
  * @version: January 2024

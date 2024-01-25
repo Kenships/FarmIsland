@@ -47,10 +47,18 @@ public class ShopMenu extends SuperSmoothMover
 
     private SimpleTimer actTimer;
     private SimpleTimer objectTimer;
+    /**
+     * basic constructor for shop
+     * @param galleryIDs an arraylist of Ids to add to the shop
+     */
     public ShopMenu(ArrayList<ObjectID> galleryIDs){
         initialize(galleryIDs);
     }
 
+    /**
+     * basic constructor for shop
+     * @param galleryIDs a hashmap of ObjectID and amount of that object
+     */
     public ShopMenu(HashMap<ObjectID, Integer> galleryIDs){
         initialize(galleryIDs);
     }
@@ -78,6 +86,10 @@ public class ShopMenu extends SuperSmoothMover
 
     }
 
+    /**
+     * initialization method
+     * @param galleryIDs the arraylist of ID's to initialize
+     */
     public void initialize(ArrayList<ObjectID> galleryIDs){
         actTimer = new SimpleTimer();
         objectTimer = new SimpleTimer();
@@ -97,6 +109,11 @@ public class ShopMenu extends SuperSmoothMover
             itemGallery.add(new ShopItem(ID, 1));
         }
     }
+
+    /**
+     * initialization method
+     * @param galleryIDs the Hashmap of ID's to initialize
+     */
 
     public void initialize(HashMap<ObjectID, Integer> galleryIDs){
         actTimer = new SimpleTimer();
@@ -132,15 +149,20 @@ public class ShopMenu extends SuperSmoothMover
         }
         sortItemGallery();
     }
-    
+    /**
+     * adds an item to the shop
+     * @param ID the ID of the item
+     */
     public void addItem(ObjectID ID){
         itemGallery.add(new ShopItem(ID, true));
     }
-    
+
     public void sortItemGallery(){
         //to be filled
     }
-
+    /**
+     * resets the shop
+     */
     public void resetShop(){
         int index = 0;
         for(ShopItem item : itemGallery){
@@ -151,9 +173,9 @@ public class ShopMenu extends SuperSmoothMover
             }
             else{
                 myWorld.addObject(item, x,y);
-                
+
                 SuperTextBox costDisplay = item.getCostDisplay();
-                
+
                 itemCosts.add(costDisplay);
                 myWorld.addObject(costDisplay, x - 5, y + 70);
             }
@@ -168,7 +190,9 @@ public class ShopMenu extends SuperSmoothMover
         myWorld.addObject(minus, 976, 460);
         myWorld.addObject(amountDisplay, x, 460);
     }
-
+    /**
+     * adds the buttons related to the shop
+     */
     public void addButtons(){
         int x = LEFT_MARGIN/3;
         int y = GameWorld.SCREEN_HEIGHT - LEFT_MARGIN/3;
@@ -180,7 +204,9 @@ public class ShopMenu extends SuperSmoothMover
         myWorld.addObject(menuDown,814, 570);
         myWorld.addObject(purchase, 1040, 526);
     }
-
+    /**
+     * clears the shop and all its contents
+     */
     public void clearShop(){
         ArrayList<Actor> components = new ArrayList<>();
         components.add(returnButton);
@@ -197,19 +223,15 @@ public class ShopMenu extends SuperSmoothMover
             myWorld.removeObject(component);
         }
     }
-
+    /**
+     * checks for keyboard action
+     */
     public void checkKeyAction(){
-        if(Greenfoot.isKeyDown("b") == !firstOpened){
-            firstOpened = false;
-            myWorld.setScreen(GameWorld.GAME);
-            clearShop();
-            myWorld.removeObject(this);
-        }
-        else{
-            firstOpened = false;
-        }
+        
     }
-
+    /**
+     * checks for mouseAction
+     */
     public void checkMouseAction(){
         if (returnButton.leftClickedThis() && !firstOpened){
             myWorld.setScreen(myWorld.GAME);
@@ -290,7 +312,9 @@ public class ShopMenu extends SuperSmoothMover
             }
         }
     }
-
+    /**
+     * slides the items up and down
+     */
     public void slide(){
         double end = SPACING * 3;
         if(distanceTraveled >= end){
