@@ -109,9 +109,7 @@ public class GameWorld extends World
         CurrencyHandler.initialize(savedFile, this);
         CollectionHandler.initialize(this);
         
-        GreenfootImage bg = new GreenfootImage("BackGrounds/Game BG.png");
-        
-        setBackground(bg);
+        setBackground(new GreenfootImage("BackGrounds/Game BG.png"));
         //initializes starting screen
 
         screen = GAME;
@@ -138,7 +136,7 @@ public class GameWorld extends World
         openInventory = new GameButton("Inventory");
         leave = new GameButton("Leave");
         openPorcus = new MenuButton("Porcus H");
-        porcus = new PorcusMenu(openPorcus, shop);
+        porcus = new PorcusMenu(savedFile, openPorcus, shop);
         addObject(porcus, 0, 0);
         
         ArrayList<Button> buttons = new ArrayList<>();
@@ -164,9 +162,6 @@ public class GameWorld extends World
         // Initializes achievement menu
         achievement = new AchievementMenu();
         achievementManager = new AchievementManager();
-        if(savedFile != null){
-            GameInfo.loadAchievements(savedFile);
-        }
         
         
         Tool tool = new Tool(ObjectID.DIAMOND_TOOL);
@@ -185,6 +180,7 @@ public class GameWorld extends World
         GamePlayMusic.playLoop();
         if(savedFile!= null){
             GameInfo.loadAchievements(savedFile);
+            //GameInfo.loadPorcus(savedFile, this);
         }
     }
     
@@ -212,6 +208,7 @@ public class GameWorld extends World
      * Clouds are spawned off-screen and slide towards the visible game area.
      */
     public void spawnClouds(){
+
         if(cloudTimer.millisElapsed() > 4000){
             cloudTimer.mark();
             int cloudNum = Greenfoot.getRandomNumber(6) + 1;
@@ -222,6 +219,7 @@ public class GameWorld extends World
             GreenfootImage cloud = new GreenfootImage("BackGrounds/Cloud " + cloudNum + ".png");
             addObject(new Effect(Effect.SLIDE,cloud, SCREEN_WIDTH + cloud.getWidth() * 2, 1.0/(Greenfoot.getRandomNumber(4) + 1.0)), -cloud.getWidth(), startY);
         }
+
     }
 
     /**
@@ -275,6 +273,7 @@ public class GameWorld extends World
      *   The inventory display can only be toggled if it is not currently in a moving state.
      */
     public void checkKeyAction(){
+        
         if(Greenfoot.isKeyDown("b")){
             setScreen(SHOP);
         }
@@ -286,6 +285,7 @@ public class GameWorld extends World
                 inventoryDisplay.open();
             }
         }
+        
     }
     
     /**
@@ -419,8 +419,7 @@ public class GameWorld extends World
      */
     public void setScreen(String screen) {
         this.screen = screen;
-    
-        switch (screen) {
+        switch(screen){
             case GAME:
                 resetButtons();
                 equip.showDisplay();
@@ -466,5 +465,9 @@ public class GameWorld extends World
     public void stopped() {
         GamePlayMusic.pause();
         ShopMusic.pause();
+    }
+    
+    public PorcusMenu getPorcusMenu(){
+        return porcus;
     }
 }
